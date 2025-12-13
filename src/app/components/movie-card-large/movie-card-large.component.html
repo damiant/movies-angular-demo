@@ -72,54 +72,37 @@
   } @else {
     <!-- Compact display for movies carousel page -->
     <div class="movie-container">
-      <ion-card>
-        <ion-img
-          [src]="movie()!.image"
-          [alt]="movie()!.title"
-          class="movie-image"
-        ></ion-img>
+      <div class="card">
+        <img [src]="movie()!.image" [alt]="movie()!.title" class="card-image" />
 
-        <ion-card-header>
-          <ion-card-title class="movie-title">{{ movie()!.title }}</ion-card-title>
-          <ion-card-subtitle class="movie-subtitle">
-            <ion-badge color="primary">{{ movie()!.year }}</ion-badge>
-            <ion-badge color="warning" class="rating-badge">
+        <div class="card-header">
+          <h2 class="card-title">{{ movie()!.title }}</h2>
+          <div class="card-subtitle">
+            <span class="year-badge">{{ movie()!.year }}</span>
+            <span class="rating-badge">
               <ion-icon [icon]="star" class="rating-icon"></ion-icon>
               {{ movie()!.rating.toFixed(1) }}
-            </ion-badge>
-          </ion-card-subtitle>
-        </ion-card-header>
+            </span>
+          </div>
+        </div>
 
-        <ion-card-content>
+        <div class="card-content">
           <p class="description">{{ movie()!.description }}</p>
 
           <div class="actors-section">
-            <ion-label>
-              <strong>Cast:</strong>
-            </ion-label>
+            <strong>Cast</strong>
             <div class="cast-avatars">
               @for (actor of movie()!.actors; let i = $index; track $index) {
-                <div
-                  class="avatar-container"
-                  (click)="actorClick.emit(movie()!.actorIds[i])"
-                >
-                  @if (movie()!.actorImages[i]) {
-                    <img
-                      [src]="movie()!.actorImages[i]"
-                      [alt]="actor"
-                      class="actor-avatar"
-                    />
-                  } @else {
-                    <div class="actor-avatar placeholder">
-                      {{ actor.charAt(0) }}
-                    </div>
-                  }
-                </div>
+                <app-actor-card
+                  [name]="actor"
+                  [image]="movie()!.actorImages[i]"
+                  (actorClick)="actorClick.emit(movie()!.actorIds[i])"
+                ></app-actor-card>
               }
             </div>
           </div>
-        </ion-card-content>
-      </ion-card>
+        </div>
+      </div>
     </div>
   }
 }

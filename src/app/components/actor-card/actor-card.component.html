@@ -1,0 +1,8 @@
+@if (image()) {
+  <img [src]="image()" [alt]="name()" class="actor-avatar" (click)="actorClick.emit()" />
+} @else {
+  <div class="actor-avatar placeholder" (click)="actorClick.emit()">
+    {{ name().charAt(0) }}
+  </div>
+}
+<span class="actor-name">{{ name() }}</span>

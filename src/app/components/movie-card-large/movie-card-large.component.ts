@@ -1,20 +1,14 @@
 import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardTitle,
-  IonCardSubtitle,
-  IonBadge,
   IonIcon,
   IonButton,
-  IonImg,
-  IonLabel,
+  IonBadge,
 } from '@ionic/angular/standalone';
 import { Movie } from '../../services/movie.service';
 import { star, playCircle, openOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
+import { ActorCardComponent } from '../actor-card/actor-card.component';
 
 @Component({
   selector: 'app-movie-card-large',
@@ -23,16 +17,10 @@ import { addIcons } from 'ionicons';
   standalone: true,
   imports: [
     CommonModule,
-    IonCard,
-    IonCardContent,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardSubtitle,
-    IonBadge,
     IonIcon,
     IonButton,
-    IonImg,
-    IonLabel,
+    IonBadge,
+    ActorCardComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

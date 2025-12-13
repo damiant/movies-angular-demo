@@ -1,0 +1,25 @@
+.actor-avatar {
+  width: var(--actor-avatar-size);
+  height: var(--actor-avatar-size);
+  border-radius: var(--border-radius-lg);
+  object-fit: cover;
+  cursor: pointer;
+
+  &.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--cast-font-size);
+    font-weight: var(--font-weight-bold);
+    color: #fff;
+    background: var(--gradient-primary);
+  }
+}
+
+.actor-name {
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-gray-medium);
+  text-align: center;
+  display: block;
+}
