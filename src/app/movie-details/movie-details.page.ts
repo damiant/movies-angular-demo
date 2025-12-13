@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import {
@@ -56,6 +56,13 @@ export class MovieDetailsPage {
 
   constructor(private movieService: MovieService, private router: Router, private celebrationService: CelebrationService) {
     addIcons({ openOutline, playCircle, closeOutline, star, starOutline });
+    
+    effect(() => {
+      const movieId = this.movie()?.id;
+      if (movieId) {
+        this.isSavedForLater.set(this.movieService.isSavedForLater(movieId));
+      }
+    });
   }
 
   openMovieLink(): void {

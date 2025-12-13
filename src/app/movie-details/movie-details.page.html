@@ -28,22 +28,6 @@
           <p class="movie-description">{{ movie()!.description }}</p>
         </div>
 
-        @if (movie()!.actors && movie()!.actors.length > 0) {
-          <div class="cast-section">
-            <h3>Cast</h3>
-            <div class="cast-list">
-              @for (actor of movie()!.actors; let i = $index; track i) {
-                <app-actor-card
-                  [name]="actor"
-                  [image]="movie()!.actorImages[i]"
-                  [whiteText]="true"
-                  (actorClick)="goToActorMovies(movie()!.actorIds[i])"
-                ></app-actor-card>
-              }
-            </div>
-          </div>
-        }
-
         <div class="button-group">
           @if (movie()!.trailerUrl) {
             <ion-button expand="full" fill="solid" color="warning" shape="round" (click)="openTrailerModal()" class="rounded-button">
@@ -60,6 +44,22 @@
             {{ isSavedForLater() ? 'Favorited' : 'Favorite' }}
           </ion-button>
         </div>
+
+        @if (movie()!.actors && movie()!.actors.length > 0) {
+          <div class="cast-section">
+            <h3>Cast</h3>
+            <div class="cast-list">
+              @for (actor of movie()!.actors; let i = $index; track i) {
+                <app-actor-card
+                  [name]="actor"
+                  [image]="movie()!.actorImages[i]"
+                  [whiteText]="true"
+                  (actorClick)="goToActorMovies(movie()!.actorIds[i])"
+                ></app-actor-card>
+              }
+            </div>
+          </div>
+        }
       </div>
     </div>
   } @else {
