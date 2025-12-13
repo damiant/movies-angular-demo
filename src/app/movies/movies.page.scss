@@ -33,7 +33,7 @@ ion-card {
 .movie-subtitle {
   display: flex;
   gap: 10px;
-  margin-top: 8px;
+  margin-top: var(--spacing-xs);
   flex-wrap: wrap;
 }
 
@@ -45,7 +45,7 @@ ion-card {
 .description {
   color: var(--color-gray-medium);
   line-height: var(--line-height-relaxed);
-  margin: 15px 0;
+  margin: var(--spacing-md) 0;
   font-size: var(--font-size-base);
 }
 
