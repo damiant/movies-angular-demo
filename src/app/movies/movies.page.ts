@@ -6,24 +6,15 @@ import {
   IonHeader,
   IonTitle,
   IonToolbar,
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardTitle,
-  IonCardSubtitle,
-  IonButton,
-  IonImg,
-  IonBadge,
-  IonLabel,
   IonSpinner,
-  IonIcon,
   IonMenuButton,
   IonButtons,
+  IonButton,
 } from '@ionic/angular/standalone';
 import { MovieService } from '../services/movie.service';
-import { star } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { MovieFooterComponent } from '../movie-footer/movie-footer.component';
+import { MovieCardLargeComponent } from '../components/movie-card-large/movie-card-large.component';
 
 @Component({
   selector: 'app-movies',
@@ -36,30 +27,21 @@ import { MovieFooterComponent } from '../movie-footer/movie-footer.component';
     IonHeader,
     IonTitle,
     IonToolbar,
-    IonCard,
-    IonCardContent,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardSubtitle,
-    IonButton,
-    IonImg,
-    IonBadge,
-    IonLabel,
     IonSpinner,
-    IonIcon,
     IonMenuButton,
     IonButtons,
+    IonButton,
     MovieFooterComponent,
+    MovieCardLargeComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MoviesPage {
   currentMovie = this.movieService.currentMovie;
   isLoading = signal(false);
-  star = star;
 
   constructor(private movieService: MovieService, private router: Router) {
-    addIcons({ star });
+    addIcons({});
     this.isLoading.set(true);
     setTimeout(() => this.isLoading.set(false), 500);
   }

@@ -15,67 +15,12 @@
   }
 
   @if (!isLoading() && currentMovie()) {
-    <div class="movie-container">
-      <ion-card>
-        <ion-img
-          [src]="currentMovie()!.image"
-          [alt]="currentMovie()!.title"
-          class="movie-image"
-        ></ion-img>
-
-        <ion-card-header>
-          <ion-card-title class="movie-title">{{ currentMovie()!.title }}</ion-card-title>
-          <ion-card-subtitle class="movie-subtitle">
-            <ion-badge color="primary">{{ currentMovie()!.year }}</ion-badge>
-            <ion-badge color="warning" class="rating-badge">
-              <ion-icon [icon]="star" class="rating-icon"></ion-icon>
-              {{ currentMovie()!.rating.toFixed(1) }}
-            </ion-badge>
-          </ion-card-subtitle>
-        </ion-card-header>
-
-        <ion-card-content>
-          <p class="description">{{ currentMovie()!.description }}</p>
-
-          <div class="actors-section">
-            <ion-label>
-              <strong>Cast:</strong>
-            </ion-label>
-            <div class="cast-avatars">
-              @for (actor of currentMovie()!.actors; let i = $index; track $index) {
-                <div
-                  class="avatar-container"
-                  (click)="goToActorMovies(currentMovie()!.actorIds[i])"
-                >
-                  @if (currentMovie()!.actorImages[i]) {
-                    <img
-                      [src]="currentMovie()!.actorImages[i]"
-                      [alt]="actor"
-                      class="actor-avatar"
-                    />
-                  } @else {
-                    <div class="actor-avatar placeholder">
-                      {{ actor.charAt(0) }}
-                    </div>
-                  }
-                  <p class="actor-name">{{ actor }}</p>
-                </div>
-              }
-            </div>
-          </div>
-        </ion-card-content>
-
-        <ion-button
-          expand="full"
-          fill="solid"
-          color="primary"
-          (click)="openMovieLink()"
-          class="link-button"
-        >
-          View on IMDb
-        </ion-button>
-      </ion-card>
-    </div>
+    <app-movie-card-large
+      [movie]="currentMovie()"
+      [isCompact]="true"
+      (actorClick)="goToActorMovies($event)"
+      (imdbClick)="openMovieLink()"
+    ></app-movie-card-large>
   }
 
   @if (!isLoading() && !currentMovie()) {

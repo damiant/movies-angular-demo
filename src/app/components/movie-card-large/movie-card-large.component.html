@@ -1,0 +1,125 @@
+@if (movie()) {
+  @if (!isCompact()) {
+    <!-- Full display for movie details page -->
+    <div class="movie-details-container">
+      <img [src]="movie()!.image" [alt]="movie()!.title" class="movie-poster" />
+
+      <div class="movie-info">
+        <h1 class="movie-title">{{ movie()!.title }}</h1>
+
+        <div class="movie-meta">
+          <span class="year">{{ movie()!.year }}</span>
+          @if (movie()!.rating) {
+            <ion-badge color="warning" class="rating">
+              {{ (movie()!.rating / 2).toFixed(1) }}/5
+            </ion-badge>
+          }
+        </div>
+
+        <div class="description-section">
+          <p class="movie-description">{{ movie()!.description }}</p>
+        </div>
+
+        @if (movie()!.actors && movie()!.actors.length > 0) {
+          <div class="cast-section">
+            <h3>Cast</h3>
+            <div class="cast-list">
+              @for (actor of movie()!.actors; let i = $index; track i) {
+                @if (movie()!.actorIds && movie()!.actorIds[i]) {
+                  <div class="cast-item clickable" (click)="actorClick.emit(movie()!.actorIds[i])">
+                    @if (movie()!.actorImages[i]) {
+                      <img [src]="movie()!.actorImages[i]" [alt]="actor" class="actor-avatar" />
+                    } @else {
+                      <div class="actor-avatar placeholder">
+                        {{ actor.charAt(0) }}
+                      </div>
+                    }
+                    <span class="actor-name">{{ actor }}</span>
+                  </div>
+                } @else {
+                  <div class="cast-item">
+                    @if (movie()!.actorImages[i]) {
+                      <img [src]="movie()!.actorImages[i]" [alt]="actor" class="actor-avatar" />
+                    } @else {
+                      <div class="actor-avatar placeholder">
+                        {{ actor.charAt(0) }}
+                      </div>
+                    }
+                    <span class="actor-name">{{ actor }}</span>
+                  </div>
+                }
+              }
+            </div>
+          </div>
+        }
+
+        @if (showTrailerButton()) {
+          <div class="button-group">
+            @if (movie()!.trailerUrl) {
+              <ion-button expand="full" fill="solid" color="warning" shape="round" (click)="trailerClick.emit()" class="rounded-button">
+                <ion-icon slot="start" [icon]="playCircle"></ion-icon>
+                Trailer
+              </ion-button>
+            }
+            <ion-button expand="full" fill="solid" color="primary" shape="round" (click)="imdbClick.emit()" class="rounded-button">
+              <ion-icon slot="start" [icon]="openOutline"></ion-icon>
+              IMDB
+            </ion-button>
+          </div>
+        }
+      </div>
+    </div>
+  } @else {
+    <!-- Compact display for movies carousel page -->
+    <div class="movie-container">
+      <ion-card>
+        <ion-img
+          [src]="movie()!.image"
+          [alt]="movie()!.title"
+          class="movie-image"
+        ></ion-img>
+
+        <ion-card-header>
+          <ion-card-title class="movie-title">{{ movie()!.title }}</ion-card-title>
+          <ion-card-subtitle class="movie-subtitle">
+            <ion-badge color="primary">{{ movie()!.year }}</ion-badge>
+            <ion-badge color="warning" class="rating-badge">
+              <ion-icon [icon]="star" class="rating-icon"></ion-icon>
+              {{ movie()!.rating.toFixed(1) }}
+            </ion-badge>
+          </ion-card-subtitle>
+        </ion-card-header>
+
+        <ion-card-content>
+          <p class="description">{{ movie()!.description }}</p>
+
+          <div class="actors-section">
+            <ion-label>
+              <strong>Cast:</strong>
+            </ion-label>
+            <div class="cast-avatars">
+              @for (actor of movie()!.actors; let i = $index; track $index) {
+                <div
+                  class="avatar-container"
+                  (click)="actorClick.emit(movie()!.actorIds[i])"
+                >
+                  @if (movie()!.actorImages[i]) {
+                    <img
+                      [src]="movie()!.actorImages[i]"
+                      [alt]="actor"
+                      class="actor-avatar"
+                    />
+                  } @else {
+                    <div class="actor-avatar placeholder">
+                      {{ actor.charAt(0) }}
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  }
+}

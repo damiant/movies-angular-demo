@@ -1,12 +1,10 @@
+@import '../styles/common-page.scss';
+
 .loading-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-}
-
-ion-content {
-  --background: var(--gradient-dark) !important;
 }
 
 .actor-container {
