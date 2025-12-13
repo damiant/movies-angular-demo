@@ -1,96 +1,41 @@
-import { Component, input, signal, ChangeDetectionStrategy, effect } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  IonFab,
-  IonFabButton,
-  IonFabList,
-  IonIcon,
-} from '@ionic/angular/standalone';
-import { MovieService } from '../services/movie.service';
-import { thumbsUpOutline, thumbsDownOutline, eyeOffOutline, starOutline, star, filmOutline } from 'ionicons/icons';
-import { addIcons } from 'ionicons';
+import { Router } from '@angular/router';
+import { IonSegment, IonSegmentButton, IonLabel, IonIcon } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-movie-footer',
   templateUrl: './movie-footer.component.html',
   styleUrls: ['./movie-footer.component.scss'],
   standalone: true,
-  imports: [
+  imports: [IonIcon, 
     CommonModule,
-    IonFab,
-    IonFabButton,
-    IonFabList,
-    IonIcon,
+    IonSegment,
+    IonSegmentButton,
+    IonLabel,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MovieFooterComponent {
-  movieId = input<number | null>(null);
-  showFooter = input(true);
+  currentSegment = 'movies';
 
-  thumbsUpOutline = thumbsUpOutline;
-  thumbsDownOutline = thumbsDownOutline;
-  eyeOffOutline = eyeOffOutline;
-  starOutline = starOutline;
-  star = star;
-  filmOutline = filmOutline;
-  activePulse = signal<string | null>(null);
-  floatingTexts = signal<Array<{ id: number; text: string }>>([]);
-  isSavedForLater = signal(false);
-  private floatingTextId = 0;
-
-  constructor(private movieService: MovieService) {
-    addIcons({ thumbsUpOutline, thumbsDownOutline, eyeOffOutline, starOutline, star, filmOutline });
-
-    effect(() => {
-      const id = this.movieId();
-      if (id) {
-        this.isSavedForLater.set(this.movieService.isSavedForLater(id));
-      }
-    });
-  }
-
-  onThumbsUp(): void {
-    if (this.movieId()) {
-      this.animateButton('thumbsUp', 'Thumbs Up');
-      this.movieService.rateMovie(this.movieId()!, 'thumbsUp');
+  constructor(private router: Router) {
+    const currentUrl = this.router.url.split('/')[1];
+    if (currentUrl === 'favorites') {
+      this.currentSegment = 'favorites';
+    } else {
+      this.currentSegment = 'movies';
     }
   }
 
-  onThumbsDown(): void {
-    if (this.movieId()) {
-      this.animateButton('thumbsDown', 'Thumbs Down');
-      this.movieService.rateMovie(this.movieId()!, 'thumbsDown');
+  onSegmentChange(event: any): void {
+    const value = event.detail.value;
+    if (value === 'movies') {
+      this.router.navigate(['/movies']);
+      this.currentSegment = 'movies';
+    } else if (value === 'favorites') {
+      this.router.navigate(['/favorites']);
+      this.currentSegment = 'favorites';
     }
-  }
-
-  onDidntSee(): void {
-    if (this.movieId()) {
-      this.animateButton('didntSee', "Haven't Seen");
-      this.movieService.markAsDidntSee(this.movieId()!);
-    }
-  }
-
-  onAddToList(): void {
-    if (this.movieId()) {
-      const isSaved = this.isSavedForLater();
-      this.animateButton('addToList', isSaved ? 'Removed from Favorites' : 'Added to Favorites');
-      this.movieService.toggleSaveForLater(this.movieId()!);
-      this.isSavedForLater.set(!isSaved);
-    }
-  }
-
-  private animateButton(buttonId: string, text: string): void {
-    this.activePulse.set(buttonId);
-    setTimeout(() => {
-      this.activePulse.set(null);
-    }, 600);
-
-    const floatingId = this.floatingTextId++;
-    const current = this.floatingTexts();
-    this.floatingTexts.set([...current, { id: floatingId, text }]);
-    setTimeout(() => {
-      this.floatingTexts.set(this.floatingTexts().filter((t) => t.id !== floatingId));
-    }, 1500);
   }
 }

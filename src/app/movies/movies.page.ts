@@ -12,7 +12,6 @@ import {
 } from '@ionic/angular/standalone';
 import { MovieService } from '../services/movie.service';
 import { addIcons } from 'ionicons';
-import { MovieFooterComponent } from '../movie-footer/movie-footer.component';
 import { MovieCardLargeComponent } from '../components/movie-card-large/movie-card-large.component';
 
 @Component({
@@ -29,7 +28,6 @@ import { MovieCardLargeComponent } from '../components/movie-card-large/movie-ca
     IonSpinner,
     IonMenuButton,
     IonButtons,
-    MovieFooterComponent,
     MovieCardLargeComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,

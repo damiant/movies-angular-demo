@@ -17,7 +17,6 @@ import { MovieService } from '../services/movie.service';
 import { CelebrationService } from '../services/celebration.service';
 import { openOutline, playCircle, closeOutline, star, starOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
-import { MovieFooterComponent } from '../movie-footer/movie-footer.component';
 import { SafePipe } from '../pipes/safe.pipe';
 import { ActorCardComponent } from '../components/actor-card/actor-card.component';
 
@@ -38,7 +37,6 @@ import { ActorCardComponent } from '../components/actor-card/actor-card.componen
     IonButtons,
     IonIcon,
     IonModal,
-    MovieFooterComponent,
     SafePipe,
     ActorCardComponent,
   ],

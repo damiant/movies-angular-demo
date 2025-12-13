@@ -1,50 +1,30 @@
-.fab-container {
-  background: var(--footer-background);
-  --background: var(--footer-background);
-  --box-shadow: none;
+.segment-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  width: 90%;
+  --background: var(--color-white);
+  border-top: 1px solid var(--color-border);
+  z-index: 100;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-bottom: var(--spacing-lg);
+  border-radius: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 
-  ion-fab-button {
-    --border-radius: 50%;
-    --box-shadow: var(--fab-button-box-shadow);
-    --background: var(--fab-button-background);
-    --background-activated: var(--fab-button-background-activated);
-    --background-focused: var(--fab-button-background-focused);
-    --background-hover: var(--fab-button-background-hover);
-    --color: var(--fab-button-color);
-    width: var(--fab-button-size);
-    height: var(--fab-button-size);
-    --padding-start: var(--fab-button-padding-start);
-    --padding-end: var(--fab-button-padding-end);
-
-    ion-icon {
-      font-size: var(--icon-size-md);
-      color: inherit;
-    }
-
-    &.pulse {
-      animation: pulse-animation var(--animation-pulse-duration) var(--animation-ease);
-    }
-  }
-
-  .main-fab {
-    ion-icon {
-      font-size: var(--icon-size-md);
-    }
-  }
-}
-
-@keyframes pulse-animation {
-  0% {
-    transform: scale(1);
-    box-shadow: var(--shadow-lg);
-  }
-  50% {
-    transform: scale(1.15);
-    box-shadow: 0 0 0 12px var(--color-shadow-light);
-  }
-  100% {
-    transform: scale(1);
-    box-shadow: var(--shadow-lg);
+  ion-segment-button {
+    flex: 1;
+    --padding-start: var(--spacing-md);
+    --padding-end: var(--spacing-md);
+    --padding-top: var(--spacing-sm);
+    --padding-bottom: var(--spacing-sm);
+    --color: var(--color-gray-medium);
+    --color-checked: var(--color-dark-green);
+    --indicator-height: 3px;
+    font-weight: var(--font-weight-bold);
   }
 }
 

@@ -1,53 +1,8 @@
-@if (showFooter() && movieId()) {
-  <ion-fab slot="fixed" horizontal="center" vertical="bottom" class="fab-container">
-    <ion-fab-button color="primary" class="main-fab">
-      <ion-icon [icon]="filmOutline"></ion-icon>
-    </ion-fab-button>
-
-    <ion-fab-list side="top">
-      <ion-fab-button
-        color="success"
-        (click)="onThumbsUp()"
-        class="fab-button"
-        [class.pulse]="activePulse() === 'thumbsUp'"
-      >
-        <ion-icon [icon]="thumbsUpOutline"></ion-icon>
-      </ion-fab-button>
-
-      <ion-fab-button
-        color="medium"
-        (click)="onDidntSee()"
-        class="fab-button"
-        [class.pulse]="activePulse() === 'didntSee'"
-      >
-        <ion-icon [icon]="eyeOffOutline"></ion-icon>
-      </ion-fab-button>
-
-      <ion-fab-button
-        color="danger"
-        (click)="onThumbsDown()"
-        class="fab-button"
-        [class.pulse]="activePulse() === 'thumbsDown'"
-      >
-        <ion-icon [icon]="thumbsDownOutline"></ion-icon>
-      </ion-fab-button>
-
-      <ion-fab-button
-        color="tertiary"
-        (click)="onAddToList()"
-        class="fab-button"
-        [class.pulse]="activePulse() === 'addToList'"
-      >
-        <ion-icon [icon]="isSavedForLater() ? star : starOutline"></ion-icon>
-      </ion-fab-button>
-    </ion-fab-list>
-
-    <div class="floating-texts">
-      @for (floatingText of floatingTexts(); track floatingText.id) {
-        <div class="floating-text">
-          {{ floatingText.text }}
-        </div>
-      }
-    </div>
-  </ion-fab>
-}
+<ion-segment [value]="currentSegment" (ionChange)="onSegmentChange($event)" class="segment-container">
+  <ion-segment-button value="movies">
+    <ion-label>Movies</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="favorites">
+    <ion-label>Favorites</ion-label>
+  </ion-segment-button>
+</ion-segment>

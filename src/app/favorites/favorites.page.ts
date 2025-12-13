@@ -20,7 +20,6 @@ import {
 import { MovieService, Movie } from '../services/movie.service';
 import { star } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
-import { MovieFooterComponent } from '../movie-footer/movie-footer.component';
 
 @Component({
   selector: 'app-favorites',
@@ -43,7 +42,6 @@ import { MovieFooterComponent } from '../movie-footer/movie-footer.component';
     IonMenuButton,
     IonButtons,
     IonIcon,
-    MovieFooterComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

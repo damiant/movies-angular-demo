@@ -3,11 +3,12 @@ import { IonApp, IonRouterOutlet, IonMenu, IonContent, IonList, IonLabel, IonIte
 import { RouterLink } from '@angular/router';
 import { homeOutline, starOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
+import { MovieFooterComponent } from './movie-footer/movie-footer.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  imports: [IonApp, IonRouterOutlet, IonMenu, IonContent, IonList, IonLabel, IonItem, IonIcon, IonHeader, IonToolbar, IonTitle, RouterLink],
+  imports: [IonApp, IonRouterOutlet, IonMenu, IonContent, IonList, IonLabel, IonItem, IonIcon, IonHeader, IonToolbar, IonTitle, RouterLink, MovieFooterComponent],
 })
 export class AppComponent {
   homeOutline = homeOutline;

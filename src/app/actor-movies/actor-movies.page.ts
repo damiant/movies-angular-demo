@@ -21,7 +21,6 @@ import {
 import { MovieService, Movie, Actor } from '../services/movie.service';
 import { starOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
-import { MovieFooterComponent } from '../movie-footer/movie-footer.component';
 import { ActorLargeComponent } from '../components/actor-large/actor-large.component';
 
 @Component({
@@ -46,7 +45,6 @@ import { ActorLargeComponent } from '../components/actor-large/actor-large.compo
     IonSpinner,
     IonBackButton,
     IonButtons,
-    MovieFooterComponent,
     ActorLargeComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
