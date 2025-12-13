@@ -1,2 +1,106 @@
 // For information on how to create your own theme, please refer to:
 // https://ionicframework.com/docs/theming/
+
+:root {
+  // ========================================
+  // LAYOUT & SPACING
+  // ========================================
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 20px;
+  --spacing-2xl: 30px;
+
+  --card-margin-bottom: 20px;
+  --card-margin-bottom-mobile: 15px;
+  --card-padding-bottom: 80px;
+
+  // ========================================
+  // BORDER RADIUS
+  // ========================================
+  --border-radius-sm: 12px;
+  --border-radius-md: 20px;
+  --border-radius-lg: 50%;
+
+  // ========================================
+  // TYPOGRAPHY
+  // ========================================
+  --font-size-xs: 12px;
+  --font-size-sm: 13px;
+  --font-size-base: 14px;
+  --font-size-lg: 16px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 28px;
+
+  --font-weight-normal: 500;
+  --font-weight-bold: 600;
+
+  --line-height-normal: 1.4;
+  --line-height-relaxed: 1.6;
+
+  // ========================================
+  // COLORS
+  // ========================================
+  --color-white: #fff;
+  --color-black: #000;
+  --color-gray-dark: #333;
+  --color-gray-medium: #666;
+  --color-gray-light: #999;
+  --color-gray-lighter: #eee;
+  --color-gray-bg: #f0f0f0;
+  --color-border: #e0e0e0;
+  --color-shadow-light: rgba(0, 0, 0, 0.1);
+  --color-shadow-medium: rgba(0, 0, 0, 0.2);
+  --color-shadow-dark: rgba(0, 0, 0, 0.3);
+
+  --gradient-purple: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+  // ========================================
+  // SHADOWS
+  // ========================================
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.2);
+  --shadow-xl: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --shadow-2xl: 0 6px 12px rgba(0, 0, 0, 0.3);
+
+  // ========================================
+  // COMPONENT SIZES
+  // ========================================
+  --avatar-size: 80px;
+  --avatar-size-mobile: 120px;
+  --actor-profile-size: 150px;
+  --actor-profile-size-mobile: 120px;
+  --fab-button-size: 56px;
+  --fab-button-size-mobile: 44.8px;
+  --icon-size-sm: 19.2px;
+  --icon-size-md: 24px;
+  --movie-image-height: 400px;
+  --movie-image-height-mobile: 300px;
+  --movie-poster-height: 200px;
+  --movie-poster-height-mobile: 160px;
+
+  // ========================================
+  // ANIMATIONS
+  // ========================================
+  --animation-pulse-duration: 0.6s;
+  --animation-float-duration: 1.5s;
+  --animation-hover-duration: 0.2s;
+  --animation-ease: ease-out;
+
+  // ========================================
+  // BREAKPOINTS
+  // ========================================
+  --breakpoint-mobile: 576px;
+
+  // ========================================
+  // RESPONSIVE VALUES
+  // ========================================
+  --gap-buttons: 16px;
+  --gap-buttons-mobile: 12px;
+  --gap-avatars: 16px;
+  --gap-grid-desktop: 12px;
+  --gap-grid-mobile: 10px;
+}
