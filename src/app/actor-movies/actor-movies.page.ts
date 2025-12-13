@@ -94,4 +94,10 @@ export class ActorMoviesPage implements OnInit {
   openMovieLink(link: string): void {
     window.open(link, '_blank');
   }
+
+  goToMovieDetails(movie: Movie): void {
+    this.router.navigate(['/movie-details'], {
+      state: { movie },
+    });
+  }
 }

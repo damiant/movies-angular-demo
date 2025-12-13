@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/movies"></ion-back-button>
+      <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title>{{ actor?.name || 'Actor' }}</ion-title>
   </ion-toolbar>
@@ -21,7 +21,7 @@
 
     <div class="movies-grid">
       @for (movie of movies; track movie.id) {
-        <ion-card class="movie-card">
+        <ion-card class="movie-card clickable" (click)="goToMovieDetails(movie)">
           <ion-img [src]="movie.image" [alt]="movie.title" class="movie-poster"></ion-img>
 
           <ion-card-header>

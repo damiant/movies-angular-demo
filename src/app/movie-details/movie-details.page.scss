@@ -1,0 +1,143 @@
+.movie-details-container {
+  padding: var(--spacing-lg);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.movie-poster {
+  width: 100%;
+  height: auto;
+  border-radius: var(--border-radius-sm);
+  margin-bottom: var(--spacing-xl);
+  box-shadow: var(--shadow-lg);
+}
+
+.movie-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.movie-title {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  margin: 0;
+  color: var(--color-gray-dark);
+}
+
+.movie-meta {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.year {
+  font-size: var(--font-size-lg);
+  color: var(--color-gray-medium);
+  font-weight: var(--font-weight-normal);
+}
+
+.rating {
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-base);
+}
+
+.description-section {
+  padding: var(--spacing-lg) 0;
+  border-top: 1px solid var(--color-gray-lighter);
+  border-bottom: 1px solid var(--color-gray-lighter);
+}
+
+.movie-description {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-gray-medium);
+  margin: 0;
+}
+
+.cast-section {
+  padding: var(--spacing-lg) 0;
+}
+
+.cast-section h3 {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  margin: 0 0 var(--spacing-lg) 0;
+  color: var(--color-gray-dark);
+}
+
+.cast-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-lg);
+}
+
+.cast-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex: 0 0 calc(25% - var(--spacing-md));
+}
+
+.actor-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: var(--border-radius-lg);
+  object-fit: cover;
+  border: 2px solid var(--color-border);
+
+  &.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: bold;
+    color: var(--color-white);
+    background: var(--gradient-purple);
+  }
+}
+
+.actor-name {
+  font-size: var(--font-size-xs);
+  text-align: center;
+  color: var(--color-gray-medium);
+  font-weight: var(--font-weight-normal);
+  max-width: 80px;
+  white-space: normal;
+}
+
+.no-movie {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  gap: var(--spacing-lg);
+
+  p {
+    color: var(--color-gray-medium);
+    margin: 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .movie-details-container {
+    padding: var(--spacing-md);
+  }
+
+  .movie-title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .cast-item {
+    flex: 0 0 calc(33.333% - var(--spacing-sm));
+  }
+
+  .actor-avatar {
+    width: 70px;
+    height: 70px;
+  }
+}
