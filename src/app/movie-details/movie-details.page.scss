@@ -127,18 +127,19 @@
 
 .button-group {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: var(--spacing-md);
   margin-top: var(--spacing-lg);
+  padding-bottom: 80px;
 
   ion-button {
     margin: 0;
+    flex: 1;
   }
 }
 
 .rounded-button {
   --border-radius: 50px;
-  border-radius: 50px !important;
 }
 
 .trailer-container {

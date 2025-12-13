@@ -63,12 +63,12 @@
 
         <div class="button-group">
           @if (movie()!.trailerUrl) {
-            <ion-button expand="block" fill="solid" color="warning" (click)="openTrailerModal()" class="rounded-button">
+            <ion-button expand="full" fill="solid" color="warning" shape="round" (click)="openTrailerModal()" class="rounded-button">
               <ion-icon slot="start" [icon]="playCircle"></ion-icon>
               Trailer
             </ion-button>
           }
-          <ion-button expand="block" fill="solid" color="primary" (click)="openMovieLink()" class="rounded-button">
+          <ion-button expand="full" fill="solid" color="primary" shape="round" (click)="openMovieLink()" class="rounded-button">
             <ion-icon slot="start" [icon]="openOutline"></ion-icon>
             IMDB
           </ion-button>
