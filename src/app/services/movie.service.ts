@@ -216,7 +216,8 @@ export class MovieService {
         }>;
       };
       const moviesWithPosters = data.cast
-        .filter((movie) => movie.poster_path)
+        .filter((movie) => movie.poster_path && movie.release_date)
+        .sort((a, b) => new Date(b.release_date).getTime() - new Date(a.release_date).getTime())
         .slice(0, 10);
       
       const moviePromises = moviesWithPosters.map((tmdbMovie) =>

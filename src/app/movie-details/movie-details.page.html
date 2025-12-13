@@ -61,3 +61,5 @@
     </div>
   }
 </ion-content>
+
+<app-movie-footer [movieId]="movie()?.id || null" [showFooter]="!!movie()"></app-movie-footer>

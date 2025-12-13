@@ -1,0 +1,53 @@
+@if (showFooter() && movieId()) {
+  <div class="footer-container">
+    <div class="fab-buttons-container">
+      <ion-button
+        color="success"
+        (click)="onThumbsUp()"
+        class="fab-button"
+        [class.pulse]="activePulse() === 'thumbsUp'"
+        shape="round"
+      >
+        <ion-icon slot="icon-only" [icon]="thumbsUpOutline"></ion-icon>
+      </ion-button>
+
+      <ion-button
+        color="medium"
+        (click)="onDidntSee()"
+        class="fab-button"
+        [class.pulse]="activePulse() === 'didntSee'"
+        shape="round"
+      >
+        <ion-icon slot="icon-only" [icon]="eyeOffOutline"></ion-icon>
+      </ion-button>
+
+      <ion-button
+        color="danger"
+        (click)="onThumbsDown()"
+        class="fab-button"
+        [class.pulse]="activePulse() === 'thumbsDown'"
+        shape="round"
+      >
+        <ion-icon slot="icon-only" [icon]="thumbsDownOutline"></ion-icon>
+      </ion-button>
+
+      <ion-button
+        color="tertiary"
+        (click)="onAddToList()"
+        class="fab-button"
+        [class.pulse]="activePulse() === 'addToList'"
+        shape="round"
+      >
+        <ion-icon slot="icon-only" [icon]="bookmarkOutline"></ion-icon>
+      </ion-button>
+    </div>
+
+    <div class="floating-texts">
+      @for (floatingText of floatingTexts(); track floatingText.id) {
+        <div class="floating-text">
+          {{ floatingText.text }}
+        </div>
+      }
+    </div>
+  </div>
+}

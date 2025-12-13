@@ -15,22 +15,13 @@ import {
   IonImg,
   IonBadge,
   IonLabel,
-  IonGrid,
-  IonRow,
-  IonCol,
   IonIcon,
   IonSpinner,
-  IonFooter,
   IonButtons,
 } from '@ionic/angular/standalone';
 import { MovieService, Movie } from '../services/movie.service';
-import {
-  thumbsUpOutline,
-  thumbsDownOutline,
-  eyeOffOutline,
-  bookmarkOutline,
-} from 'ionicons/icons';
 import { addIcons } from 'ionicons';
+import { MovieFooterComponent } from '../movie-footer/movie-footer.component';
 
 @Component({
   selector: 'app-movies',
@@ -52,80 +43,19 @@ import { addIcons } from 'ionicons';
     IonImg,
     IonBadge,
     IonLabel,
-    IonIcon,
     IonSpinner,
-    IonFooter,
+    MovieFooterComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MoviesPage {
   currentMovie = this.movieService.currentMovie;
   isLoading = signal(false);
-  thumbsUpOutline = thumbsUpOutline;
-  thumbsDownOutline = thumbsDownOutline;
-  eyeOffOutline = eyeOffOutline;
-  bookmarkOutline = bookmarkOutline;
-
-  activePulse: string | null = null;
-  floatingTexts: Array<{ id: number; text: string }> = [];
-  private floatingTextId = 0;
 
   constructor(private movieService: MovieService, private router: Router) {
-    addIcons({
-      thumbsUpOutline,
-      thumbsDownOutline,
-      eyeOffOutline,
-      bookmarkOutline,
-    });
+    addIcons({});
     this.isLoading.set(true);
     setTimeout(() => this.isLoading.set(false), 500);
-  }
-
-  onThumbsUp(): void {
-    const movie = this.currentMovie();
-    if (movie) {
-      this.animateButton('thumbsUp', 'Thumbs Up');
-      this.movieService.rateMovie(movie.id, 'thumbsUp');
-    }
-  }
-
-  onThumbsDown(): void {
-    const movie = this.currentMovie();
-    if (movie) {
-      this.animateButton('thumbsDown', 'Thumbs Down');
-      this.movieService.rateMovie(movie.id, 'thumbsDown');
-    }
-  }
-
-  onDidntSee(): void {
-    const movie = this.currentMovie();
-    if (movie) {
-      this.animateButton('didntSee', "Haven't Seen");
-      this.movieService.markAsDidntSee(movie.id);
-    }
-  }
-
-  onAddToList(): void {
-    const movie = this.currentMovie();
-    if (movie) {
-      this.animateButton('addToList', 'Saved for Later');
-      this.movieService.addToList(movie.id);
-    }
-  }
-
-  private animateButton(buttonId: string, text: string): void {
-    // Pulse animation
-    this.activePulse = buttonId;
-    setTimeout(() => {
-      this.activePulse = null;
-    }, 600);
-
-    // Floating text animation
-    const floatingId = this.floatingTextId++;
-    this.floatingTexts.push({ id: floatingId, text });
-    setTimeout(() => {
-      this.floatingTexts = this.floatingTexts.filter((t) => t.id !== floatingId);
-    }, 1500);
   }
 
   openMovieLink(): void {
@@ -137,13 +67,6 @@ export class MoviesPage {
 
   onReset(): void {
     this.movieService.resetMovies();
-  }
-
-  trackByFloatingText(
-    _index: number,
-    item: { id: number; text: string }
-  ): number {
-    return item.id;
   }
 
   goToActorMovies(actorId: number): void {

@@ -7,18 +7,15 @@ import {
   IonTitle,
   IonToolbar,
   IonButton,
-  IonImg,
   IonBadge,
-  IonIcon,
   IonBackButton,
   IonButtons,
-  IonCardHeader,
-  IonCardTitle,
-  IonCardSubtitle,
+  IonIcon,
 } from '@ionic/angular/standalone';
 import { Movie, MovieService } from '../services/movie.service';
 import { openOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
+import { MovieFooterComponent } from '../movie-footer/movie-footer.component';
 
 @Component({
   selector: 'app-movie-details',
@@ -33,9 +30,10 @@ import { addIcons } from 'ionicons';
     IonToolbar,
     IonButton,
     IonBadge,
-    IonIcon,
     IonBackButton,
     IonButtons,
+    IonIcon,
+    MovieFooterComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -1,5 +1,9 @@
 - Avoid creating css or inline styles, css variables in theme/variables.css instead 
-- Always use built in control flow rather than directives like *ngFor
+- Always use built in control flow rather than directives like *ngFor, *ngIf, etc
 - Implement push change detection with components
-- Use signal inputs and signals in general and avoid using rxjs
+- Use signal inputs and signals in general
+- Do not use @Input()
+- Avoid using rxjs
 - use fetch rather than use httpclient
+- Create components strategically to keep pages simple
+- Always call `npm run build` to verify no build errors were created

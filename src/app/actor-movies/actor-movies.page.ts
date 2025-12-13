@@ -14,9 +14,6 @@ import {
   IonButton,
   IonImg,
   IonBadge,
-  IonGrid,
-  IonRow,
-  IonCol,
   IonIcon,
   IonSpinner,
   IonBackButton,
@@ -25,6 +22,7 @@ import {
 import { MovieService, Movie, Actor } from '../services/movie.service';
 import { starOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
+import { MovieFooterComponent } from '../movie-footer/movie-footer.component';
 
 @Component({
   selector: 'app-actor-movies',
@@ -48,6 +46,7 @@ import { addIcons } from 'ionicons';
     IonSpinner,
     IonBackButton,
     IonButtons,
+    MovieFooterComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -57,6 +56,7 @@ export class ActorMoviesPage {
   isLoading = signal(true);
   actorId: number | null = null;
   starOutline = starOutline;
+  selectedMovieId = signal<number | null>(null);
 
   constructor(
     private movieService: MovieService,
@@ -98,6 +98,7 @@ export class ActorMoviesPage {
   }
 
   goToMovieDetails(movie: Movie): void {
+    this.selectedMovieId.set(movie.id);
     this.movieService.setSelectedMovie(movie);
     this.router.navigate(['/movie-details'], {
       state: { movie },

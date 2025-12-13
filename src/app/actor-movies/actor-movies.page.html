@@ -64,3 +64,6 @@
       <ion-button (click)="goBack()">Go Back</ion-button>
     </div>
   }
+</ion-content>
+
+<app-movie-footer [movieId]="selectedMovieId()" [showFooter]="!!selectedMovieId()"></app-movie-footer>

@@ -103,4 +103,35 @@
   --gap-avatars: 16px;
   --gap-grid-desktop: 12px;
   --gap-grid-mobile: 10px;
+
+  // ========================================
+  // FAB BUTTON STYLES
+  // ========================================
+  --fab-button-padding-start: 0;
+  --fab-button-padding-end: 0;
+  --fab-button-border-radius: 50%;
+  --fab-button-box-shadow: none;
+  --fab-button-background: transparent;
+  --fab-button-background-activated: transparent;
+  --fab-button-background-focused: transparent;
+  --fab-button-background-hover: transparent;
+  --fab-button-color: currentColor;
+
+  // ========================================
+  // FOOTER STYLES
+  // ========================================
+  --footer-padding: 16px 0;
+  --footer-margin-top: 20px;
+  --footer-background: transparent;
+  --footer-buttons-z-index: 10;
+  --footer-buttons-transform: translateY(-50%);
+
+  // ========================================
+  // FLOATING TEXT STYLES
+  // ========================================
+  --floating-text-bottom: 80px;
+  --floating-text-font-size: var(--font-size-lg);
+  --floating-text-font-weight: var(--font-weight-bold);
+  --floating-text-color: var(--color-white);
+  --floating-text-background: var(--color-black);
 }
