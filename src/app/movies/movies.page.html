@@ -5,86 +5,92 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <div *ngIf="isLoading" class="loading-container">
-    <ion-spinner></ion-spinner>
-  </div>
+  @if (isLoading()) {
+    <div class="loading-container">
+      <ion-spinner></ion-spinner>
+    </div>
+  }
 
-  <div *ngIf="!isLoading && currentMovie" class="movie-container">
-    <ion-card>
-      <ion-img
-        [src]="currentMovie.image"
-        [alt]="currentMovie.title"
-        class="movie-image"
-      ></ion-img>
+  @if (!isLoading() && currentMovie()) {
+    <div class="movie-container">
+      <ion-card>
+        <ion-img
+          [src]="currentMovie()!.image"
+          [alt]="currentMovie()!.title"
+          class="movie-image"
+        ></ion-img>
 
-      <ion-card-header>
-        <ion-card-title class="movie-title">{{ currentMovie.title }}</ion-card-title>
-        <ion-card-subtitle class="movie-subtitle">
-          <ion-badge color="primary">{{ currentMovie.year }}</ion-badge>
-          <ion-badge color="warning" class="rating-badge">
-            ⭐ {{ currentMovie.rating.toFixed(1) }}
-          </ion-badge>
-        </ion-card-subtitle>
-      </ion-card-header>
+        <ion-card-header>
+          <ion-card-title class="movie-title">{{ currentMovie()!.title }}</ion-card-title>
+          <ion-card-subtitle class="movie-subtitle">
+            <ion-badge color="primary">{{ currentMovie()!.year }}</ion-badge>
+            <ion-badge color="warning" class="rating-badge">
+              ⭐ {{ currentMovie()!.rating.toFixed(1) }}
+            </ion-badge>
+          </ion-card-subtitle>
+        </ion-card-header>
 
-      <ion-card-content>
-        <p class="description">{{ currentMovie.description }}</p>
+        <ion-card-content>
+          <p class="description">{{ currentMovie()!.description }}</p>
 
-        <div class="actors-section">
-          <ion-label>
-            <strong>Cast:</strong>
-          </ion-label>
-          <div class="cast-avatars">
-            @for (actor of currentMovie.actors; let i = $index; track i) {
-              <div
-                class="avatar-container"
-                (click)="goToActorMovies(currentMovie.actorIds[i])"
-              >
-                @if (currentMovie.actorImages[i]) {
-                  <img
-                    [src]="currentMovie.actorImages[i]"
-                    [alt]="actor"
-                    class="actor-avatar"
-                  />
-                } @else {
-                  <div class="actor-avatar placeholder">
-                    {{ actor.charAt(0) }}
-                  </div>
-                }
-                <p class="actor-name">{{ actor }}</p>
-              </div>
-            }
+          <div class="actors-section">
+            <ion-label>
+              <strong>Cast:</strong>
+            </ion-label>
+            <div class="cast-avatars">
+              @for (actor of currentMovie()!.actors; let i = $index; track i) {
+                <div
+                  class="avatar-container"
+                  (click)="goToActorMovies(currentMovie()!.actorIds[i])"
+                >
+                  @if (currentMovie()!.actorImages[i]) {
+                    <img
+                      [src]="currentMovie()!.actorImages[i]"
+                      [alt]="actor"
+                      class="actor-avatar"
+                    />
+                  } @else {
+                    <div class="actor-avatar placeholder">
+                      {{ actor.charAt(0) }}
+                    </div>
+                  }
+                  <p class="actor-name">{{ actor }}</p>
+                </div>
+              }
+            </div>
           </div>
-        </div>
-      </ion-card-content>
+        </ion-card-content>
 
+        <ion-button
+          expand="full"
+          fill="solid"
+          color="primary"
+          (click)="openMovieLink()"
+          class="link-button"
+        >
+          View on IMDb
+        </ion-button>
+      </ion-card>
+    </div>
+  }
+
+  @if (!isLoading() && !currentMovie()) {
+    <div class="no-movies">
+      <h2>All movies rated!</h2>
+      <p>You've gone through all the movies. Great job!</p>
       <ion-button
         expand="full"
-        fill="solid"
         color="primary"
-        (click)="openMovieLink()"
-        class="link-button"
+        (click)="onReset()"
+        class="reset-button"
       >
-        View on IMDb
+        Start Over
       </ion-button>
-    </ion-card>
-  </div>
-
-  <div *ngIf="!isLoading && !currentMovie" class="no-movies">
-    <h2>All movies rated!</h2>
-    <p>You've gone through all the movies. Great job!</p>
-    <ion-button
-      expand="full"
-      color="primary"
-      (click)="onReset()"
-      class="reset-button"
-    >
-      Start Over
-    </ion-button>
-  </div>
+    </div>
+  }
 </ion-content>
 
-<ion-footer *ngIf="!isLoading && currentMovie" class="footer-container">
+<ion-footer *ngIf="!isLoading() && currentMovie()" class="footer-container">
   <div class="fab-buttons-container">
     <ion-button
       color="success"

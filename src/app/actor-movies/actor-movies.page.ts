@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import {
@@ -49,11 +49,12 @@ import { addIcons } from 'ionicons';
     IonBackButton,
     IonButtons,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ActorMoviesPage implements OnInit {
-  actor: Actor | null = null;
-  movies: Movie[] = [];
-  isLoading = true;
+export class ActorMoviesPage {
+  actor = signal<Actor | null>(null);
+  movies = signal<Movie[]>([]);
+  isLoading = signal(true);
   actorId: number | null = null;
   starOutline = starOutline;
 
@@ -74,17 +75,18 @@ export class ActorMoviesPage implements OnInit {
     });
   }
 
-  private loadActorData(): void {
+  private async loadActorData(): Promise<void> {
     if (!this.actorId) return;
 
-    this.movieService.getActor(this.actorId).subscribe((actor) => {
-      this.actor = actor;
-    });
+    try {
+      const actor = await this.movieService.getActor(this.actorId);
+      this.actor.set(actor);
 
-    this.movieService.getActorMovies(this.actorId).subscribe((movies) => {
-      this.movies = movies;
-      this.isLoading = false;
-    });
+      const actorMovies = await this.movieService.getActorMovies(this.actorId);
+      this.movies.set(actorMovies);
+    } finally {
+      this.isLoading.set(false);
+    }
   }
 
   goBack(): void {

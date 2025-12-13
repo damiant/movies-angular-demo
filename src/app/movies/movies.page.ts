@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import {
@@ -55,13 +55,12 @@ import { addIcons } from 'ionicons';
     IonIcon,
     IonSpinner,
     IonFooter,
-    IonButtons,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MoviesPage implements OnInit {
-  currentMovie: Movie | null = null;
-  movies: Movie[] = [];
-  isLoading = true;
+export class MoviesPage {
+  currentMovie = this.movieService.currentMovie;
+  isLoading = signal(false);
   thumbsUpOutline = thumbsUpOutline;
   thumbsDownOutline = thumbsDownOutline;
   eyeOffOutline = eyeOffOutline;
@@ -78,40 +77,39 @@ export class MoviesPage implements OnInit {
       eyeOffOutline,
       bookmarkOutline,
     });
-  }
-
-  ngOnInit() {
-    this.movieService.getCurrentMovie().subscribe((movie) => {
-      this.currentMovie = movie;
-      this.isLoading = false;
-    });
+    this.isLoading.set(true);
+    setTimeout(() => this.isLoading.set(false), 500);
   }
 
   onThumbsUp(): void {
-    if (this.currentMovie) {
+    const movie = this.currentMovie();
+    if (movie) {
       this.animateButton('thumbsUp', 'Thumbs Up');
-      this.movieService.rateMovie(this.currentMovie.id, 'thumbsUp');
+      this.movieService.rateMovie(movie.id, 'thumbsUp');
     }
   }
 
   onThumbsDown(): void {
-    if (this.currentMovie) {
+    const movie = this.currentMovie();
+    if (movie) {
       this.animateButton('thumbsDown', 'Thumbs Down');
-      this.movieService.rateMovie(this.currentMovie.id, 'thumbsDown');
+      this.movieService.rateMovie(movie.id, 'thumbsDown');
     }
   }
 
   onDidntSee(): void {
-    if (this.currentMovie) {
+    const movie = this.currentMovie();
+    if (movie) {
       this.animateButton('didntSee', "Haven't Seen");
-      this.movieService.markAsDidntSee(this.currentMovie.id);
+      this.movieService.markAsDidntSee(movie.id);
     }
   }
 
   onAddToList(): void {
-    if (this.currentMovie) {
+    const movie = this.currentMovie();
+    if (movie) {
       this.animateButton('addToList', 'Saved for Later');
-      this.movieService.addToList(this.currentMovie.id);
+      this.movieService.addToList(movie.id);
     }
   }
 
@@ -131,8 +129,9 @@ export class MoviesPage implements OnInit {
   }
 
   openMovieLink(): void {
-    if (this.currentMovie?.link) {
-      window.open(this.currentMovie.link, '_blank');
+    const movie = this.currentMovie();
+    if (movie?.link) {
+      window.open(movie.link, '_blank');
     }
   }
 

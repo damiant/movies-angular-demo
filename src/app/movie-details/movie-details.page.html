@@ -3,39 +3,39 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/movies"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ movie?.title || 'Movie' }}</ion-title>
+    <ion-title>{{ movie()?.title || 'Movie' }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  @if (movie) {
+  @if (movie()) {
     <div class="movie-details-container">
-      <img [src]="movie.image" [alt]="movie.title" class="movie-poster" />
+      <img [src]="movie()!.image" [alt]="movie()!.title" class="movie-poster" />
 
       <div class="movie-info">
-        <h1 class="movie-title">{{ movie.title }}</h1>
+        <h1 class="movie-title">{{ movie()!.title }}</h1>
 
         <div class="movie-meta">
-          <span class="year">{{ movie.year }}</span>
-          @if (movie.rating) {
+          <span class="year">{{ movie()!.year }}</span>
+          @if (movie()!.rating) {
             <ion-badge color="warning" class="rating">
-              {{ (movie.rating / 2).toFixed(1) }}/5
+              {{ (movie()!.rating / 2).toFixed(1) }}/5
             </ion-badge>
           }
         </div>
 
         <div class="description-section">
-          <p class="movie-description">{{ movie.description }}</p>
+          <p class="movie-description">{{ movie()!.description }}</p>
         </div>
 
-        @if (movie.actors && movie.actors.length > 0) {
+        @if (movie()!.actors && movie()!.actors.length > 0) {
           <div class="cast-section">
             <h3>Cast</h3>
             <div class="cast-list">
-              @for (actor of movie.actors; let i = $index; track i) {
+              @for (actor of movie()!.actors; let i = $index; track i) {
                 <div class="cast-item">
-                  @if (movie.actorImages[i]) {
-                    <img [src]="movie.actorImages[i]" [alt]="actor" class="actor-avatar" />
+                  @if (movie()!.actorImages[i]) {
+                    <img [src]="movie()!.actorImages[i]" [alt]="actor" class="actor-avatar" />
                   } @else {
                     <div class="actor-avatar placeholder">
                       {{ actor.charAt(0) }}

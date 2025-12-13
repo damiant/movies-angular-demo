@@ -1,8 +1,6 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Injectable, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 
 export interface Movie {
   id: number;
@@ -51,73 +49,71 @@ export class MovieService {
   private readonly BASE_URL = 'https://api.themoviedb.org/3';
   private readonly IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
 
-  private currentMovieIndex = 0;
-  private movies: Movie[] = [];
-  private userRatings: Map<number, UserMovieRating> = new Map();
-  private currentMovie$ = new BehaviorSubject<Movie | null>(null);
-  private userMoviesList$ = new BehaviorSubject<Movie[]>([]);
-  private isLoaded = false;
+  private movies = signal<Movie[]>([]);
+  private currentMovieIndex = signal(0);
+  private userRatings = signal<Map<number, UserMovieRating>>(new Map());
+  private isLoaded = signal(false);
+  private userMoviesList = signal<Movie[]>([]);
+
+  currentMovie = computed(() => {
+    const movies = this.movies();
+    const index = this.currentMovieIndex();
+    return index < movies.length ? movies[index] : null;
+  });
 
   constructor(private http: HttpClient) {
     this.loadMovies();
   }
 
-  private loadMovies(): void {
-    // Fetch popular movies from TMDB
-    this.http
-      .get<{ results: TMDbMovie[] }>(
-        `${this.BASE_URL}/movie/popular?api_key=${this.API_KEY}&language=en-US&page=1`
-      )
-      .subscribe({
-        next: (response) => {
-          this.processMovies(response.results);
-        },
-        error: (error) => {
-          console.error('Error loading movies from TMDB:', error);
-          this.loadFallbackMovies();
-        },
-      });
+  private async loadMovies(): Promise<void> {
+    try {
+      const response = await lastValueFrom(
+        this.http.get<{ results: TMDbMovie[] }>(
+          `${this.BASE_URL}/movie/popular?api_key=${this.API_KEY}&language=en-US&page=1`
+        )
+      );
+      await this.processMovies(response.results);
+    } catch (error) {
+      console.error('Error loading movies from TMDB:', error);
+      this.loadFallbackMovies();
+    }
   }
 
-  private processMovies(tmdbMovies: TMDbMovie[]): void {
+  private async processMovies(tmdbMovies: TMDbMovie[]): Promise<void> {
     const moviePromises = tmdbMovies.slice(0, 20).map((tmdbMovie) =>
       this.enrichMovieWithCredits(tmdbMovie)
-        .pipe(
-          catchError(() =>
-            of(this.createMovieFromTMDb(tmdbMovie, [], []))
-          )
-        )
-        .toPromise()
     );
 
-    Promise.all(moviePromises).then((enrichedMovies) => {
-      this.movies = enrichedMovies.filter(
-        (movie): movie is Movie => movie !== null
-      );
+    try {
+      const enrichedMovies = await Promise.all(moviePromises);
+      this.movies.set(enrichedMovies.filter((movie): movie is Movie => movie !== null));
       this.initializeRatings();
-      this.currentMovie$.next(this.movies[0] || null);
-      this.isLoaded = true;
-    });
+      this.isLoaded.set(true);
+    } catch (error) {
+      console.error('Error processing movies:', error);
+      this.loadFallbackMovies();
+    }
   }
 
-  private enrichMovieWithCredits(tmdbMovie: TMDbMovie): Observable<Movie> {
-    return this.http
-      .get<TMDbCredits>(
-        `${this.BASE_URL}/movie/${tmdbMovie.id}/credits?api_key=${this.API_KEY}`
-      )
-      .pipe(
-        map((credits) => {
-          const topCast = credits.cast.slice(0, 3);
-          const actors = topCast.map((actor) => actor.name);
-          const actorIds = topCast.map((actor) => actor.id);
-          const actorImages = topCast.map((actor) =>
-            actor.profile_path
-              ? `${this.IMAGE_BASE_URL}${actor.profile_path}`
-              : 'https://via.placeholder.com/150x150?text=No+Image'
-          );
-          return this.createMovieFromTMDb(tmdbMovie, actors, actorImages, actorIds);
-        })
+  private async enrichMovieWithCredits(tmdbMovie: TMDbMovie): Promise<Movie> {
+    try {
+      const credits = await lastValueFrom(
+        this.http.get<TMDbCredits>(
+          `${this.BASE_URL}/movie/${tmdbMovie.id}/credits?api_key=${this.API_KEY}`
+        )
       );
+      const topCast = credits.cast.slice(0, 3);
+      const actors = topCast.map((actor) => actor.name);
+      const actorIds = topCast.map((actor) => actor.id);
+      const actorImages = topCast.map((actor) =>
+        actor.profile_path
+          ? `${this.IMAGE_BASE_URL}${actor.profile_path}`
+          : 'https://via.placeholder.com/150x150?text=No+Image'
+      );
+      return this.createMovieFromTMDb(tmdbMovie, actors, actorImages, actorIds);
+    } catch {
+      return this.createMovieFromTMDb(tmdbMovie, [], [], []);
+    }
   }
 
   private createMovieFromTMDb(tmdbMovie: TMDbMovie, actors: string[], actorImages: string[], actorIds: number[] = []): Movie {
@@ -179,32 +175,26 @@ export class MovieService {
       },
     ];
 
-    this.movies = fallbackMovies;
+    this.movies.set(fallbackMovies);
     this.initializeRatings();
-    this.currentMovie$.next(this.movies[0] || null);
-    this.isLoaded = true;
+    this.isLoaded.set(true);
   }
 
   private initializeRatings(): void {
-    this.movies.forEach((movie) => {
-      this.userRatings.set(movie.id, {
+    const ratingsMap = new Map<number, UserMovieRating>();
+    this.movies().forEach((movie) => {
+      ratingsMap.set(movie.id, {
         movieId: movie.id,
         rating: null,
         addedToList: false,
       });
     });
-  }
-
-  getCurrentMovie(): Observable<Movie | null> {
-    return this.currentMovie$.asObservable();
-  }
-
-  getUserMoviesList(): Observable<Movie[]> {
-    return this.userMoviesList$.asObservable();
+    this.userRatings.set(ratingsMap);
   }
 
   rateMovie(movieId: number, rating: 'thumbsUp' | 'thumbsDown'): void {
-    const userRating = this.userRatings.get(movieId);
+    const ratingsMap = this.userRatings();
+    const userRating = ratingsMap.get(movieId);
     if (userRating) {
       userRating.rating = rating;
     }
@@ -212,7 +202,8 @@ export class MovieService {
   }
 
   markAsDidntSee(movieId: number): void {
-    const userRating = this.userRatings.get(movieId);
+    const ratingsMap = this.userRatings();
+    const userRating = ratingsMap.get(movieId);
     if (userRating) {
       userRating.rating = 'didntSee';
     }
@@ -220,87 +211,92 @@ export class MovieService {
   }
 
   addToList(movieId: number): void {
-    const userRating = this.userRatings.get(movieId);
+    const ratingsMap = this.userRatings();
+    const userRating = ratingsMap.get(movieId);
     if (userRating) {
       userRating.addedToList = true;
-      const movie = this.movies.find((m) => m.id === movieId);
+      const movie = this.movies().find((m) => m.id === movieId);
       if (movie) {
-        const currentList = this.userMoviesList$.value;
+        const currentList = this.userMoviesList();
         if (!currentList.find((m) => m.id === movieId)) {
-          this.userMoviesList$.next([...currentList, movie]);
+          this.userMoviesList.set([...currentList, movie]);
         }
       }
     }
   }
 
   nextMovie(): void {
-    this.currentMovieIndex++;
-    if (this.currentMovieIndex < this.movies.length) {
-      this.currentMovie$.next(this.movies[this.currentMovieIndex]);
-    } else {
-      this.currentMovie$.next(null);
-    }
+    const nextIndex = this.currentMovieIndex() + 1;
+    this.currentMovieIndex.set(nextIndex);
   }
 
   resetMovies(): void {
-    this.currentMovieIndex = 0;
-    this.userRatings.clear();
-    this.userMoviesList$.next([]);
+    this.currentMovieIndex.set(0);
+    this.userRatings.set(new Map());
+    this.userMoviesList.set([]);
     this.initializeRatings();
-    this.currentMovie$.next(this.movies[0] || null);
   }
 
   getUserRatings(): Map<number, UserMovieRating> {
-    return this.userRatings;
+    return this.userRatings();
   }
 
-  getActorMovies(actorId: number): Observable<Movie[]> {
-    return this.http
-      .get<{
-        cast: Array<{
-          id: number;
-          title: string;
-          poster_path: string;
-          overview: string;
-          release_date: string;
-          vote_average: number;
-        }>;
-      }>(
-        `${this.BASE_URL}/person/${actorId}/movie_credits?api_key=${this.API_KEY}`
-      )
-      .pipe(
-        map((response) => {
-          return response.cast
-            .filter((movie) => movie.poster_path)
-            .slice(0, 10)
-            .map((tmdbMovie) => this.createMovieFromTMDb(tmdbMovie as TMDbMovie, [], [], []));
-        }),
-        catchError(() => of([]))
-      );
+  getUserMoviesList() {
+    return this.userMoviesList;
   }
 
-  getActor(actorId: number): Observable<Actor | null> {
-    return this.http
-      .get<{ id: number; name: string; profile_path: string | null }>(
-        `${this.BASE_URL}/person/${actorId}?api_key=${this.API_KEY}`
-      )
-      .pipe(
-        map((response) => ({
-          id: response.id,
-          name: response.name,
-          profileImage: response.profile_path
-            ? `${this.IMAGE_BASE_URL}${response.profile_path}`
-            : 'https://via.placeholder.com/300x450?text=No+Image',
-        })),
-        catchError(() => of(null))
+  async getActorMovies(actorId: number): Promise<Movie[]> {
+    try {
+      const response = await lastValueFrom(
+        this.http.get<{
+          cast: Array<{
+            id: number;
+            title: string;
+            poster_path: string;
+            overview: string;
+            release_date: string;
+            vote_average: number;
+          }>;
+        }>(
+          `${this.BASE_URL}/person/${actorId}/movie_credits?api_key=${this.API_KEY}`
+        )
       );
+      return response.cast
+        .filter((movie) => movie.poster_path)
+        .slice(0, 10)
+        .map((tmdbMovie) => this.createMovieFromTMDb(tmdbMovie as TMDbMovie, [], [], []));
+    } catch {
+      return [];
+    }
+  }
+
+  async getActor(actorId: number): Promise<Actor | null> {
+    try {
+      const response = await lastValueFrom(
+        this.http.get<{ id: number; name: string; profile_path: string | null }>(
+          `${this.BASE_URL}/person/${actorId}?api_key=${this.API_KEY}`
+        )
+      );
+      return {
+        id: response.id,
+        name: response.name,
+        profileImage: response.profile_path
+          ? `${this.IMAGE_BASE_URL}${response.profile_path}`
+          : 'https://via.placeholder.com/300x450?text=No+Image',
+      };
+    } catch {
+      return null;
+    }
   }
 
   setSelectedMovie(movie: Movie): void {
-    this.currentMovie$.next(movie);
+    // Store selected movie for navigation
+    this.selectedMovie.set(movie);
   }
 
-  getSelectedMovie(): Observable<Movie | null> {
-    return this.currentMovie$.asObservable();
+  private selectedMovie = signal<Movie | null>(null);
+
+  getSelectedMovie() {
+    return this.selectedMovie;
   }
 }

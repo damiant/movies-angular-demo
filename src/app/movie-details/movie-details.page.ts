@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import {
@@ -32,18 +32,15 @@ import { addIcons } from 'ionicons';
     IonTitle,
     IonToolbar,
     IonButton,
-    IonImg,
     IonBadge,
     IonIcon,
     IonBackButton,
     IonButtons,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardSubtitle,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MovieDetailsPage implements OnInit {
-  movie: Movie | null = null;
+export class MovieDetailsPage {
+  movie = this.movieService.getSelectedMovie();
   openOutline = openOutline;
 
   constructor(
@@ -54,25 +51,10 @@ export class MovieDetailsPage implements OnInit {
     addIcons({ openOutline });
   }
 
-  ngOnInit(): void {
-    // Try to get movie from service first
-    this.movieService.getSelectedMovie().subscribe((movie) => {
-      if (movie) {
-        this.movie = movie;
-        return;
-      }
-
-      // Fallback: try to get from navigation state
-      const navigation = this.router.getCurrentNavigation();
-      if (navigation?.extras?.state?.['movie']) {
-        this.movie = navigation.extras.state['movie'];
-      }
-    });
-  }
-
   openMovieLink(): void {
-    if (this.movie?.link) {
-      window.open(this.movie.link, '_blank');
+    const selectedMovie = this.movie();
+    if (selectedMovie?.link) {
+      window.open(selectedMovie.link, '_blank');
     }
   }
 }
