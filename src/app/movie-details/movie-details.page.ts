@@ -1,5 +1,4 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import {
   IonContent,
@@ -12,7 +11,7 @@ import {
   IonButtons,
   IonIcon,
 } from '@ionic/angular/standalone';
-import { Movie, MovieService } from '../services/movie.service';
+import { MovieService } from '../services/movie.service';
 import { openOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { MovieFooterComponent } from '../movie-footer/movie-footer.component';
@@ -41,11 +40,7 @@ export class MovieDetailsPage {
   movie = this.movieService.getSelectedMovie();
   openOutline = openOutline;
 
-  constructor(
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private movieService: MovieService
-  ) {
+  constructor(private movieService: MovieService) {
     addIcons({ openOutline });
   }
 

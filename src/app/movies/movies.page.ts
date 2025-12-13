@@ -15,11 +15,9 @@ import {
   IonImg,
   IonBadge,
   IonLabel,
-  IonIcon,
   IonSpinner,
-  IonButtons,
 } from '@ionic/angular/standalone';
-import { MovieService, Movie } from '../services/movie.service';
+import { MovieService } from '../services/movie.service';
 import { addIcons } from 'ionicons';
 import { MovieFooterComponent } from '../movie-footer/movie-footer.component';
 

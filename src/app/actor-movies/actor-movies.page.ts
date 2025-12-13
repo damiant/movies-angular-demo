@@ -14,7 +14,6 @@ import {
   IonButton,
   IonImg,
   IonBadge,
-  IonIcon,
   IonSpinner,
   IonBackButton,
   IonButtons,
