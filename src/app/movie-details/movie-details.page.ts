@@ -14,6 +14,7 @@ import {
   IonModal,
 } from '@ionic/angular/standalone';
 import { MovieService } from '../services/movie.service';
+import { CelebrationService } from '../services/celebration.service';
 import { openOutline, playCircle, closeOutline, star, starOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { MovieFooterComponent } from '../movie-footer/movie-footer.component';
@@ -53,7 +54,7 @@ export class MovieDetailsPage {
   star = star;
   starOutline = starOutline;
 
-  constructor(private movieService: MovieService, private router: Router) {
+  constructor(private movieService: MovieService, private router: Router, private celebrationService: CelebrationService) {
     addIcons({ openOutline, playCircle, closeOutline, star, starOutline });
   }
 
@@ -82,8 +83,13 @@ export class MovieDetailsPage {
   toggleFavorite(): void {
     const movieId = this.movie()?.id;
     if (movieId) {
+      const wasAlreadySaved = this.isSavedForLater();
       this.movieService.toggleSaveForLater(movieId);
-      this.isSavedForLater.set(!this.isSavedForLater());
+      const isNowSaved = !wasAlreadySaved;
+      this.isSavedForLater.set(isNowSaved);
+      if (isNowSaved) {
+        this.celebrationService.celebrate();
+      }
     }
   }
 }
