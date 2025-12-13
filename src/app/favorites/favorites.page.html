@@ -21,7 +21,7 @@
                 <ion-badge color="primary">{{ movie.year }}</ion-badge>
                 @if (movie.rating) {
                   <ion-badge color="warning">
-                    <ion-icon [icon]="star" style="width: 14px; height: 14px; margin-right: 2px;"></ion-icon>
+                    <ion-icon [icon]="star" class="rating-icon"></ion-icon>
                     {{ (movie.rating / 2).toFixed(1) }}
                   </ion-badge>
                 }

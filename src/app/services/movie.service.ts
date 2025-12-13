@@ -84,7 +84,6 @@ export class MovieService {
       const data = await response.json() as { results: TMDbMovie[] };
       await this.processMovies(data.results);
     } catch (error) {
-      console.error('Error loading movies from TMDB:', error);
       this.movies.set([]);
       this.isLoaded.set(true);
     }
@@ -101,7 +100,6 @@ export class MovieService {
       this.initializeRatings();
       this.isLoaded.set(true);
     } catch (error) {
-      console.error('Error processing movies:', error);
       this.movies.set([]);
       this.isLoaded.set(true);
     }
@@ -132,7 +130,6 @@ export class MovieService {
       let trailerUrl: string | undefined;
       if (videosResponse.ok) {
         const videos = await videosResponse.json() as TMDbVideoResult;
-        console.log(`Movies/Trailers for ${tmdbMovie.title}:`, videos.results.map((v) => ({ type: v.type, official: v.official })));
         // First try to find official English trailer
         let trailer = videos.results.find(
           (v) => v.type === 'Trailer' && v.official && (v.iso_639_1 === 'en' || !v.iso_639_1)
@@ -147,17 +144,11 @@ export class MovieService {
         }
         if (trailer) {
           trailerUrl = `https://www.youtube.com/embed/${trailer.key}`;
-          console.log('Found trailer for', tmdbMovie.title, ':', trailerUrl);
-        } else {
-          console.log('No trailer found for', tmdbMovie.title, 'Available:', videos.results.length > 0 ? videos.results.map((v) => v.type).slice(0, 5) : 'none');
         }
-      } else {
-        console.log('Video API response not ok for', tmdbMovie.title, 'Status:', videosResponse.status);
       }
 
       return this.createMovieFromTMDb(tmdbMovie, actors, actorImages, actorIds, trailerUrl);
     } catch (error) {
-      console.error('Error enriching movie:', error);
       return this.createMovieFromTMDb(tmdbMovie, [], [], []);
     }
   }
@@ -262,17 +253,20 @@ export class MovieService {
           vote_average: number;
         }>;
       };
+      
+
       const moviesWithPosters = data.cast
         .filter((movie) => movie.poster_path && movie.release_date)
-        .sort((a, b) => new Date(b.release_date).getTime() - new Date(a.release_date).getTime())
-        .slice(0, 10);
+        .sort((a, b) => new Date(b.release_date).getTime() - new Date(a.release_date).getTime());
       
       const moviePromises = moviesWithPosters.map((tmdbMovie) =>
         this.enrichMovieWithCredits(tmdbMovie as TMDbMovie)
       );
       
-      return await Promise.all(moviePromises);
-    } catch {
+      const enrichedMovies = await Promise.all(moviePromises);
+      
+      return enrichedMovies;
+    } catch (error) {
       return [];
     }
   }
@@ -317,7 +311,7 @@ export class MovieService {
     try {
       localStorage.setItem('savedMovies', JSON.stringify(Array.from(this.savedMovies())));
     } catch {
-      console.error('Failed to save to localStorage');
+      // Silently fail if storage is unavailable
     }
   }
 
