@@ -9,7 +9,6 @@ import {
   IonSpinner,
   IonMenuButton,
   IonButtons,
-  IonButton,
 } from '@ionic/angular/standalone';
 import { MovieService } from '../services/movie.service';
 import { addIcons } from 'ionicons';
@@ -30,7 +29,6 @@ import { MovieCardLargeComponent } from '../components/movie-card-large/movie-ca
     IonSpinner,
     IonMenuButton,
     IonButtons,
-    IonButton,
     MovieFooterComponent,
     MovieCardLargeComponent,
   ],

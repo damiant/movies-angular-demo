@@ -118,10 +118,10 @@ export class MovieService {
 
       if (!creditsResponse.ok) throw new Error(`HTTP error! status: ${creditsResponse.status}`);
       const credits = await creditsResponse.json() as TMDbCredits;
-      const topCast = credits.cast.slice(0, 3);
-      const actors = topCast.map((actor) => actor.name);
-      const actorIds = topCast.map((actor) => actor.id);
-      const actorImages = topCast.map((actor) =>
+      const cast = credits.cast;
+      const actors = cast.map((actor) => actor.name);
+      const actorIds = cast.map((actor) => actor.id);
+      const actorImages = cast.map((actor) =>
         actor.profile_path
           ? `${this.IMAGE_BASE_URL}${actor.profile_path}`
           : 'https://via.placeholder.com/150x150?text=No+Image'

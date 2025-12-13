@@ -29,6 +29,7 @@ export class MovieCardLargeComponent {
   showTrailerButton = input(false);
   isCompact = input(false);
   reducePadding = input(false);
+  limitActors = input<number | null>(null);
 
   actorClick = output<number>();
   trailerClick = output<void>();
@@ -41,4 +42,24 @@ export class MovieCardLargeComponent {
   constructor() {
     addIcons({ star, playCircle, openOutline });
   }
-}
+
+  getDisplayedActors(): string[] {
+    const movie = this.movie();
+    if (!movie?.actors) return [];
+    const limit = this.limitActors();
+    return limit ? movie.actors.slice(0, limit) : movie.actors;
+  }
+
+  getDisplayedActorIds(): number[] {
+    const movie = this.movie();
+    if (!movie?.actorIds) return [];
+    const limit = this.limitActors();
+    return limit ? movie.actorIds.slice(0, limit) : movie.actorIds;
+  }
+
+  getDisplayedActorImages(): string[] {
+    const movie = this.movie();
+    if (!movie?.actorImages) return [];
+    const limit = this.limitActors();
+    return limit ? movie.actorImages.slice(0, limit) : movie.actorImages;
+  }}

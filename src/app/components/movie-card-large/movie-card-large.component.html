@@ -92,11 +92,11 @@
           <div class="actors-section">
             <strong>Cast</strong>
             <div class="cast-avatars">
-              @for (actor of movie()!.actors; let i = $index; track $index) {
+              @for (actor of getDisplayedActors(); let i = $index; track $index) {
                 <app-actor-card
                   [name]="actor"
-                  [image]="movie()!.actorImages[i]"
-                  (actorClick)="actorClick.emit(movie()!.actorIds[i])"
+                  [image]="getDisplayedActorImages()[i]"
+                  (actorClick)="actorClick.emit(getDisplayedActorIds()[i])"
                 ></app-actor-card>
               }
             </div>

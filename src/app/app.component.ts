@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonApp, IonRouterOutlet, IonMenu, IonContent, IonList, IonListHeader, IonLabel, IonItem, IonIcon, IonHeader, IonToolbar, IonTitle } from '@ionic/angular/standalone';
+import { IonApp, IonRouterOutlet, IonMenu, IonContent, IonList, IonLabel, IonItem, IonIcon, IonHeader, IonToolbar, IonTitle } from '@ionic/angular/standalone';
 import { RouterLink } from '@angular/router';
 import { homeOutline, starOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
@@ -7,7 +7,7 @@ import { addIcons } from 'ionicons';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  imports: [IonApp, IonRouterOutlet, IonMenu, IonContent, IonList, IonListHeader, IonLabel, IonItem, IonIcon, IonHeader, IonToolbar, IonTitle, RouterLink],
+  imports: [IonApp, IonRouterOutlet, IonMenu, IonContent, IonList, IonLabel, IonItem, IonIcon, IonHeader, IonToolbar, IonTitle, RouterLink],
 })
 export class AppComponent {
   homeOutline = homeOutline;

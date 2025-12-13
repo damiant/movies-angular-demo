@@ -21,6 +21,7 @@
           [movie]="movie"
           [isCompact]="true"
           [reducePadding]="true"
+          [limitActors]="3"
           (actorClick)="goToActorMovies($event)"
           (imdbClick)="openMovieLink()"
         ></app-movie-card-large>

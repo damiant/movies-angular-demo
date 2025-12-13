@@ -11,13 +11,11 @@ import {
   IonCardHeader,
   IonCardTitle,
   IonCardSubtitle,
-  IonButton,
   IonImg,
   IonBadge,
   IonMenuButton,
   IonButtons,
   IonIcon,
-  IonSpinner,
 } from '@ionic/angular/standalone';
 import { MovieService, Movie } from '../services/movie.service';
 import { star } from 'ionicons/icons';
@@ -40,13 +38,11 @@ import { MovieFooterComponent } from '../movie-footer/movie-footer.component';
     IonCardHeader,
     IonCardTitle,
     IonCardSubtitle,
-    IonButton,
     IonImg,
     IonBadge,
     IonMenuButton,
     IonButtons,
     IonIcon,
-    IonSpinner,
     MovieFooterComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,

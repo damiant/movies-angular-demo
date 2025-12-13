@@ -22,6 +22,10 @@
   color: var(--color-gray-medium);
   text-align: center;
   display: block;
+  width: var(--actor-avatar-size);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
   &.white-text {
     color: #ffffff;
