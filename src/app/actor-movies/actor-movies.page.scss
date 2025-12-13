@@ -103,6 +103,7 @@
 .card-description {
   font-size: var(--font-size-xs);
   color: var(--color-gray-medium);
+  padding-top: var(--spacing-sm);
   margin: 0;
   line-height: var(--line-height-normal);
   display: -webkit-box;
@@ -151,4 +152,12 @@
   .movie-poster {
     height: var(--movie-poster-height-mobile);
   }
+
+  .spacer {
+    padding-top: var( --spacing-lg);
+    padding-bottom: var(--spacing-sm);
+    gap: var(--spacing-sm);
+    display: flex;
+  }
 }
+
