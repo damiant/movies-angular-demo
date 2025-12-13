@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content (ionScroll)="onScroll($event)">
   @if (savedMovies().length > 0) {
     <div class="favorites-container">
       <div class="movies-grid">

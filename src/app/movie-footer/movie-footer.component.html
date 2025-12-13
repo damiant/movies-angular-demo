@@ -1,4 +1,4 @@
-<ion-segment [value]="currentSegment" (ionChange)="onSegmentChange($event)" class="segment-container">
+<ion-segment [value]="currentSegment" (ionChange)="onSegmentChange($event)" class="segment-container" [class.hidden]="isHidden()">
   <ion-segment-button value="movies">
     <ion-label>Movies</ion-label>
   </ion-segment-button>

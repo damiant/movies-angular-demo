@@ -14,6 +14,7 @@ import {
   IonModal,
 } from '@ionic/angular/standalone';
 import { MovieService } from '../services/movie.service';
+import { ScrollService } from '../services/scroll.service';
 import { CelebrationService } from '../services/celebration.service';
 import { openOutline, playCircle, closeOutline, star, starOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
@@ -55,21 +56,28 @@ export class MovieDetailsPage {
   star = star;
   starOutline = starOutline;
 
-  constructor(private movieService: MovieService, private router: Router, private celebrationService: CelebrationService) {
+  constructor(
+    private movieService: MovieService,
+    private router: Router,
+    private celebrationService: CelebrationService,
+    private scrollService: ScrollService
+  ) {
     addIcons({ openOutline, playCircle, closeOutline, star, starOutline });
-    
     // Check if navigating from favorites page
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras?.state?.['fromFavorites']) {
       this.isFromFavorites.set(true);
     }
-    
     effect(() => {
       const movieId = this.movie()?.id;
       if (movieId) {
         this.isSavedForLater.set(this.movieService.isSavedForLater(movieId));
       }
     });
+  }
+
+  onScroll(event: any): void {
+    this.scrollService.setScrollTop(event.detail.scrollTop);
   }
 
   openMovieLink(): void {

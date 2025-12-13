@@ -16,6 +16,7 @@ import {
   IonIcon,
 } from '@ionic/angular/standalone';
 import { MovieService, Movie } from '../services/movie.service';
+import { ScrollService } from '../services/scroll.service';
 import { star } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { PageSpacingComponent } from '../components/page-spacing/page-spacing.component';
@@ -48,7 +49,7 @@ export class FavoritesPage {
   star = star;
   selectedMovieId = signal<number | null>(null);
 
-  constructor(private movieService: MovieService, private router: Router) {
+  constructor(private movieService: MovieService, private router: Router, private scrollService: ScrollService) {
     addIcons({ star });
     this.loadSavedMovies();
 
@@ -75,5 +76,9 @@ export class FavoritesPage {
   openMovieLink(link: string, event: Event): void {
     event.stopPropagation();
     window.open(link, '_blank');
+  }
+
+  onScroll(event: any): void {
+    this.scrollService.setScrollTop(event.detail.scrollTop);
   }
 }

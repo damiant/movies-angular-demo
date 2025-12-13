@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" (ionScroll)="onScroll($event)">
   @if (movie()) {
     <div class="movie-details-container">
       <img [src]="movie()!.image" [alt]="movie()!.title" class="movie-poster" />

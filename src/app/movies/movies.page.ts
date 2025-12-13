@@ -9,6 +9,7 @@ import {
   IonSpinner,
 } from '@ionic/angular/standalone';
 import { MovieService } from '../services/movie.service';
+import { ScrollService } from '../services/scroll.service';
 import { addIcons } from 'ionicons';
 import { MovieCardLargeComponent } from '../components/movie-card-large/movie-card-large.component';
 import { PageSpacingComponent } from '../components/page-spacing/page-spacing.component';
@@ -35,7 +36,7 @@ export class MoviesPage {
   isLoading = signal(false);
   randomMovies = signal<any[]>([]);
 
-  constructor(private movieService: MovieService, private router: Router) {
+  constructor(private movieService: MovieService, private router: Router, private scrollService: ScrollService) {
     addIcons({});
     this.isLoading.set(true);
     setTimeout(() => {
@@ -81,5 +82,9 @@ export class MoviesPage {
 
   isFavorited(movieId: number): boolean {
     return this.movieService.isSavedForLater(movieId);
+  }
+
+  onScroll(event: any): void {
+    this.scrollService.setScrollTop(event.detail.scrollTop);
   }
 }

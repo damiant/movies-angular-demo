@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { IonSegment, IonSegmentButton, IonLabel } from '@ionic/angular/standalone';
 import { MovieService } from '../services/movie.service';
+import { ScrollService } from '../services/scroll.service';
 
 @Component({
   selector: 'app-movie-footer',
@@ -21,8 +22,15 @@ export class MovieFooterComponent {
   currentSegment = 'movies';
   favoritesCount = signal(0);
   isBouncing = signal(false);
+  isHidden = signal(false);
+  private lastScrollPosition = 0;
+  private scrollThreshold = 50;
 
-  constructor(private router: Router, private movieService: MovieService) {
+  constructor(
+    private router: Router,
+    private movieService: MovieService,
+    private scrollService: ScrollService
+  ) {
     const currentUrl = this.router.url.split('/')[1];
     if (currentUrl === 'favorites') {
       this.currentSegment = 'favorites';
@@ -46,6 +54,20 @@ export class MovieFooterComponent {
           this.isBouncing.set(false);
         }, 800);
       }
+    });
+
+    // Listen to scroll events from the scroll service
+    effect(() => {
+      const currentScrollPosition = this.scrollService.scrollTop();
+      if (currentScrollPosition > this.lastScrollPosition + this.scrollThreshold) {
+        // Scrolling down
+        this.isHidden.set(true);
+      } else if (currentScrollPosition < this.lastScrollPosition - this.scrollThreshold) {
+        // Scrolling up
+        this.isHidden.set(false);
+      }
+      
+      this.lastScrollPosition = currentScrollPosition;
     });
   }
 
