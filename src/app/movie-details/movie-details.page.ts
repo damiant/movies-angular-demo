@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import {
   IonContent,
   IonHeader,
@@ -47,7 +48,7 @@ export class MovieDetailsPage {
   playCircle = playCircle;
   closeOutline = closeOutline;
 
-  constructor(private movieService: MovieService) {
+  constructor(private movieService: MovieService, private router: Router) {
     addIcons({ openOutline, playCircle, closeOutline });
   }
 
@@ -64,6 +65,13 @@ export class MovieDetailsPage {
 
   closeTrailerModal(): void {
     this.showTrailerModal.set(false);
+  }
+
+  goToActorMovies(actorId: number): void {
+    if (!actorId) {
+      return;
+    }
+    this.router.navigate(['/actor', actorId]);
   }
 }
 

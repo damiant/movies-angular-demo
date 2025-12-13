@@ -33,16 +33,29 @@
             <h3>Cast</h3>
             <div class="cast-list">
               @for (actor of movie()!.actors; let i = $index; track i) {
-                <div class="cast-item">
-                  @if (movie()!.actorImages[i]) {
-                    <img [src]="movie()!.actorImages[i]" [alt]="actor" class="actor-avatar" />
-                  } @else {
-                    <div class="actor-avatar placeholder">
-                      {{ actor.charAt(0) }}
-                    </div>
-                  }
-                  <span class="actor-name">{{ actor }}</span>
-                </div>
+                @if (movie()!.actorIds && movie()!.actorIds[i]) {
+                  <div class="cast-item clickable" (click)="goToActorMovies(movie()!.actorIds[i])">
+                    @if (movie()!.actorImages[i]) {
+                      <img [src]="movie()!.actorImages[i]" [alt]="actor" class="actor-avatar" />
+                    } @else {
+                      <div class="actor-avatar placeholder">
+                        {{ actor.charAt(0) }}
+                      </div>
+                    }
+                    <span class="actor-name">{{ actor }}</span>
+                  </div>
+                } @else {
+                  <div class="cast-item">
+                    @if (movie()!.actorImages[i]) {
+                      <img [src]="movie()!.actorImages[i]" [alt]="actor" class="actor-avatar" />
+                    } @else {
+                      <div class="actor-avatar placeholder">
+                        {{ actor.charAt(0) }}
+                      </div>
+                    }
+                    <span class="actor-name">{{ actor }}</span>
+                  </div>
+                }
               }
             </div>
           </div>
@@ -54,8 +67,6 @@
               <ion-icon slot="start" [icon]="playCircle"></ion-icon>
               Trailer
             </ion-button>
-          } @else {
-            <p style="font-size: 12px; color: #999; text-align: center;">No trailer available (trailerUrl: {{ movie()!.trailerUrl }})</p>
           }
           <ion-button expand="block" fill="solid" color="primary" (click)="openMovieLink()" class="rounded-button">
             <ion-icon slot="start" [icon]="openOutline"></ion-icon>
