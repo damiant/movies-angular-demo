@@ -5,6 +5,10 @@
   height: 100vh;
 }
 
+ion-content {
+  --background: var(--gradient-dark) !important;
+}
+
 .actor-container {
   padding-bottom: var(--spacing-xl);
 }
