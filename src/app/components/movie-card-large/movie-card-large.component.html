@@ -71,7 +71,7 @@
     </div>
   } @else {
     <!-- Compact display for movies carousel page -->
-    <div class="movie-container">
+    <div class="movie-container" [class.reduce-padding]="reducePadding()">
       <div class="card">
         <img [src]="movie()!.image" [alt]="movie()!.title" class="card-image" />
 

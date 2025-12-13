@@ -14,27 +14,24 @@
     </div>
   }
 
-  @if (!isLoading() && currentMovie()) {
-    <app-movie-card-large
-      [movie]="currentMovie()"
-      [isCompact]="true"
-      (actorClick)="goToActorMovies($event)"
-      (imdbClick)="openMovieLink()"
-    ></app-movie-card-large>
+  @if (!isLoading() && randomMovies().length > 0) {
+    <div class="movies-list">
+      @for (movie of randomMovies(); track movie.id) {
+        <app-movie-card-large
+          [movie]="movie"
+          [isCompact]="true"
+          [reducePadding]="true"
+          (actorClick)="goToActorMovies($event)"
+          (imdbClick)="openMovieLink()"
+        ></app-movie-card-large>
+      }
+    </div>
   }
 
-  @if (!isLoading() && !currentMovie()) {
+  @if (!isLoading() && randomMovies().length === 0) {
     <div class="no-movies">
-      <h2>All movies rated!</h2>
-      <p>You've gone through all the movies. Great job!</p>
-      <ion-button
-        expand="full"
-        color="primary"
-        (click)="onReset()"
-        class="reset-button"
-      >
-        Start Over
-      </ion-button>
+      <h2>No movies available</h2>
+      <p>Unable to load movies.</p>
     </div>
   }
 </ion-content>

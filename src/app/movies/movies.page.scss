@@ -1,5 +1,12 @@
 @import '../styles/common-page.scss';
 
+.movies-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  padding-bottom: var(--spacing-md);
+}
+
 .movie-container {
   max-width: 600px;
   margin: 0 auto;

@@ -149,6 +149,10 @@
   max-width: 600px;
   margin: 0 auto;
   padding-bottom: 80px;
+
+  &.reduce-padding {
+    padding-bottom: var(--spacing-md);
+  }
 }
 
 .card {

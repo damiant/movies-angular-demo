@@ -39,11 +39,21 @@ import { MovieCardLargeComponent } from '../components/movie-card-large/movie-ca
 export class MoviesPage {
   currentMovie = this.movieService.currentMovie;
   isLoading = signal(false);
+  randomMovies = signal<any[]>([]);
 
   constructor(private movieService: MovieService, private router: Router) {
     addIcons({});
     this.isLoading.set(true);
-    setTimeout(() => this.isLoading.set(false), 500);
+    setTimeout(() => {
+      this.loadRandomMovies();
+      this.isLoading.set(false);
+    }, 500);
+  }
+
+  private loadRandomMovies(): void {
+    const allMovies = this.movieService.getMovies();
+    const shuffled = [...allMovies].sort(() => Math.random() - 0.5);
+    this.randomMovies.set(shuffled.slice(0, 5));
   }
 
   openMovieLink(): void {

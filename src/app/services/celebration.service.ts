@@ -4,42 +4,20 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class CelebrationService {
-  private audioContext: AudioContext | null = null;
-
   celebrate(): void {
-    this.playDingSound();
+    this.playSound();
     this.showFireworks();
   }
 
-  private playDingSound(): void {
+  private playSound(): void {
     try {
-      if (!this.audioContext) {
-        this.audioContext = new (window as any).AudioContext();
-      }
-
-      const ctx = this.audioContext;
-      if (!ctx) return;
-
-      const now = ctx.currentTime;
-
-      // Create oscillator for ding sound
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-
-      // Ding sound: higher pitch that decays
-      osc.frequency.setValueAtTime(1200, now);
-      osc.frequency.exponentialRampToValueAtTime(900, now + 0.3);
-
-      gain.gain.setValueAtTime(0.3, now);
-      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
-
-      osc.start(now);
-      osc.stop(now + 0.3);
+      const audio = new Audio('assets/fav.mp3');
+      audio.volume = 0.5;
+      audio.play().catch(() => {
+        // Silently fail if audio playback is not available
+      });
     } catch (error) {
-      // Silently fail if audio context is not available
+      // Silently fail if audio is not available
     }
   }
 

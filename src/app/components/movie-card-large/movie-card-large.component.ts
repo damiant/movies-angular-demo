@@ -28,6 +28,7 @@ export class MovieCardLargeComponent {
   movie = input<Movie | null>(null);
   showTrailerButton = input(false);
   isCompact = input(false);
+  reducePadding = input(false);
 
   actorClick = output<number>();
   trailerClick = output<void>();
