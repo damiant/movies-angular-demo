@@ -25,7 +25,8 @@
           <ion-card-subtitle class="movie-subtitle">
             <ion-badge color="primary">{{ currentMovie()!.year }}</ion-badge>
             <ion-badge color="warning" class="rating-badge">
-              ⭐ {{ currentMovie()!.rating.toFixed(1) }}
+              <ion-icon [icon]="star" style="width: 14px; height: 14px; margin-right: 4px;"></ion-icon>
+              {{ currentMovie()!.rating.toFixed(1) }}
             </ion-badge>
           </ion-card-subtitle>
         </ion-card-header>

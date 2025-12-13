@@ -16,8 +16,10 @@ import {
   IonBadge,
   IonLabel,
   IonSpinner,
+  IonIcon,
 } from '@ionic/angular/standalone';
 import { MovieService } from '../services/movie.service';
+import { star } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { MovieFooterComponent } from '../movie-footer/movie-footer.component';
 
@@ -42,6 +44,7 @@ import { MovieFooterComponent } from '../movie-footer/movie-footer.component';
     IonBadge,
     IonLabel,
     IonSpinner,
+    IonIcon,
     MovieFooterComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -49,9 +52,10 @@ import { MovieFooterComponent } from '../movie-footer/movie-footer.component';
 export class MoviesPage {
   currentMovie = this.movieService.currentMovie;
   isLoading = signal(false);
+  star = star;
 
   constructor(private movieService: MovieService, private router: Router) {
-    addIcons({});
+    addIcons({ star });
     this.isLoading.set(true);
     setTimeout(() => this.isLoading.set(false), 500);
   }

@@ -35,11 +35,22 @@ ion-card {
   gap: 10px;
   margin-top: var(--spacing-xs);
   flex-wrap: wrap;
+  align-items: center;
+}
+
+ion-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
 }
 
 .rating-badge {
   font-size: 14px;
   padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .description {

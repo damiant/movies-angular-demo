@@ -7,7 +7,7 @@ import {
   IonIcon,
 } from '@ionic/angular/standalone';
 import { MovieService } from '../services/movie.service';
-import { thumbsUpOutline, thumbsDownOutline, eyeOffOutline, bookmarkOutline, bookmarkSharp, filmOutline } from 'ionicons/icons';
+import { thumbsUpOutline, thumbsDownOutline, eyeOffOutline, starOutline, star, filmOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 
 @Component({
@@ -31,8 +31,8 @@ export class MovieFooterComponent {
   thumbsUpOutline = thumbsUpOutline;
   thumbsDownOutline = thumbsDownOutline;
   eyeOffOutline = eyeOffOutline;
-  bookmarkOutline = bookmarkOutline;
-  bookmarkSharp = bookmarkSharp;
+  starOutline = starOutline;
+  star = star;
   filmOutline = filmOutline;
   activePulse = signal<string | null>(null);
   floatingTexts = signal<Array<{ id: number; text: string }>>([]);
@@ -40,7 +40,7 @@ export class MovieFooterComponent {
   private floatingTextId = 0;
 
   constructor(private movieService: MovieService) {
-    addIcons({ thumbsUpOutline, thumbsDownOutline, eyeOffOutline, bookmarkOutline, bookmarkSharp, filmOutline });
+    addIcons({ thumbsUpOutline, thumbsDownOutline, eyeOffOutline, starOutline, star, filmOutline });
 
     effect(() => {
       const id = this.movieId();
