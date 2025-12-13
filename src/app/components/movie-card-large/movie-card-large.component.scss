@@ -163,12 +163,39 @@
   display: flex;
   flex-direction: column;
   margin-bottom: var(--card-margin-bottom);
+  position: relative;
 }
 
 .card-image {
   width: 100%;
   height: 400px;
   object-fit: cover;
+}
+
+.favorite-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #fff;
+  padding: 0;
+  z-index: 10;
+
+  ion-icon {
+    font-size: 20px;
+  }
+
+  &.favorited {
+    color: gold;
+  }
 }
 
 .card-header {

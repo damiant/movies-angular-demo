@@ -1,8 +1,8 @@
-@if (image()) {
-  <img [src]="image()" [alt]="name()" class="actor-avatar" (click)="actorClick.emit()" />
+@if (image() && !imageLoadFailed()) {
+  <img [src]="image()" [alt]="name()" class="actor-avatar" (click)="actorClick.emit()" (error)="onImageError()" />
 } @else {
   <div class="actor-avatar placeholder" (click)="actorClick.emit()">
-    {{ name().charAt(0) }}
+    {{ getInitials() }}
   </div>
 }
 <span class="actor-name" [class.white-text]="whiteText()">{{ name() }}</span>

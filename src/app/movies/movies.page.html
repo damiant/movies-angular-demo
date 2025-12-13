@@ -17,14 +17,18 @@
   @if (!isLoading() && randomMovies().length > 0) {
     <div class="movies-list">
       @for (movie of randomMovies(); track movie.id) {
-        <app-movie-card-large
-          [movie]="movie"
-          [isCompact]="true"
-          [reducePadding]="true"
-          [limitActors]="3"
-          (actorClick)="goToActorMovies($event)"
-          (imdbClick)="openMovieLink()"
-        ></app-movie-card-large>
+        <div (click)="goToMovieDetails(movie)">
+          <app-movie-card-large
+            [movie]="movie"
+            [isCompact]="true"
+            [reducePadding]="true"
+            [limitActors]="3"
+            [isFavorited]="isFavorited(movie.id)"
+            (actorClick)="onActorClick($event)"
+            (imdbClick)="openMovieLink()"
+            (favoriteClick)="toggleFavorite(movie.id)"
+          ></app-movie-card-large>
+        </div>
       }
     </div>
   }

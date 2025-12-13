@@ -11,14 +11,17 @@
     justify-content: center;
     font-size: var(--cast-font-size);
     font-weight: var(--font-weight-bold);
-    color: #fff;
-    background: var(--gradient-primary);
+    font-family: var(--font-family-heading);
+    color: var(--color-gray-light);
+    background: var(--color-gray-bg);
+    border: 1px solid var(--color-border);
   }
 }
 
 .actor-name {
   font-size: var(--font-size-xs);
   line-height: var(--line-height-relaxed);
+  font-family: var(--font-family-heading);
   color: var(--color-gray-medium);
   text-align: center;
   display: block;
@@ -28,6 +31,6 @@
   white-space: nowrap;
 
   &.white-text {
-    color: #ffffff;
+    color: var(--color-white);
   }
 }

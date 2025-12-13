@@ -65,7 +65,25 @@ export class MoviesPage {
     this.movieService.resetMovies();
   }
 
+  onActorClick(actorId: number): void {
+    event?.stopPropagation();
+    this.goToActorMovies(actorId);
+  }
+
   goToActorMovies(actorId: number): void {
     this.router.navigate(['/actor', actorId]);
+  }
+
+  goToMovieDetails(movie: any): void {
+    this.movieService.setSelectedMovie(movie);
+    this.router.navigate(['/movie-details']);
+  }
+
+  toggleFavorite(movieId: number): void {
+    this.movieService.toggleSaveForLater(movieId);
+  }
+
+  isFavorited(movieId: number): boolean {
+    return this.movieService.isSavedForLater(movieId);
   }
 }

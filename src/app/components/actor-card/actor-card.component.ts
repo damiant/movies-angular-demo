@@ -1,4 +1,4 @@
-import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -14,5 +14,21 @@ export class ActorCardComponent {
   image = input<string | null>(null);
   whiteText = input(false);
   
+  imageLoadFailed = signal(false);
+  
   actorClick = output<void>();
+
+  onImageError(): void {
+    this.imageLoadFailed.set(true);
+  }
+
+  getInitials(): string {
+    const name = this.name();
+    return name
+      .split(' ')
+      .map(word => word.charAt(0))
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
+  }
 }

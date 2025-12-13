@@ -16,11 +16,7 @@
 
   @if (!isLoading() && actor()) {
     <div class="actor-container">
-      <div class="actor-header">
-        <img [src]="actor()!.profileImage" [alt]="actor()!.name" class="actor-profile" />
-        <h1>{{ actor()!.name }}</h1>
-        <p class="filmography-text">{{ movies().length }} films</p>
-      </div>
+      <app-actor-large [actor]="actor()" [movieCount]="movies().length"></app-actor-large>
 
       <div class="movies-grid">
         @for (movie of movies(); track movie.id) {

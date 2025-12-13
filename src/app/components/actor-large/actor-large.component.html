@@ -1,0 +1,13 @@
+@if (actor()) {
+  <div class="actor-header">
+    @if (actor()!.profileImage && !imageLoadFailed()) {
+      <img [src]="actor()!.profileImage" [alt]="actor()!.name" class="actor-profile" (error)="onImageError()" />
+    } @else {
+      <div class="actor-profile placeholder">
+        {{ getInitials() }}
+      </div>
+    }
+    <h1>{{ actor()!.name }}</h1>
+    <p class="filmography-text">{{ movieCount() }} films</p>
+  </div>
+}

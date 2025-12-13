@@ -1,4 +1,4 @@
-import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   IonIcon,
@@ -6,7 +6,8 @@ import {
   IonBadge,
 } from '@ionic/angular/standalone';
 import { Movie } from '../../services/movie.service';
-import { star, playCircle, openOutline } from 'ionicons/icons';
+import { CelebrationService } from '../../services/celebration.service';
+import { star, playCircle, openOutline, starOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { ActorCardComponent } from '../actor-card/actor-card.component';
 
@@ -30,17 +31,34 @@ export class MovieCardLargeComponent {
   isCompact = input(false);
   reducePadding = input(false);
   limitActors = input<number | null>(null);
+  isFavorited = input(false);
+
+  isFavoritedLocal = signal(false);
 
   actorClick = output<number>();
   trailerClick = output<void>();
   imdbClick = output<void>();
+  favoriteClick = output<void>();
 
   star = star;
+  starOutline = starOutline;
   playCircle = playCircle;
   openOutline = openOutline;
 
-  constructor() {
-    addIcons({ star, playCircle, openOutline });
+  constructor(private celebrationService: CelebrationService) {
+    addIcons({ star, starOutline, playCircle, openOutline });
+    effect(() => {
+      this.isFavoritedLocal.set(this.isFavorited());
+    });
+  }
+
+  onFavoriteClick(): void {
+    const wasAlreadyFavorited = this.isFavoritedLocal();
+    this.isFavoritedLocal.set(!wasAlreadyFavorited);
+    this.favoriteClick.emit();
+    if (!wasAlreadyFavorited) {
+      this.celebrationService.celebrate();
+    }
   }
 
   getDisplayedActors(): string[] {
