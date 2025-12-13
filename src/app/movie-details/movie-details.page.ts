@@ -14,7 +14,7 @@ import {
   IonModal,
 } from '@ionic/angular/standalone';
 import { MovieService } from '../services/movie.service';
-import { openOutline, playCircle, closeOutline } from 'ionicons/icons';
+import { openOutline, playCircle, closeOutline, star, starOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { MovieFooterComponent } from '../movie-footer/movie-footer.component';
 import { SafePipe } from '../pipes/safe.pipe';
@@ -46,12 +46,15 @@ import { ActorCardComponent } from '../components/actor-card/actor-card.componen
 export class MovieDetailsPage {
   movie = this.movieService.getSelectedMovie();
   showTrailerModal = signal(false);
+  isSavedForLater = signal(false);
   openOutline = openOutline;
   playCircle = playCircle;
   closeOutline = closeOutline;
+  star = star;
+  starOutline = starOutline;
 
   constructor(private movieService: MovieService, private router: Router) {
-    addIcons({ openOutline, playCircle, closeOutline });
+    addIcons({ openOutline, playCircle, closeOutline, star, starOutline });
   }
 
   openMovieLink(): void {
@@ -74,6 +77,14 @@ export class MovieDetailsPage {
       return;
     }
     this.router.navigate(['/actor', actorId]);
+  }
+
+  toggleFavorite(): void {
+    const movieId = this.movie()?.id;
+    if (movieId) {
+      this.movieService.toggleSaveForLater(movieId);
+      this.isSavedForLater.set(!this.isSavedForLater());
+    }
   }
 }
 

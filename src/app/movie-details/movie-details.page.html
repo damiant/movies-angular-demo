@@ -51,9 +51,13 @@
               Trailer
             </ion-button>
           }
-          <ion-button expand="full" fill="solid" color="primary" shape="round" (click)="openMovieLink()" class="rounded-button">
+          <ion-button expand="full" fill="solid" color="warning" shape="round" (click)="openMovieLink()" class="rounded-button">
             <ion-icon slot="start" [icon]="openOutline"></ion-icon>
             IMDB
+          </ion-button>
+          <ion-button expand="full" fill="solid" color="primary" shape="round" (click)="toggleFavorite()" class="rounded-button">
+            <ion-icon slot="start" [icon]="isSavedForLater() ? star : starOutline"></ion-icon>
+            {{ isSavedForLater() ? 'Favorited' : 'Favorite' }}
           </ion-button>
         </div>
       </div>
