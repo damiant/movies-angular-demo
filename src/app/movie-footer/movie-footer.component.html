@@ -1,46 +1,46 @@
 @if (showFooter() && movieId()) {
-  <div class="footer-container">
-    <div class="fab-buttons-container">
-      <ion-button
+  <ion-fab slot="fixed" horizontal="center" vertical="bottom" class="fab-container">
+    <ion-fab-button color="primary" class="main-fab">
+      <ion-icon [icon]="filmOutline"></ion-icon>
+    </ion-fab-button>
+
+    <ion-fab-list side="top">
+      <ion-fab-button
         color="success"
         (click)="onThumbsUp()"
         class="fab-button"
         [class.pulse]="activePulse() === 'thumbsUp'"
-        shape="round"
       >
-        <ion-icon slot="icon-only" [icon]="thumbsUpOutline"></ion-icon>
-      </ion-button>
+        <ion-icon [icon]="thumbsUpOutline"></ion-icon>
+      </ion-fab-button>
 
-      <ion-button
+      <ion-fab-button
         color="medium"
         (click)="onDidntSee()"
         class="fab-button"
         [class.pulse]="activePulse() === 'didntSee'"
-        shape="round"
       >
-        <ion-icon slot="icon-only" [icon]="eyeOffOutline"></ion-icon>
-      </ion-button>
+        <ion-icon [icon]="eyeOffOutline"></ion-icon>
+      </ion-fab-button>
 
-      <ion-button
+      <ion-fab-button
         color="danger"
         (click)="onThumbsDown()"
         class="fab-button"
         [class.pulse]="activePulse() === 'thumbsDown'"
-        shape="round"
       >
-        <ion-icon slot="icon-only" [icon]="thumbsDownOutline"></ion-icon>
-      </ion-button>
+        <ion-icon [icon]="thumbsDownOutline"></ion-icon>
+      </ion-fab-button>
 
-      <ion-button
+      <ion-fab-button
         color="tertiary"
         (click)="onAddToList()"
         class="fab-button"
         [class.pulse]="activePulse() === 'addToList'"
-        shape="round"
       >
-        <ion-icon slot="icon-only" [icon]="bookmarkOutline"></ion-icon>
-      </ion-button>
-    </div>
+        <ion-icon [icon]="bookmarkOutline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
 
     <div class="floating-texts">
       @for (floatingText of floatingTexts(); track floatingText.id) {
@@ -49,5 +49,5 @@
         </div>
       }
     </div>
-  </div>
+  </ion-fab>
 }

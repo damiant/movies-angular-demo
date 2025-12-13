@@ -41,21 +41,33 @@
   --line-height-relaxed: 1.6;
 
   // ========================================
-  // COLORS
+  // COLORS - Design System Palette
   // ========================================
   --color-white: #fff;
   --color-black: #000;
+  
+  // Primary Brand Colors
+  --color-dark-green: #1a4d2e;
+  --color-sage-green: #7a9b7f;
+  --color-beige: #e8d4c0;
+  --color-magenta: #c41e5a;
+  --color-burgundy: #6b2d3e;
+  
+  // Neutral Grays
   --color-gray-dark: #333;
   --color-gray-medium: #666;
   --color-gray-light: #999;
   --color-gray-lighter: #eee;
   --color-gray-bg: #f0f0f0;
   --color-border: #e0e0e0;
+  
+  // Shadows
   --color-shadow-light: rgba(0, 0, 0, 0.1);
   --color-shadow-medium: rgba(0, 0, 0, 0.2);
   --color-shadow-dark: rgba(0, 0, 0, 0.3);
 
-  --gradient-purple: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-primary: linear-gradient(135deg, var(--color-dark-green) 0%, var(--color-sage-green) 100%);
+  --gradient-accent: linear-gradient(135deg, var(--color-magenta) 0%, var(--color-burgundy) 100%);
 
   // ========================================
   // SHADOWS
@@ -119,12 +131,12 @@
   --fab-button-padding-start: 0;
   --fab-button-padding-end: 0;
   --fab-button-border-radius: 50%;
-  --fab-button-box-shadow: none;
-  --fab-button-background: transparent;
-  --fab-button-background-activated: transparent;
-  --fab-button-background-focused: transparent;
-  --fab-button-background-hover: transparent;
-  --fab-button-color: currentColor;
+  --fab-button-box-shadow: var(--shadow-lg);
+  --fab-button-background: currentColor;
+  --fab-button-background-activated: currentColor;
+  --fab-button-background-focused: currentColor;
+  --fab-button-background-hover: currentColor;
+  --fab-button-color: var(--color-white);
 
   // ========================================
   // FOOTER STYLES

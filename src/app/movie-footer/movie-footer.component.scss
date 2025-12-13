@@ -1,49 +1,35 @@
-.footer-container {
+.fab-container {
   background: var(--footer-background);
-  padding: var(--footer-padding);
-  position: relative;
-  margin-top: var(--footer-margin-top);
+  --background: var(--footer-background);
+  --box-shadow: none;
 
-  ion-toolbar {
-    background: var(--footer-background);
-  }
-}
-
-.fab-buttons-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: var(--gap-buttons);
-  flex-wrap: wrap;
-  padding: 0 var(--spacing-lg);
-  position: relative;
-  z-index: var(--footer-buttons-z-index);
-  transform: var(--footer-buttons-transform);
-}
-
-.fab-button {
-  width: var(--fab-button-size);
-  height: var(--fab-button-size);
-  --border-radius: var(--fab-button-border-radius);
-  --box-shadow: var(--fab-button-box-shadow);
-  --padding-start: var(--fab-button-padding-start);
-  --padding-end: var(--fab-button-padding-end);
-  --background: var(--fab-button-background);
-  --background-activated: var(--fab-button-background-activated);
-  --background-focused: var(--fab-button-background-focused);
-  --background-hover: var(--fab-button-background-hover);
-  --color: var(--fab-button-color);
-
-  ion-icon {
-    font-size: var(--icon-size-md);
-  }
-
-  &:hover {
+  ion-fab-button {
+    --border-radius: 50%;
     --box-shadow: var(--fab-button-box-shadow);
+    --background: var(--fab-button-background);
+    --background-activated: var(--fab-button-background-activated);
+    --background-focused: var(--fab-button-background-focused);
+    --background-hover: var(--fab-button-background-hover);
+    --color: var(--fab-button-color);
+    width: var(--fab-button-size);
+    height: var(--fab-button-size);
+    --padding-start: var(--fab-button-padding-start);
+    --padding-end: var(--fab-button-padding-end);
+
+    ion-icon {
+      font-size: var(--icon-size-md);
+      color: inherit;
+    }
+
+    &.pulse {
+      animation: pulse-animation var(--animation-pulse-duration) var(--animation-ease);
+    }
   }
 
-  &.pulse {
-    animation: pulse-animation var(--animation-pulse-duration) var(--animation-ease);
+  .main-fab {
+    ion-icon {
+      font-size: var(--icon-size-md);
+    }
   }
 }
 

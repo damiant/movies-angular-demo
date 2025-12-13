@@ -1,11 +1,13 @@
 import { Component, input, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-  IonButton,
+  IonFab,
+  IonFabButton,
+  IonFabList,
   IonIcon,
 } from '@ionic/angular/standalone';
 import { MovieService } from '../services/movie.service';
-import { thumbsUpOutline, thumbsDownOutline, eyeOffOutline, bookmarkOutline } from 'ionicons/icons';
+import { thumbsUpOutline, thumbsDownOutline, eyeOffOutline, bookmarkOutline, filmOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 
 @Component({
@@ -15,7 +17,9 @@ import { addIcons } from 'ionicons';
   standalone: true,
   imports: [
     CommonModule,
-    IonButton,
+    IonFab,
+    IonFabButton,
+    IonFabList,
     IonIcon,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,12 +32,13 @@ export class MovieFooterComponent {
   thumbsDownOutline = thumbsDownOutline;
   eyeOffOutline = eyeOffOutline;
   bookmarkOutline = bookmarkOutline;
+  filmOutline = filmOutline;
   activePulse = signal<string | null>(null);
   floatingTexts = signal<Array<{ id: number; text: string }>>([]);
   private floatingTextId = 0;
 
   constructor(private movieService: MovieService) {
-    addIcons({ thumbsUpOutline, thumbsDownOutline, eyeOffOutline, bookmarkOutline });
+    addIcons({ thumbsUpOutline, thumbsDownOutline, eyeOffOutline, bookmarkOutline, filmOutline });
   }
 
   onThumbsUp(): void {
