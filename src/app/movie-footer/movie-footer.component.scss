@@ -29,6 +29,25 @@
     --border-radius: 20px;
     padding: 6px;
     font-weight: var(--font-weight-bold);
+
+    &.bounce {
+      animation: bounce 0.8s ease-in-out;
+    }
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.15);
+  }
+  50% {
+    transform: scale(1);
+  }
+  75% {
+    transform: scale(1.15);
   }
 }
 

@@ -2,7 +2,7 @@
   <ion-segment-button value="movies">
     <ion-label>Movies</ion-label>
   </ion-segment-button>
-  <ion-segment-button value="favorites">
-    <ion-label>Favorites</ion-label>
+  <ion-segment-button value="favorites" [class.bounce]="isBouncing()">
+    <ion-label>{{ favoritesCount() }} favorite{{ favoritesCount() !== 1 ? 's' : '' }}</ion-label>
   </ion-segment-button>
 </ion-segment>

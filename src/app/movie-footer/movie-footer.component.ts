@@ -1,14 +1,15 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { IonSegment, IonSegmentButton, IonLabel, IonIcon } from '@ionic/angular/standalone';
+import { IonSegment, IonSegmentButton, IonLabel } from '@ionic/angular/standalone';
+import { MovieService } from '../services/movie.service';
 
 @Component({
   selector: 'app-movie-footer',
   templateUrl: './movie-footer.component.html',
   styleUrls: ['./movie-footer.component.scss'],
   standalone: true,
-  imports: [IonIcon, 
+  imports: [
     CommonModule,
     IonSegment,
     IonSegmentButton,
@@ -18,14 +19,34 @@ import { IonSegment, IonSegmentButton, IonLabel, IonIcon } from '@ionic/angular/
 })
 export class MovieFooterComponent {
   currentSegment = 'movies';
+  favoritesCount = signal(0);
+  isBouncing = signal(false);
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private movieService: MovieService) {
     const currentUrl = this.router.url.split('/')[1];
     if (currentUrl === 'favorites') {
       this.currentSegment = 'favorites';
     } else {
       this.currentSegment = 'movies';
     }
+
+    // Update favorites count whenever movies or saved movies change
+    effect(() => {
+      const allMovies = this.movieService.getMovies();
+      const saved = this.movieService.getSavedMovies(allMovies);
+      const newCount = saved.length;
+      
+      // Trigger bounce animation if count changed
+      if (newCount !== this.favoritesCount()) {
+        this.isBouncing.set(true);
+        this.favoritesCount.set(newCount);
+        
+        // Reset animation after it completes (800ms for 2 bounces)
+        setTimeout(() => {
+          this.isBouncing.set(false);
+        }, 800);
+      }
+    });
   }
 
   onSegmentChange(event: any): void {

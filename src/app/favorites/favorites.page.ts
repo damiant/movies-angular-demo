@@ -13,8 +13,6 @@ import {
   IonCardSubtitle,
   IonImg,
   IonBadge,
-  IonMenuButton,
-  IonButtons,
   IonIcon,
 } from '@ionic/angular/standalone';
 import { MovieService, Movie } from '../services/movie.service';
@@ -40,8 +38,6 @@ import { PageSpacingComponent } from '../components/page-spacing/page-spacing.co
     IonCardSubtitle,
     IonImg,
     IonBadge,
-    IonMenuButton,
-    IonButtons,
     IonIcon,
     PageSpacingComponent,
   ],
@@ -72,7 +68,7 @@ export class FavoritesPage {
     this.selectedMovieId.set(movie.id);
     this.movieService.setSelectedMovie(movie);
     this.router.navigate(['/movie-details'], {
-      state: { movie },
+      state: { movie, fromFavorites: true },
     });
   }
 

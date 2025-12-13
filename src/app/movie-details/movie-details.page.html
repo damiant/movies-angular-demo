@@ -54,7 +54,7 @@
                   [name]="actor"
                   [image]="movie()!.actorImages[i]"
                   [whiteText]="true"
-                  (actorClick)="goToActorMovies(movie()!.actorIds[i])"
+                  (actorClick)="!isFromFavorites() && goToActorMovies(movie()!.actorIds[i])"
                 ></app-actor-card>
               }
             </div>

@@ -48,6 +48,7 @@ export class MovieDetailsPage {
   movie = this.movieService.getSelectedMovie();
   showTrailerModal = signal(false);
   isSavedForLater = signal(false);
+  isFromFavorites = signal(false);
   openOutline = openOutline;
   playCircle = playCircle;
   closeOutline = closeOutline;
@@ -56,6 +57,12 @@ export class MovieDetailsPage {
 
   constructor(private movieService: MovieService, private router: Router, private celebrationService: CelebrationService) {
     addIcons({ openOutline, playCircle, closeOutline, star, starOutline });
+    
+    // Check if navigating from favorites page
+    const navigation = this.router.getCurrentNavigation();
+    if (navigation?.extras?.state?.['fromFavorites']) {
+      this.isFromFavorites.set(true);
+    }
     
     effect(() => {
       const movieId = this.movie()?.id;
@@ -81,7 +88,7 @@ export class MovieDetailsPage {
   }
 
   goToActorMovies(actorId: number): void {
-    if (!actorId) {
+    if (!actorId || this.isFromFavorites()) {
       return;
     }
     this.router.navigate(['/actor', actorId]);

@@ -7,8 +7,6 @@ import {
   IonTitle,
   IonToolbar,
   IonSpinner,
-  IonMenuButton,
-  IonButtons,
 } from '@ionic/angular/standalone';
 import { MovieService } from '../services/movie.service';
 import { addIcons } from 'ionicons';
@@ -27,8 +25,6 @@ import { PageSpacingComponent } from '../components/page-spacing/page-spacing.co
     IonTitle,
     IonToolbar,
     IonSpinner,
-    IonMenuButton,
-    IonButtons,
     MovieCardLargeComponent,
     PageSpacingComponent,
   ],
