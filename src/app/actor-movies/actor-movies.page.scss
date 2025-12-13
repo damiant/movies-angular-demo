@@ -35,10 +35,11 @@ ion-content {
   font-size: var(--actor-name-font-size);
   margin: var(--spacing-sm) 0 var(--spacing-xs) 0;
   font-weight: var(--font-weight-bold);
+  color: var(--color-white);
 }
 
 .filmography-text {
-  color: var(--color-gray-medium);
+  color: var(--color-white);
   font-size: var(--font-size-base);
   margin: 0;
 }

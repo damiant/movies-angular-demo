@@ -74,7 +74,7 @@ export class MovieFooterComponent {
   onAddToList(): void {
     if (this.movieId()) {
       const isSaved = this.isSavedForLater();
-      this.animateButton('addToList', isSaved ? 'Removed from Saved' : 'Saved for Later');
+      this.animateButton('addToList', isSaved ? 'Removed from Favorites' : 'Added to Favorites');
       this.movieService.toggleSaveForLater(this.movieId()!);
       this.isSavedForLater.set(!isSaved);
     }
