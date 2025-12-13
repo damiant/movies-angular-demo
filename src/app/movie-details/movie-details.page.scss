@@ -108,6 +108,37 @@
   white-space: normal;
 }
 
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+
+  ion-button {
+    margin: 0;
+  }
+}
+
+.rounded-button {
+  --border-radius: 50px;
+  border-radius: 50px !important;
+}
+
+.trailer-container {
+  width: 100%;
+  padding: var(--spacing-lg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.trailer-iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: none;
+  border-radius: var(--border-radius-sm);
+}
+
 .no-movie {
   display: flex;
   flex-direction: column;

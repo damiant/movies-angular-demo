@@ -11,6 +11,7 @@ export interface Movie {
   year: number;
   rating: number; // 0-10
   link: string;
+  trailerUrl?: string;
 }
 
 export interface Actor {
@@ -36,6 +37,17 @@ interface TMDbMovie {
 
 interface TMDbCredits {
   cast: Array<{ id: number; name: string; profile_path: string | null }>;
+}
+
+interface TMDbVideoResult {
+  results: Array<{
+    id: string;
+    key: string;
+    name: string;
+    type: string;
+    official: boolean;
+    iso_639_1?: string;
+  }>;
 }
 
 
@@ -97,11 +109,17 @@ export class MovieService {
 
   private async enrichMovieWithCredits(tmdbMovie: TMDbMovie): Promise<Movie> {
     try {
-      const response = await fetch(
-        `${this.BASE_URL}/movie/${tmdbMovie.id}/credits?api_key=${this.API_KEY}`
-      );
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      const credits = await response.json() as TMDbCredits;
+      const [creditsResponse, videosResponse] = await Promise.all([
+        fetch(
+          `${this.BASE_URL}/movie/${tmdbMovie.id}/credits?api_key=${this.API_KEY}`
+        ),
+        fetch(
+          `${this.BASE_URL}/movie/${tmdbMovie.id}/videos?api_key=${this.API_KEY}`
+        ),
+      ]);
+
+      if (!creditsResponse.ok) throw new Error(`HTTP error! status: ${creditsResponse.status}`);
+      const credits = await creditsResponse.json() as TMDbCredits;
       const topCast = credits.cast.slice(0, 3);
       const actors = topCast.map((actor) => actor.name);
       const actorIds = topCast.map((actor) => actor.id);
@@ -110,13 +128,41 @@ export class MovieService {
           ? `${this.IMAGE_BASE_URL}${actor.profile_path}`
           : 'https://via.placeholder.com/150x150?text=No+Image'
       );
-      return this.createMovieFromTMDb(tmdbMovie, actors, actorImages, actorIds);
-    } catch {
+
+      let trailerUrl: string | undefined;
+      if (videosResponse.ok) {
+        const videos = await videosResponse.json() as TMDbVideoResult;
+        console.log(`Movies/Trailers for ${tmdbMovie.title}:`, videos.results.map((v) => ({ type: v.type, official: v.official })));
+        // First try to find official English trailer
+        let trailer = videos.results.find(
+          (v) => v.type === 'Trailer' && v.official && (v.iso_639_1 === 'en' || !v.iso_639_1)
+        );
+        // Then try any official trailer
+        if (!trailer) {
+          trailer = videos.results.find((v) => v.type === 'Trailer' && v.official);
+        }
+        // Then try any trailer or teaser
+        if (!trailer) {
+          trailer = videos.results.find((v) => v.type === 'Trailer' || v.type === 'Teaser');
+        }
+        if (trailer) {
+          trailerUrl = `https://www.youtube.com/embed/${trailer.key}`;
+          console.log('Found trailer for', tmdbMovie.title, ':', trailerUrl);
+        } else {
+          console.log('No trailer found for', tmdbMovie.title, 'Available:', videos.results.length > 0 ? videos.results.map((v) => v.type).slice(0, 5) : 'none');
+        }
+      } else {
+        console.log('Video API response not ok for', tmdbMovie.title, 'Status:', videosResponse.status);
+      }
+
+      return this.createMovieFromTMDb(tmdbMovie, actors, actorImages, actorIds, trailerUrl);
+    } catch (error) {
+      console.error('Error enriching movie:', error);
       return this.createMovieFromTMDb(tmdbMovie, [], [], []);
     }
   }
 
-  private createMovieFromTMDb(tmdbMovie: TMDbMovie, actors: string[], actorImages: string[], actorIds: number[] = []): Movie {
+  private createMovieFromTMDb(tmdbMovie: TMDbMovie, actors: string[], actorImages: string[], actorIds: number[] = [], trailerUrl?: string): Movie {
     const year = new Date(tmdbMovie.release_date).getFullYear();
     return {
       id: tmdbMovie.id,
@@ -131,6 +177,7 @@ export class MovieService {
       year: year || new Date().getFullYear(),
       rating: tmdbMovie.vote_average,
       link: `https://www.themoviedb.org/movie/${tmdbMovie.id}`,
+      trailerUrl,
     };
   }
 

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   IonContent,
@@ -10,11 +10,13 @@ import {
   IonBackButton,
   IonButtons,
   IonIcon,
+  IonModal,
 } from '@ionic/angular/standalone';
 import { MovieService } from '../services/movie.service';
-import { openOutline } from 'ionicons/icons';
+import { openOutline, playCircle, closeOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { MovieFooterComponent } from '../movie-footer/movie-footer.component';
+import { SafePipe } from '../pipes/safe.pipe';
 
 @Component({
   selector: 'app-movie-details',
@@ -32,16 +34,21 @@ import { MovieFooterComponent } from '../movie-footer/movie-footer.component';
     IonBackButton,
     IonButtons,
     IonIcon,
+    IonModal,
     MovieFooterComponent,
+    SafePipe,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MovieDetailsPage {
   movie = this.movieService.getSelectedMovie();
+  showTrailerModal = signal(false);
   openOutline = openOutline;
+  playCircle = playCircle;
+  closeOutline = closeOutline;
 
   constructor(private movieService: MovieService) {
-    addIcons({ openOutline });
+    addIcons({ openOutline, playCircle, closeOutline });
   }
 
   openMovieLink(): void {
@@ -49,6 +56,14 @@ export class MovieDetailsPage {
     if (selectedMovie?.link) {
       window.open(selectedMovie.link, '_blank');
     }
+  }
+
+  openTrailerModal(): void {
+    this.showTrailerModal.set(true);
+  }
+
+  closeTrailerModal(): void {
+    this.showTrailerModal.set(false);
   }
 }
 

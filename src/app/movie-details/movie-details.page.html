@@ -48,10 +48,20 @@
           </div>
         }
 
-        <ion-button expand="full" fill="solid" color="primary" (click)="openMovieLink()">
-          <ion-icon slot="start" [icon]="openOutline"></ion-icon>
-          View on IMDb
-        </ion-button>
+        <div class="button-group">
+          @if (movie()!.trailerUrl) {
+            <ion-button expand="block" fill="solid" color="warning" (click)="openTrailerModal()" class="rounded-button">
+              <ion-icon slot="start" [icon]="playCircle"></ion-icon>
+              Trailer
+            </ion-button>
+          } @else {
+            <p style="font-size: 12px; color: #999; text-align: center;">No trailer available (trailerUrl: {{ movie()!.trailerUrl }})</p>
+          }
+          <ion-button expand="block" fill="solid" color="primary" (click)="openMovieLink()" class="rounded-button">
+            <ion-icon slot="start" [icon]="openOutline"></ion-icon>
+            IMDB
+          </ion-button>
+        </div>
       </div>
     </div>
   } @else {
@@ -61,5 +71,33 @@
     </div>
   }
 </ion-content>
+
+<ion-modal [isOpen]="showTrailerModal()" (ionModalDidDismiss)="closeTrailerModal()">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>{{ movie()?.title }} - Trailer</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeTrailerModal()">
+            <ion-icon slot="icon-only" [icon]="closeOutline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      @if (movie()?.trailerUrl) {
+        <div class="trailer-container">
+          <iframe
+            class="trailer-iframe"
+            [src]="movie()!.trailerUrl! | safe"
+            title="Movie Trailer"
+            allowfullscreen
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          ></iframe>
+        </div>
+      }
+    </ion-content>
+  </ng-template>
+</ion-modal>
 
 <app-movie-footer [movieId]="movie()?.id || null" [showFooter]="!!movie()"></app-movie-footer>
