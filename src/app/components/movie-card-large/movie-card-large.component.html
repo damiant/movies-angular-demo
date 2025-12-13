@@ -2,7 +2,14 @@
   @if (!isCompact()) {
     <!-- Full display for movie details page -->
     <div class="movie-details-container">
-      <img [src]="movie()!.image" [alt]="movie()!.title" class="movie-poster" />
+      @if (!imageLoaded() && !imageError()) {
+        <ion-skeleton-text animated class="movie-poster skeleton"></ion-skeleton-text>
+      }
+      @if (!imageError()) {
+        <img [src]="movie()!.image" [alt]="movie()!.title" class="movie-poster" [class.hidden]="!imageLoaded()" (load)="onImageLoad()" (error)="onImageError()" />
+      } @else {
+        <div class="movie-poster error-placeholder"></div>
+      }
 
       <div class="movie-info">
         <h1 class="movie-title">{{ movie()!.title }}</h1>
@@ -73,7 +80,14 @@
     <!-- Compact display for movies carousel page -->
     <div class="movie-container" [class.reduce-padding]="reducePadding()">
       <div class="card">
-        <img [src]="movie()!.image" [alt]="movie()!.title" class="card-image" />
+        @if (!imageLoaded() && !imageError()) {
+          <ion-skeleton-text animated class="card-image skeleton"></ion-skeleton-text>
+        }
+        @if (!imageError()) {
+          <img [src]="movie()!.image" [alt]="movie()!.title" class="card-image" [class.hidden]="!imageLoaded()" (load)="onImageLoad()" (error)="onImageError()" />
+        } @else {
+          <div class="card-image error-placeholder"></div>
+        }
         <button class="favorite-btn" (click)="onFavoriteClick(); $event.stopPropagation()" [class.favorited]="isFavoritedLocal()">
           <ion-icon [icon]="isFavoritedLocal() ? star : starOutline"></ion-icon>
         </button>

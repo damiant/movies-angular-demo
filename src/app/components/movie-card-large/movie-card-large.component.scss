@@ -10,6 +10,23 @@
   height: auto;
   border-radius: var(--border-radius-sm);
   margin-bottom: var(--spacing-lg);
+
+  &.hidden {
+    display: none;
+  }
+
+  &.skeleton {
+    height: 500px;
+    margin-bottom: var(--spacing-lg);
+  }
+}
+
+.error-placeholder {
+  width: 100%;
+  height: 500px;
+  background-color: var(--color-gray-darker);
+  border-radius: var(--border-radius-sm);
+  margin-bottom: var(--spacing-lg);
 }
 
 .movie-info {
@@ -170,6 +187,20 @@
   width: 100%;
   height: 400px;
   object-fit: cover;
+
+  &.hidden {
+    display: none;
+  }
+
+  &.skeleton {
+    height: 400px;
+  }
+}
+
+.error-placeholder {
+  width: 100%;
+  height: 400px;
+  background-color: var(--color-gray-darker);
 }
 
 .favorite-btn {

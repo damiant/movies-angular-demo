@@ -342,4 +342,20 @@ export class MovieService {
   getSelectedMovie() {
     return this.selectedMovie;
   }
+
+  async searchMovies(query: string): Promise<Movie[]> {
+    if (!query.trim()) return [];
+    try {
+      const response = await fetch(
+        `${this.BASE_URL}/search/movie?api_key=${this.API_KEY}&language=en-US&query=${encodeURIComponent(query)}&page=1&include_adult=false`
+      );
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      const data = await response.json() as { results: TMDbMovie[] };
+      const moviePromises = data.results.slice(0, 20).map((tmdbMovie) => this.enrichMovieWithCredits(tmdbMovie));
+      const enrichedMovies = await Promise.all(moviePromises);
+      return enrichedMovies.filter((movie): movie is Movie => movie !== null);
+    } catch (error) {
+      return [];
+    }
+  }
 }

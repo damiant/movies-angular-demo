@@ -2,39 +2,77 @@
   <ion-toolbar>
     <ion-title>Movie Rater</ion-title>
   </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar
+      placeholder="Search for movies..."
+      [value]="searchQuery()"
+      [debounce]="1000"
+      (ionInput)="searchQuery.set($event.detail.value || '')"
+      showClearButton="focus"
+      animated="true"
+    ></ion-searchbar>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding" [scrollEvents]="true" (ionScroll)="onScroll($event)">
-  @if (isLoading()) {
+  @if (searching()) {
     <div class="loading-container">
       <ion-spinner></ion-spinner>
     </div>
-  }
-
-  @if (!isLoading() && randomMovies().length > 0) {
-    <div class="movies-list">
-      @for (movie of randomMovies(); track movie.id) {
-        <div (click)="goToMovieDetails(movie)">
-          <app-movie-card-large
-            [movie]="movie"
-            [isCompact]="true"
-            [reducePadding]="true"
-            [limitActors]="3"
-            [isFavorited]="isFavorited(movie.id)"
-            (actorClick)="onActorClick($event)"
-            (imdbClick)="openMovieLink()"
-            (favoriteClick)="toggleFavorite(movie.id)"
-          ></app-movie-card-large>
-        </div>
-      }
-    </div>
-  }
-
-  @if (!isLoading() && randomMovies().length === 0) {
-    <div class="no-movies">
-      <h2>No movies available</h2>
-      <p>Unable to load movies.</p>
-    </div>
+  } @else if (searchResults() !== null) {
+    @if (searchResults()?.length) {
+      <div class="movies-list">
+        @for (movie of searchResults(); track movie.id) {
+          <div (click)="goToMovieDetails(movie)">
+            <app-movie-card-large
+              [movie]="movie"
+              [isCompact]="true"
+              [reducePadding]="true"
+              [limitActors]="3"
+              [isFavorited]="isFavorited(movie.id)"
+              (actorClick)="onActorClick($event)"
+              (imdbClick)="openMovieLink()"
+              (favoriteClick)="toggleFavorite(movie.id)"
+            ></app-movie-card-large>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="no-movies">
+        <h2>No results found</h2>
+        <p>Try a different search term.</p>
+      </div>
+    }
+  } @else {
+    @if (isLoading()) {
+      <div class="loading-container">
+        <ion-spinner></ion-spinner>
+      </div>
+    }
+    @if (!isLoading() && randomMovies().length > 0) {
+      <div class="movies-list">
+        @for (movie of randomMovies(); track movie.id) {
+          <div (click)="goToMovieDetails(movie)">
+            <app-movie-card-large
+              [movie]="movie"
+              [isCompact]="true"
+              [reducePadding]="true"
+              [limitActors]="3"
+              [isFavorited]="isFavorited(movie.id)"
+              (actorClick)="onActorClick($event)"
+              (imdbClick)="openMovieLink()"
+              (favoriteClick)="toggleFavorite(movie.id)"
+            ></app-movie-card-large>
+          </div>
+        }
+      </div>
+    }
+    @if (!isLoading() && randomMovies().length === 0) {
+      <div class="no-movies">
+        <h2>No movies available</h2>
+        <p>Unable to load movies.</p>
+      </div>
+    }
   }
   <app-page-spacing></app-page-spacing>
 </ion-content>

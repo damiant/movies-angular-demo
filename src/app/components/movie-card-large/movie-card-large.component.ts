@@ -4,6 +4,7 @@ import {
   IonIcon,
   IonButton,
   IonBadge,
+  IonSkeletonText,
 } from '@ionic/angular/standalone';
 import { Movie } from '../../services/movie.service';
 import { CelebrationService } from '../../services/celebration.service';
@@ -21,6 +22,7 @@ import { ActorCardComponent } from '../actor-card/actor-card.component';
     IonIcon,
     IonButton,
     IonBadge,
+    IonSkeletonText,
     ActorCardComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,6 +36,8 @@ export class MovieCardLargeComponent {
   isFavorited = input(false);
 
   isFavoritedLocal = signal(false);
+  imageLoaded = signal(false);
+  imageError = signal(false);
 
   actorClick = output<number>();
   trailerClick = output<void>();
@@ -59,6 +63,14 @@ export class MovieCardLargeComponent {
     if (!wasAlreadyFavorited) {
       this.celebrationService.celebrate();
     }
+  }
+
+  onImageLoad(): void {
+    this.imageLoaded.set(true);
+  }
+
+  onImageError(): void {
+    this.imageError.set(true);
   }
 
   getDisplayedActors(): string[] {

@@ -1,4 +1,4 @@
-import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, signal, ChangeDetectionStrategy, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import {
@@ -7,8 +7,9 @@ import {
   IonTitle,
   IonToolbar,
   IonSpinner,
+  IonSearchbar,
 } from '@ionic/angular/standalone';
-import { MovieService } from '../services/movie.service';
+import { MovieService, Movie } from '../services/movie.service';
 import { ScrollService } from '../services/scroll.service';
 import { addIcons } from 'ionicons';
 import { MovieCardLargeComponent } from '../components/movie-card-large/movie-card-large.component';
@@ -26,6 +27,7 @@ import { PageSpacingComponent } from '../components/page-spacing/page-spacing.co
     IonTitle,
     IonToolbar,
     IonSpinner,
+    IonSearchbar,
     MovieCardLargeComponent,
     PageSpacingComponent,
   ],
@@ -34,7 +36,10 @@ import { PageSpacingComponent } from '../components/page-spacing/page-spacing.co
 export class MoviesPage {
   currentMovie = this.movieService.currentMovie;
   isLoading = signal(false);
-  randomMovies = signal<any[]>([]);
+  randomMovies = signal<Movie[]>([]);
+  searchQuery = signal('');
+  searchResults = signal<Movie[] | null>(null);
+  searching = signal(false);
 
   constructor(private movieService: MovieService, private router: Router, private scrollService: ScrollService) {
     addIcons({});
@@ -43,6 +48,20 @@ export class MoviesPage {
       this.loadRandomMovies();
       this.isLoading.set(false);
     }, 500);
+
+    effect(() => {
+      const query = this.searchQuery();
+      if (query.trim() === '') {
+        this.searchResults.set(null);
+        this.searching.set(false);
+        return;
+      }
+      this.searching.set(true);
+      this.movieService.searchMovies(query).then(results => {
+        this.searchResults.set(results);
+        this.searching.set(false);
+      });
+    });
   }
 
   private loadRandomMovies(): void {
