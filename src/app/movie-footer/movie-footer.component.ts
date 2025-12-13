@@ -1,4 +1,4 @@
-import { Component, input, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, input, signal, ChangeDetectionStrategy, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   IonFab,
@@ -7,7 +7,7 @@ import {
   IonIcon,
 } from '@ionic/angular/standalone';
 import { MovieService } from '../services/movie.service';
-import { thumbsUpOutline, thumbsDownOutline, eyeOffOutline, bookmarkOutline, filmOutline } from 'ionicons/icons';
+import { thumbsUpOutline, thumbsDownOutline, eyeOffOutline, bookmarkOutline, bookmarkSharp, filmOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 
 @Component({
@@ -32,13 +32,22 @@ export class MovieFooterComponent {
   thumbsDownOutline = thumbsDownOutline;
   eyeOffOutline = eyeOffOutline;
   bookmarkOutline = bookmarkOutline;
+  bookmarkSharp = bookmarkSharp;
   filmOutline = filmOutline;
   activePulse = signal<string | null>(null);
   floatingTexts = signal<Array<{ id: number; text: string }>>([]);
+  isSavedForLater = signal(false);
   private floatingTextId = 0;
 
   constructor(private movieService: MovieService) {
-    addIcons({ thumbsUpOutline, thumbsDownOutline, eyeOffOutline, bookmarkOutline, filmOutline });
+    addIcons({ thumbsUpOutline, thumbsDownOutline, eyeOffOutline, bookmarkOutline, bookmarkSharp, filmOutline });
+
+    effect(() => {
+      const id = this.movieId();
+      if (id) {
+        this.isSavedForLater.set(this.movieService.isSavedForLater(id));
+      }
+    });
   }
 
   onThumbsUp(): void {
@@ -64,8 +73,10 @@ export class MovieFooterComponent {
 
   onAddToList(): void {
     if (this.movieId()) {
-      this.animateButton('addToList', 'Saved for Later');
-      this.movieService.addToList(this.movieId()!);
+      const isSaved = this.isSavedForLater();
+      this.animateButton('addToList', isSaved ? 'Removed from Saved' : 'Saved for Later');
+      this.movieService.toggleSaveForLater(this.movieId()!);
+      this.isSavedForLater.set(!isSaved);
     }
   }
 

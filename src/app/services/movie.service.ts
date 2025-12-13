@@ -302,6 +302,44 @@ export class MovieService {
   }
 
   private selectedMovie = signal<Movie | null>(null);
+  private savedMovies = signal<Set<number>>(this.loadSavedMovies());
+
+  private loadSavedMovies(): Set<number> {
+    try {
+      const saved = localStorage.getItem('savedMovies');
+      return new Set(saved ? JSON.parse(saved) : []);
+    } catch {
+      return new Set();
+    }
+  }
+
+  private saveSavedMoviesToStorage(): void {
+    try {
+      localStorage.setItem('savedMovies', JSON.stringify(Array.from(this.savedMovies())));
+    } catch {
+      console.error('Failed to save to localStorage');
+    }
+  }
+
+  isSavedForLater(movieId: number): boolean {
+    return this.savedMovies().has(movieId);
+  }
+
+  toggleSaveForLater(movieId: number): void {
+    const saved = this.savedMovies();
+    if (saved.has(movieId)) {
+      saved.delete(movieId);
+    } else {
+      saved.add(movieId);
+    }
+    this.savedMovies.set(new Set(saved));
+    this.saveSavedMoviesToStorage();
+  }
+
+  getSavedMovies(allMovies: Movie[]): Movie[] {
+    const saved = this.savedMovies();
+    return allMovies.filter((m) => saved.has(m.id));
+  }
 
   getSelectedMovie() {
     return this.selectedMovie;
