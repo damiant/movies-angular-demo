@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import {
   IonContent,
@@ -16,7 +16,7 @@ import {
   IonCardTitle,
   IonCardSubtitle,
 } from '@ionic/angular/standalone';
-import { Movie } from '../services/movie.service';
+import { Movie, MovieService } from '../services/movie.service';
 import { openOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 
@@ -46,19 +46,27 @@ export class MovieDetailsPage implements OnInit {
   movie: Movie | null = null;
   openOutline = openOutline;
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private movieService: MovieService
+  ) {
     addIcons({ openOutline });
-    const navigation = this.router.getCurrentNavigation();
-    if (navigation?.extras?.state?.['movie']) {
-      this.movie = navigation.extras.state['movie'];
-    }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Try to get movie from service first
+    this.movieService.getSelectedMovie().subscribe((movie) => {
+      if (movie) {
+        this.movie = movie;
+        return;
+      }
 
-  goBack(): void {
-    this.router.navigate(['/actor-movies'], {
-      relativeTo: null,
+      // Fallback: try to get from navigation state
+      const navigation = this.router.getCurrentNavigation();
+      if (navigation?.extras?.state?.['movie']) {
+        this.movie = navigation.extras.state['movie'];
+      }
     });
   }
 
@@ -68,4 +76,5 @@ export class MovieDetailsPage implements OnInit {
     }
   }
 }
+
 

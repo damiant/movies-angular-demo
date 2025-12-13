@@ -295,4 +295,12 @@ export class MovieService {
         catchError(() => of(null))
       );
   }
+
+  setSelectedMovie(movie: Movie): void {
+    this.currentMovie$.next(movie);
+  }
+
+  getSelectedMovie(): Observable<Movie | null> {
+    return this.currentMovie$.asObservable();
+  }
 }

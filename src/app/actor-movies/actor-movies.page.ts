@@ -96,6 +96,7 @@ export class ActorMoviesPage implements OnInit {
   }
 
   goToMovieDetails(movie: Movie): void {
+    this.movieService.setSelectedMovie(movie);
     this.router.navigate(['/movie-details'], {
       state: { movie },
     });

@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button (click)="goBack()"></ion-back-button>
+      <ion-back-button defaultHref="/movies"></ion-back-button>
     </ion-buttons>
     <ion-title>{{ movie?.title || 'Movie' }}</ion-title>
   </ion-toolbar>
@@ -57,7 +57,7 @@
   } @else {
     <div class="no-movie">
       <p>No movie information available.</p>
-      <ion-button (click)="goBack()">Go Back</ion-button>
+      <ion-button href="/movies">Go Back</ion-button>
     </div>
   }
 </ion-content>
