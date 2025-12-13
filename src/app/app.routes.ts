@@ -18,6 +18,10 @@ export const routes: Routes = [
     loadComponent: () => import('./movie-details/movie-details.page').then((m) => m.MovieDetailsPage),
   },
   {
+    path: 'favorites',
+    loadComponent: () => import('./favorites/favorites.page').then((m) => m.FavoritesPage),
+  },
+  {
     path: '',
     redirectTo: 'movies',
     pathMatch: 'full',

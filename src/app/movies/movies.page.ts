@@ -17,6 +17,8 @@ import {
   IonLabel,
   IonSpinner,
   IonIcon,
+  IonMenuButton,
+  IonButtons,
 } from '@ionic/angular/standalone';
 import { MovieService } from '../services/movie.service';
 import { star } from 'ionicons/icons';
@@ -45,6 +47,8 @@ import { MovieFooterComponent } from '../movie-footer/movie-footer.component';
     IonLabel,
     IonSpinner,
     IonIcon,
+    IonMenuButton,
+    IonButtons,
     MovieFooterComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,

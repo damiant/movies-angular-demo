@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Favorites</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (savedMovies().length > 0) {
+    <div class="favorites-container">
+      <div class="movies-grid">
+        @for (movie of savedMovies(); track movie.id) {
+          <ion-card class="movie-card clickable" (click)="goToMovieDetails(movie)">
+            <ion-img [src]="movie.image" [alt]="movie.title" class="movie-poster"></ion-img>
+
+            <ion-card-header>
+              <ion-card-title class="card-title">{{ movie.title }}</ion-card-title>
+              <ion-card-subtitle class="card-subtitle">
+                <ion-badge color="primary">{{ movie.year }}</ion-badge>
+                @if (movie.rating) {
+                  <ion-badge color="warning">
+                    <ion-icon [icon]="star" style="width: 14px; height: 14px; margin-right: 2px;"></ion-icon>
+                    {{ (movie.rating / 2).toFixed(1) }}
+                  </ion-badge>
+                }
+              </ion-card-subtitle>
+            </ion-card-header>
+
+            <ion-card-content>
+              <p class="card-description">{{ movie.description }}</p>
+            </ion-card-content>
+          </ion-card>
+        }
+      </div>
+    </div>
+  } @else {
+    <div class="no-favorites">
+      <p>No saved favorites yet.</p>
+      <p>Click the star icon on movies to save them here!</p>
+    </div>
+  }
+</ion-content>
+
+<app-movie-footer [movieId]="selectedMovieId()" [showFooter]="!!selectedMovieId()"></app-movie-footer>

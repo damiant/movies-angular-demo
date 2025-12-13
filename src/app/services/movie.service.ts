@@ -341,6 +341,10 @@ export class MovieService {
     return allMovies.filter((m) => saved.has(m.id));
   }
 
+  getMovies(): Movie[] {
+    return this.movies();
+  }
+
   getSelectedMovie() {
     return this.selectedMovie;
   }
