@@ -20,6 +20,7 @@ import {
 import { MovieService, Movie } from '../services/movie.service';
 import { star } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
+import { PageSpacingComponent } from '../components/page-spacing/page-spacing.component';
 
 @Component({
   selector: 'app-favorites',
@@ -42,6 +43,7 @@ import { addIcons } from 'ionicons';
     IonMenuButton,
     IonButtons,
     IonIcon,
+    PageSpacingComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

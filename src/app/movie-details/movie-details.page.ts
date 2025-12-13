@@ -19,6 +19,7 @@ import { openOutline, playCircle, closeOutline, star, starOutline } from 'ionico
 import { addIcons } from 'ionicons';
 import { SafePipe } from '../pipes/safe.pipe';
 import { ActorCardComponent } from '../components/actor-card/actor-card.component';
+import { PageSpacingComponent } from '../components/page-spacing/page-spacing.component';
 
 @Component({
   selector: 'app-movie-details',
@@ -39,6 +40,7 @@ import { ActorCardComponent } from '../components/actor-card/actor-card.componen
     IonModal,
     SafePipe,
     ActorCardComponent,
+    PageSpacingComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

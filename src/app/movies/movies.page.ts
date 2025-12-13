@@ -13,6 +13,7 @@ import {
 import { MovieService } from '../services/movie.service';
 import { addIcons } from 'ionicons';
 import { MovieCardLargeComponent } from '../components/movie-card-large/movie-card-large.component';
+import { PageSpacingComponent } from '../components/page-spacing/page-spacing.component';
 
 @Component({
   selector: 'app-movies',
@@ -29,6 +30,7 @@ import { MovieCardLargeComponent } from '../components/movie-card-large/movie-ca
     IonMenuButton,
     IonButtons,
     MovieCardLargeComponent,
+    PageSpacingComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
