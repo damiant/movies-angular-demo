@@ -1,0 +1,3 @@
+- Avoid creating css or inline styles, css variables in theme/variables.css instead 
+- Always use built in control flow rather than directives like *ngFor
+- Implement push change detection with components

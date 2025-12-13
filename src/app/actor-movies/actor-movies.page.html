@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/movies"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ actor?.name || 'Actor' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="isLoading" class="loading-container">
+    <ion-spinner></ion-spinner>
+  </div>
+
+  <div *ngIf="!isLoading && actor" class="actor-container">
+    <div class="actor-header">
+      <img [src]="actor.profileImage" [alt]="actor.name" class="actor-profile" />
+      <h1>{{ actor.name }}</h1>
+      <p class="filmography-text">{{ movies.length }} films</p>
+    </div>
+
+    <div class="movies-grid">
+      @for (movie of movies; track movie.id) {
+        <ion-card class="movie-card">
+          <ion-img [src]="movie.image" [alt]="movie.title" class="movie-poster"></ion-img>
+
+          <ion-card-header>
+            <ion-card-title class="card-title">{{ movie.title }}</ion-card-title>
+            <ion-card-subtitle class="card-subtitle">
+              <ion-badge color="primary">{{ movie.year }}</ion-badge>
+              @if (movie.rating) {
+                <ion-badge color="warning">
+                  {{ (movie.rating / 2).toFixed(1) }}/5
+                </ion-badge>
+              }
+            </ion-card-subtitle>
+          </ion-card-header>
+
+          <ion-card-content>
+            <p class="card-description">{{ movie.description }}</p>
+          </ion-card-content>
+
+          <ion-button expand="full" fill="solid" color="primary" (click)="openMovieLink(movie.link)">
+            View Details
+          </ion-button>
+        </ion-card>
+      }
+    </div>
+
+    @if (movies.length === 0) {
+      <div class="no-movies">
+        <p>No movies found for this actor.</p>
+      </div>
+    }
+  </div>
+
+  <div *ngIf="!isLoading && !actor" class="error-container">
+    <p>Unable to load actor information.</p>
+    <ion-button (click)="goBack()">Go Back</ion-button>
+  </div>
+</ion-content>

@@ -1,0 +1,270 @@
+.movie-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding-bottom: 80px;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+ion-card {
+  margin: 0 0 20px 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.movie-image {
+  height: 400px;
+  object-fit: cover;
+}
+
+.movie-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.movie-subtitle {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.rating-badge {
+  font-size: 14px;
+  padding: 6px 12px;
+}
+
+.description {
+  color: #666;
+  line-height: 1.6;
+  margin: 15px 0;
+  font-size: 14px;
+}
+
+.actors-section {
+  margin: 15px 0;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+}
+
+.actors {
+  color: #777;
+  font-size: 13px;
+  margin: 8px 0 0 0;
+  font-style: italic;
+}
+
+.cast-avatars {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.avatar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.actor-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #f0f0f0;
+  border: 2px solid #e0e0e0;
+
+  &.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: bold;
+    color: #999;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+  }
+}
+
+.actor-name {
+  font-size: 12px;
+  text-align: center;
+  color: #666;
+  font-weight: 500;
+  max-width: 100px;
+  white-space: normal;
+  margin: 0;
+}
+
+.link-button {
+  margin-top: 0;
+  margin: 0;
+}
+
+.footer-container {
+  background: transparent;
+  padding: 16px 0;
+  position: relative;
+  margin-top: 20px;
+
+  ion-toolbar {
+    background: transparent;
+  }
+}
+
+.fab-buttons-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 0 16px;
+  position: relative;
+  z-index: 10;
+  transform: translateY(-50%);
+}
+
+.fab-button {
+  width: 56px;
+  height: 56px;
+  --border-radius: 50%;
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  --padding-start: 0;
+  --padding-end: 0;
+
+  ion-icon {
+    font-size: 24px;
+  }
+
+  &:hover {
+    --box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  &.pulse {
+    animation: pulse-animation 0.6s ease-out;
+  }
+}
+
+@keyframes pulse-animation {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  50% {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 12px rgba(0, 0, 0, 0.1);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.floating-texts {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  height: 200px;
+}
+
+.floating-text {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  white-space: nowrap;
+  background: #000;
+  padding: 8px 16px;
+  border-radius: 20px;
+  animation: float-up 1.5s ease-out forwards;
+}
+
+@keyframes float-up {
+  0% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-80px);
+  }
+}
+
+.no-movies {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+
+  h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+
+  p {
+    color: #666;
+    margin-bottom: 30px;
+  }
+}
+
+.reset-button {
+  max-width: 200px;
+}
+
+@media (max-width: 576px) {
+  .movie-image {
+    height: 300px;
+  }
+
+  .movie-title {
+    font-size: 20px;
+  }
+
+  ion-card {
+    margin: 0 0 15px 0;
+  }
+
+  .fab-button {
+    width: 44.8px;
+    height: 44.8px;
+
+    ion-icon {
+      font-size: 19.2px;
+    }
+  }
+
+  .fab-buttons-container {
+    gap: 12px;
+    padding: 0 12px;
+  }
+
+  .floating-text {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+}
