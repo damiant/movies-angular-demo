@@ -2,3 +2,4 @@
 - Always use built in control flow rather than directives like *ngFor
 - Implement push change detection with components
 - Use signal inputs and signals in general and avoid using rxjs
+- use fetch rather than use httpclient

@@ -1,6 +1,4 @@
 import { Injectable, signal, computed } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { lastValueFrom } from 'rxjs';
 
 export interface Movie {
   id: number;
@@ -61,21 +59,22 @@ export class MovieService {
     return index < movies.length ? movies[index] : null;
   });
 
-  constructor(private http: HttpClient) {
+  constructor() {
     this.loadMovies();
   }
 
   private async loadMovies(): Promise<void> {
     try {
-      const response = await lastValueFrom(
-        this.http.get<{ results: TMDbMovie[] }>(
-          `${this.BASE_URL}/movie/popular?api_key=${this.API_KEY}&language=en-US&page=1`
-        )
+      const response = await fetch(
+        `${this.BASE_URL}/movie/popular?api_key=${this.API_KEY}&language=en-US&page=1`
       );
-      await this.processMovies(response.results);
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      const data = await response.json() as { results: TMDbMovie[] };
+      await this.processMovies(data.results);
     } catch (error) {
       console.error('Error loading movies from TMDB:', error);
-      this.loadFallbackMovies();
+      this.movies.set([]);
+      this.isLoaded.set(true);
     }
   }
 
@@ -91,17 +90,18 @@ export class MovieService {
       this.isLoaded.set(true);
     } catch (error) {
       console.error('Error processing movies:', error);
-      this.loadFallbackMovies();
+      this.movies.set([]);
+      this.isLoaded.set(true);
     }
   }
 
   private async enrichMovieWithCredits(tmdbMovie: TMDbMovie): Promise<Movie> {
     try {
-      const credits = await lastValueFrom(
-        this.http.get<TMDbCredits>(
-          `${this.BASE_URL}/movie/${tmdbMovie.id}/credits?api_key=${this.API_KEY}`
-        )
+      const response = await fetch(
+        `${this.BASE_URL}/movie/${tmdbMovie.id}/credits?api_key=${this.API_KEY}`
       );
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      const credits = await response.json() as TMDbCredits;
       const topCast = credits.cast.slice(0, 3);
       const actors = topCast.map((actor) => actor.name);
       const actorIds = topCast.map((actor) => actor.id);
@@ -132,52 +132,6 @@ export class MovieService {
       rating: tmdbMovie.vote_average,
       link: `https://www.themoviedb.org/movie/${tmdbMovie.id}`,
     };
-  }
-
-  private loadFallbackMovies(): void {
-    // Fallback to sample movies if API fails
-    const fallbackMovies: Movie[] = [
-      {
-        id: 278,
-        title: 'The Shawshank Redemption',
-        image: 'https://image.tmdb.org/t/p/w500/q6725aieQkBBKOQsggvHWYcgISJ.jpg',
-        description: 'Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.',
-        actors: ['Tim Robbins', 'Morgan Freeman'],
-        actorImages: [],
-        actorIds: [],
-        year: 1994,
-        rating: 9.3,
-        link: 'https://www.themoviedb.org/movie/278',
-      },
-      {
-        id: 238,
-        title: 'The Godfather',
-        image: 'https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fmnbZ1.jpg',
-        description: 'The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant youngest son.',
-        actors: ['Marlon Brando', 'Al Pacino', 'James Caan'],
-        actorImages: [],
-        actorIds: [],
-        year: 1972,
-        rating: 9.2,
-        link: 'https://www.themoviedb.org/movie/238',
-      },
-      {
-        id: 155,
-        title: 'The Dark Knight',
-        image: 'https://image.tmdb.org/t/p/w500/1hqwGsggBV2JLicCrWZbnezRSclu.jpg',
-        description: 'When the menace known as the Joker wreaks havoc on Gotham, Batman must accept one of the greatest tests to fight injustice.',
-        actors: ['Christian Bale', 'Heath Ledger', 'Aaron Eckhart'],
-        actorImages: [],
-        actorIds: [],
-        year: 2008,
-        rating: 9.0,
-        link: 'https://www.themoviedb.org/movie/155',
-      },
-    ];
-
-    this.movies.set(fallbackMovies);
-    this.initializeRatings();
-    this.isLoaded.set(true);
   }
 
   private initializeRatings(): void {
@@ -247,24 +201,29 @@ export class MovieService {
 
   async getActorMovies(actorId: number): Promise<Movie[]> {
     try {
-      const response = await lastValueFrom(
-        this.http.get<{
-          cast: Array<{
-            id: number;
-            title: string;
-            poster_path: string;
-            overview: string;
-            release_date: string;
-            vote_average: number;
-          }>;
-        }>(
-          `${this.BASE_URL}/person/${actorId}/movie_credits?api_key=${this.API_KEY}`
-        )
+      const response = await fetch(
+        `${this.BASE_URL}/person/${actorId}/movie_credits?api_key=${this.API_KEY}`
       );
-      return response.cast
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      const data = await response.json() as {
+        cast: Array<{
+          id: number;
+          title: string;
+          poster_path: string;
+          overview: string;
+          release_date: string;
+          vote_average: number;
+        }>;
+      };
+      const moviesWithPosters = data.cast
         .filter((movie) => movie.poster_path)
-        .slice(0, 10)
-        .map((tmdbMovie) => this.createMovieFromTMDb(tmdbMovie as TMDbMovie, [], [], []));
+        .slice(0, 10);
+      
+      const moviePromises = moviesWithPosters.map((tmdbMovie) =>
+        this.enrichMovieWithCredits(tmdbMovie as TMDbMovie)
+      );
+      
+      return await Promise.all(moviePromises);
     } catch {
       return [];
     }
@@ -272,16 +231,16 @@ export class MovieService {
 
   async getActor(actorId: number): Promise<Actor | null> {
     try {
-      const response = await lastValueFrom(
-        this.http.get<{ id: number; name: string; profile_path: string | null }>(
-          `${this.BASE_URL}/person/${actorId}?api_key=${this.API_KEY}`
-        )
+      const response = await fetch(
+        `${this.BASE_URL}/person/${actorId}?api_key=${this.API_KEY}`
       );
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      const data = await response.json() as { id: number; name: string; profile_path: string | null };
       return {
-        id: response.id,
-        name: response.name,
-        profileImage: response.profile_path
-          ? `${this.IMAGE_BASE_URL}${response.profile_path}`
+        id: data.id,
+        name: data.name,
+        profileImage: data.profile_path
+          ? `${this.IMAGE_BASE_URL}${data.profile_path}`
           : 'https://via.placeholder.com/300x450?text=No+Image',
       };
     } catch {
