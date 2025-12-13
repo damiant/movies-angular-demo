@@ -25,9 +25,9 @@ ion-card {
 }
 
 .movie-title {
-  font-size: 24px;
-  font-weight: 600;
-  margin-top: 10px;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  margin-top: var(--spacing-md);
 }
 
 .movie-subtitle {

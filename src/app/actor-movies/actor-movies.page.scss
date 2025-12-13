@@ -6,14 +6,14 @@
 }
 
 .actor-container {
-  padding-bottom: 20px;
+  padding-bottom: var(--spacing-xl);
 }
 
 .actor-header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: var(--actor-header-padding);
   text-align: center;
 }
 
@@ -28,9 +28,9 @@
 }
 
 .actor-header h1 {
-  font-size: 28px;
-  margin: 10px 0 5px 0;
-  font-weight: 600;
+  font-size: var(--actor-name-font-size);
+  margin: var(--spacing-sm) 0 var(--spacing-xs) 0;
+  font-weight: var(--font-weight-bold);
 }
 
 .filmography-text {
@@ -77,18 +77,18 @@
 }
 
 .movie-poster {
-  height: 200px;
+  height: var(--movie-poster-height);
   object-fit: cover;
 }
 
 .card-title {
-  font-size: 14px !important;
+  font-size: var(--font-size-base) !important;
   font-weight: 500;
 }
 
 .card-subtitle {
   display: flex;
-  gap: 4px;
+  gap: var(--spacing-xs);
   margin-top: 4px;
   flex-wrap: wrap;
 }

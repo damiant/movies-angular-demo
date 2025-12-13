@@ -1,4 +1,4 @@
-import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, signal, ChangeDetectionStrategy, effect } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import {
@@ -64,13 +64,16 @@ export class ActorMoviesPage {
     private router: Router
   ) {
     addIcons({ starOutline });
+    this.initializeActorData();
   }
 
-  ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      this.actorId = params['id'];
-      if (this.actorId) {
-        this.loadActorData();
+  private initializeActorData(): void {
+    effect(async () => {
+      const params = this.route.snapshot.params;
+      const id = params['id'];
+      if (id) {
+        this.actorId = id;
+        await this.loadActorData();
       }
     });
   }

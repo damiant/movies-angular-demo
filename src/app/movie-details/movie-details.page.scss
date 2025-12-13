@@ -1,6 +1,6 @@
 .movie-details-container {
   padding: var(--spacing-lg);
-  max-width: 600px;
+  max-width: var(--movie-details-max-width);
   margin: 0 auto;
 }
 
@@ -82,18 +82,18 @@
 }
 
 .actor-avatar {
-  width: 80px;
-  height: 80px;
+  width: var(--cast-avatar-size);
+  height: var(--cast-avatar-size);
   border-radius: var(--border-radius-lg);
   object-fit: cover;
-  border: 2px solid var(--color-border);
+  border: var(--movie-card-border) solid var(--color-border);
 
   &.placeholder {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 32px;
-    font-weight: bold;
+    font-size: var(--cast-font-size);
+    font-weight: var(--font-weight-bold);
     color: var(--color-white);
     background: var(--gradient-purple);
   }
@@ -104,7 +104,7 @@
   text-align: center;
   color: var(--color-gray-medium);
   font-weight: var(--font-weight-normal);
-  max-width: 80px;
+  max-width: var(--cast-avatar-size);
   white-space: normal;
 }
 
@@ -137,7 +137,7 @@
   }
 
   .actor-avatar {
-    width: 70px;
-    height: 70px;
+    width: var(--cast-avatar-size-mobile);
+    height: var(--cast-avatar-size-mobile);
   }
 }
