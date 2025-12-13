@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 export class ActorCardComponent {
   name = input<string>('');
   image = input<string | null>(null);
+  whiteText = input(false);
   
   actorClick = output<void>();
 }

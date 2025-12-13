@@ -33,29 +33,12 @@
             <h3>Cast</h3>
             <div class="cast-list">
               @for (actor of movie()!.actors; let i = $index; track i) {
-                @if (movie()!.actorIds && movie()!.actorIds[i]) {
-                  <div class="cast-item clickable" (click)="goToActorMovies(movie()!.actorIds[i])">
-                    @if (movie()!.actorImages[i]) {
-                      <img [src]="movie()!.actorImages[i]" [alt]="actor" class="actor-avatar" />
-                    } @else {
-                      <div class="actor-avatar placeholder">
-                        {{ actor.charAt(0) }}
-                      </div>
-                    }
-                    <span class="actor-name">{{ actor }}</span>
-                  </div>
-                } @else {
-                  <div class="cast-item">
-                    @if (movie()!.actorImages[i]) {
-                      <img [src]="movie()!.actorImages[i]" [alt]="actor" class="actor-avatar" />
-                    } @else {
-                      <div class="actor-avatar placeholder">
-                        {{ actor.charAt(0) }}
-                      </div>
-                    }
-                    <span class="actor-name">{{ actor }}</span>
-                  </div>
-                }
+                <app-actor-card
+                  [name]="actor"
+                  [image]="movie()!.actorImages[i]"
+                  [whiteText]="true"
+                  (actorClick)="goToActorMovies(movie()!.actorIds[i])"
+                ></app-actor-card>
               }
             </div>
           </div>

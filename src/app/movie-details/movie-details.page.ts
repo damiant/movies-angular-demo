@@ -18,6 +18,7 @@ import { openOutline, playCircle, closeOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { MovieFooterComponent } from '../movie-footer/movie-footer.component';
 import { SafePipe } from '../pipes/safe.pipe';
+import { ActorCardComponent } from '../components/actor-card/actor-card.component';
 
 @Component({
   selector: 'app-movie-details',
@@ -38,6 +39,7 @@ import { SafePipe } from '../pipes/safe.pipe';
     IonModal,
     MovieFooterComponent,
     SafePipe,
+    ActorCardComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

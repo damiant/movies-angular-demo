@@ -22,4 +22,8 @@
   color: var(--color-gray-medium);
   text-align: center;
   display: block;
+
+  &.white-text {
+    color: #ffffff;
+  }
 }
