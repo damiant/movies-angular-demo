@@ -21,15 +21,15 @@ Movie Rater is a modern, mobile-first Ionic + Angular application for browsing, 
 ## Getting Started
 1. Install dependencies:
    ```bash
-   npm install
+   bun install
    ```
 2. Run the app:
    ```bash
-   npm start
+   bun run start
    ```
 3. Build for production:
    ```bash
-   npm run build
+   bun run build
    ```
 
 ## Project Structure
