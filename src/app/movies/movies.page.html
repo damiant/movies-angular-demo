@@ -7,7 +7,7 @@
       placeholder="Search for movies..."
       [value]="searchQuery()"
       [debounce]="1000"
-      (ionInput)="searchQuery.set($event.detail.value || '')"
+      (ionInput)="onSearchInput($event)"
       showClearButton="focus"
       animated="true"
     ></ion-searchbar>

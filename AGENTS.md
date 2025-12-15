@@ -10,3 +10,4 @@
 - Always look for components that can be reused.
 - If css is going over the budget limit consider breaking a page into components.
 - Avoid using console.log
+- Always use bun as the project is bun based: not npm.

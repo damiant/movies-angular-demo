@@ -44,6 +44,16 @@
 
 import './zone-flags';
 
+// Mock adoptedStyleSheets for Ionic/Stencil in test environment
+if (typeof document !== 'undefined' && !document.adoptedStyleSheets) {
+  class AdoptedStyleSheets extends Array<any> {}
+  Object.defineProperty(document, 'adoptedStyleSheets', {
+    value: new AdoptedStyleSheets(),
+    writable: true,
+    configurable: true,
+  });
+}
+
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
  */

@@ -117,4 +117,8 @@ export class MoviesPage {
   onScroll(event: any): void {
     this.scrollService.setScrollTop(event.detail.scrollTop);
   }
+
+  onSearchInput(event: any): void {
+    this.searchQuery.set(event.detail.value || '');
+  }
 }
