@@ -1,8 +1,8 @@
 {
-  "name": "tmp-angular-ionic",
-  "version": "0.0.0",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "name": "movie-rater",
+  "version": "0.0.1",
+  "author": "Damian Tarnawsky",
+  "homepage": "https://github.com/damiant/",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
