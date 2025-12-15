@@ -121,6 +121,18 @@
       padding: 0 20px 20px 20px;
     }
   }
+
+  .card-title {
+    font-size: calc(var(--font-size-base) * 1.25) !important;
+  }
+
+  .card-subtitle ion-badge {
+    font-size: 13.75px;
+  }
+
+  .card-description {
+    font-size: calc(var(--font-size-xs) * 1.25);
+  }
 }
 
 @media (max-width: 576px) {
