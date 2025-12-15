@@ -2,3 +2,15 @@
 ion-content {
   --background: var(--gradient-dark) !important;
 }
+
+@media (min-width: 641px) {
+  .actor-container,
+  .movies-list,
+  .movie-details-container,
+  .favorites-container,
+  #container {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 950px;
+  }
+}
