@@ -1,12 +1,12 @@
 import { Component, input, output, ChangeDetectionStrategy, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-actor-card',
   templateUrl: './actor-card.component.html',
   styleUrls: ['./actor-card.component.scss'],
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ActorCardComponent {

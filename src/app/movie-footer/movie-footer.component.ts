@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, signal, effect } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { Router } from '@angular/router';
 import { IonSegment, IonSegmentButton, IonLabel } from '@ionic/angular/standalone';
 import { MovieService } from '../services/movie.service';
@@ -11,11 +11,10 @@ import { ScrollService } from '../services/scroll.service';
   styleUrls: ['./movie-footer.component.scss'],
   standalone: true,
   imports: [
-    CommonModule,
     IonSegment,
     IonSegmentButton,
-    IonLabel,
-  ],
+    IonLabel
+],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MovieFooterComponent {

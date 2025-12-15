@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, signal, effect } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { Router } from '@angular/router';
 import {
   IonContent,
@@ -27,7 +27,6 @@ import { PageSpacingComponent } from '../components/page-spacing/page-spacing.co
   styleUrls: ['./favorites.page.scss'],
   standalone: true,
   imports: [
-    CommonModule,
     IonContent,
     IonHeader,
     IonTitle,
@@ -40,8 +39,8 @@ import { PageSpacingComponent } from '../components/page-spacing/page-spacing.co
     IonImg,
     IonBadge,
     IonIcon,
-    PageSpacingComponent,
-  ],
+    PageSpacingComponent
+],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FavoritesPage {

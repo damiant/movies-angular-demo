@@ -1,5 +1,5 @@
 import { Component, input, ChangeDetectionStrategy, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { Actor } from '../../services/movie.service';
 
 @Component({
@@ -7,7 +7,7 @@ import { Actor } from '../../services/movie.service';
   templateUrl: './actor-large.component.html',
   styleUrls: ['./actor-large.component.scss'],
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ActorLargeComponent {

@@ -1,5 +1,5 @@
 import { Component, input, output, ChangeDetectionStrategy, signal, effect } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import {
   IonIcon,
   IonButton,
@@ -18,13 +18,12 @@ import { ActorCardComponent } from '../actor-card/actor-card.component';
   styleUrls: ['./movie-card-large.component.scss'],
   standalone: true,
   imports: [
-    CommonModule,
     IonIcon,
     IonButton,
     IonBadge,
     IonSkeletonText,
-    ActorCardComponent,
-  ],
+    ActorCardComponent
+],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MovieCardLargeComponent {

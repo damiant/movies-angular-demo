@@ -4,7 +4,7 @@ import {
   ChangeDetectionStrategy,
   effect,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { Router } from '@angular/router';
 import {
   IonContent,
@@ -26,7 +26,6 @@ import { PageSpacingComponent } from '../components/page-spacing/page-spacing.co
   styleUrls: ['./movies.page.scss'],
   standalone: true,
   imports: [
-    CommonModule,
     IonContent,
     IonHeader,
     IonTitle,
@@ -34,8 +33,8 @@ import { PageSpacingComponent } from '../components/page-spacing/page-spacing.co
     IonSpinner,
     IonSearchbar,
     MovieCardLargeComponent,
-    PageSpacingComponent,
-  ],
+    PageSpacingComponent
+],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MoviesPage {

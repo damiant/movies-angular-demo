@@ -1,6 +1,6 @@
 import { Component, signal, ChangeDetectionStrategy, effect } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 import {
   IonContent,
   IonHeader,
@@ -29,7 +29,6 @@ import { ActorLargeComponent } from '../components/actor-large/actor-large.compo
   styleUrls: ['./actor-movies.page.scss'],
   standalone: true,
   imports: [
-    CommonModule,
     IonContent,
     IonHeader,
     IonTitle,
@@ -45,8 +44,8 @@ import { ActorLargeComponent } from '../components/actor-large/actor-large.compo
     IonSpinner,
     IonBackButton,
     IonButtons,
-    ActorLargeComponent,
-  ],
+    ActorLargeComponent
+],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ActorMoviesPage {

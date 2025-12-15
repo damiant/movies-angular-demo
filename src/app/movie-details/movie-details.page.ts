@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, signal, effect } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { Router } from '@angular/router';
 import {
   IonContent,
@@ -28,7 +28,6 @@ import { PageSpacingComponent } from '../components/page-spacing/page-spacing.co
   styleUrls: ['./movie-details.page.scss'],
   standalone: true,
   imports: [
-    CommonModule,
     IonContent,
     IonHeader,
     IonTitle,
@@ -41,8 +40,8 @@ import { PageSpacingComponent } from '../components/page-spacing/page-spacing.co
     IonModal,
     SafePipe,
     ActorCardComponent,
-    PageSpacingComponent,
-  ],
+    PageSpacingComponent
+],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MovieDetailsPage {
