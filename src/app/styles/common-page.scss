@@ -4,13 +4,8 @@ ion-content {
 }
 
 @media (min-width: 641px) {
-  ion-content {
-    display: flex;
-    justify-content: center;
-
-    > * {
-      max-width: 950px;
-      width: 100%;
-    }
+  ion-content::part(scroll) {
+    margin: 0 auto;
+    max-width: 950px;
   }
 }
