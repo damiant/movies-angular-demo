@@ -77,9 +77,15 @@ export class MovieService {
 
   private async loadMovies(): Promise<void> {
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
+
       const response = await fetch(
-        `${this.BASE_URL}/movie/popular?api_key=${this.API_KEY}&language=en-US&page=1`
+        `${this.BASE_URL}/movie/popular?api_key=${this.API_KEY}&language=en-US&page=1`,
+        { signal: controller.signal }
       );
+      clearTimeout(timeoutId);
+
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       const data = await response.json() as { results: TMDbMovie[] };
       await this.processMovies(data.results);
@@ -107,14 +113,21 @@ export class MovieService {
 
   private async enrichMovieWithCredits(tmdbMovie: TMDbMovie): Promise<Movie> {
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+
       const [creditsResponse, videosResponse] = await Promise.all([
         fetch(
-          `${this.BASE_URL}/movie/${tmdbMovie.id}/credits?api_key=${this.API_KEY}`
+          `${this.BASE_URL}/movie/${tmdbMovie.id}/credits?api_key=${this.API_KEY}`,
+          { signal: controller.signal }
         ),
         fetch(
-          `${this.BASE_URL}/movie/${tmdbMovie.id}/videos?api_key=${this.API_KEY}`
+          `${this.BASE_URL}/movie/${tmdbMovie.id}/videos?api_key=${this.API_KEY}`,
+          { signal: controller.signal }
         ),
       ]);
+
+      clearTimeout(timeoutId);
 
       if (!creditsResponse.ok) throw new Error(`HTTP error! status: ${creditsResponse.status}`);
       const credits = await creditsResponse.json() as TMDbCredits;
@@ -130,15 +143,12 @@ export class MovieService {
       let trailerUrl: string | undefined;
       if (videosResponse.ok) {
         const videos = await videosResponse.json() as TMDbVideoResult;
-        // First try to find official English trailer
         let trailer = videos.results.find(
           (v) => v.type === 'Trailer' && v.official && (v.iso_639_1 === 'en' || !v.iso_639_1)
         );
-        // Then try any official trailer
         if (!trailer) {
           trailer = videos.results.find((v) => v.type === 'Trailer' && v.official);
         }
-        // Then try any trailer or teaser
         if (!trailer) {
           trailer = videos.results.find((v) => v.type === 'Trailer' || v.type === 'Teaser');
         }
@@ -341,6 +351,10 @@ export class MovieService {
 
   getSelectedMovie() {
     return this.selectedMovie;
+  }
+
+  getIsLoaded() {
+    return this.isLoaded;
   }
 
   async searchMovies(query: string): Promise<Movie[]> {

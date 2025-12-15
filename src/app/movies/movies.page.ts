@@ -1,4 +1,9 @@
-import { Component, signal, ChangeDetectionStrategy, effect } from '@angular/core';
+import {
+  Component,
+  signal,
+  ChangeDetectionStrategy,
+  effect,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import {
@@ -35,19 +40,24 @@ import { PageSpacingComponent } from '../components/page-spacing/page-spacing.co
 })
 export class MoviesPage {
   currentMovie = this.movieService.currentMovie;
-  isLoading = signal(false);
+  isLoading = this.movieService.getIsLoaded();
   randomMovies = signal<Movie[]>([]);
   searchQuery = signal('');
   searchResults = signal<Movie[] | null>(null);
   searching = signal(false);
 
-  constructor(private movieService: MovieService, private router: Router, private scrollService: ScrollService) {
+  constructor(
+    private movieService: MovieService,
+    private router: Router,
+    private scrollService: ScrollService
+  ) {
     addIcons({});
-    this.isLoading.set(true);
-    setTimeout(() => {
-      this.loadRandomMovies();
-      this.isLoading.set(false);
-    }, 500);
+    effect(() => {
+      const isLoaded = this.isLoading();
+      if (isLoaded) {
+        this.loadRandomMovies();
+      }
+    });
 
     effect(() => {
       const query = this.searchQuery();
@@ -57,7 +67,7 @@ export class MoviesPage {
         return;
       }
       this.searching.set(true);
-      this.movieService.searchMovies(query).then(results => {
+      this.movieService.searchMovies(query).then((results) => {
         this.searchResults.set(results);
         this.searching.set(false);
       });
@@ -68,6 +78,8 @@ export class MoviesPage {
     const allMovies = this.movieService.getMovies();
     const shuffled = [...allMovies].sort(() => Math.random() - 0.5);
     this.randomMovies.set(shuffled.slice(0, 5));
+    this.isLoading.set(false);
+
   }
 
   openMovieLink(): void {
