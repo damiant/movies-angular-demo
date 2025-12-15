@@ -6,7 +6,7 @@
 - Avoid using rxjs
 - use fetch rather than use httpclient
 - Create components strategically to keep pages simple
-- Always call `npm run build` to verify no build errors were created
+- After code changes run the build to verify no build errors were created
 - Always look for components that can be reused.
 - If css is going over the budget limit consider breaking a page into components.
 - Avoid using console.log
