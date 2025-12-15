@@ -2,3 +2,15 @@
 ion-content {
   --background: var(--gradient-dark) !important;
 }
+
+@media (min-width: 641px) {
+  ion-content {
+    display: flex;
+    justify-content: center;
+
+    > * {
+      max-width: 950px;
+      width: 100%;
+    }
+  }
+}
