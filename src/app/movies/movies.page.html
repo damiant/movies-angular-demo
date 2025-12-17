@@ -4,7 +4,7 @@
   </ion-toolbar>
   <ion-toolbar>
     <ion-searchbar
-      placeholder="Search for movies..."
+      placeholder="movies"
       [value]="searchQuery()"
       [debounce]="1000"
       (ionInput)="searchQuery.set($event.detail.value || '')"
