@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
-import { MovieFooterComponent } from './movie-footer/movie-footer.component';
+import { DarkFooterComponent } from './dark-footer/dark-footer.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  imports: [IonApp, IonRouterOutlet, MovieFooterComponent],
+  imports: [IonApp, IonRouterOutlet, DarkFooterComponent],
 })
 export class AppComponent {}

@@ -1,0 +1,8 @@
+<ion-segment [value]="currentSegment" (ionChange)="onSegmentChange($event)" class="dark-footer-segment" [class.hidden]="isHidden()">
+  <ion-segment-button value="movies">
+    <ion-label>Movies</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="favorites" [class.bounce]="isBouncing()">
+    <ion-label>{{ favoritesCount() }} favorite{{ favoritesCount() !== 1 ? 's' : '' }}</ion-label>
+  </ion-segment-button>
+</ion-segment>
