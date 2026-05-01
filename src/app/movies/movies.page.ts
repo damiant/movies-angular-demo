@@ -3,6 +3,7 @@ import {
   signal,
   ChangeDetectionStrategy,
   effect,
+  inject,
 } from '@angular/core';
 
 import { Router } from '@angular/router';
@@ -38,6 +39,10 @@ import { PageSpacingComponent } from '../components/page-spacing/page-spacing.co
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MoviesPage {
+  private movieService = inject(MovieService);
+  private router = inject(Router);
+  private scrollService = inject(ScrollService);
+
   currentMovie = this.movieService.currentMovie;
   isLoading = this.movieService.getIsLoaded();
   randomMovies = signal<Movie[]>([]);
@@ -45,11 +50,7 @@ export class MoviesPage {
   searchResults = signal<Movie[] | null>(null);
   searching = signal(false);
 
-  constructor(
-    private movieService: MovieService,
-    private router: Router,
-    private scrollService: ScrollService
-  ) {
+  constructor() {
     addIcons({});
     effect(() => {
       const isLoaded = this.isLoading();

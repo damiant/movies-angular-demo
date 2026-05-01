@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, signal, effect } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal, effect, inject } from '@angular/core';
 
 import { Router } from '@angular/router';
 import { IonSegment, IonSegmentButton, IonLabel } from '@ionic/angular/standalone';
@@ -25,11 +25,11 @@ export class MovieFooterComponent {
   private lastScrollPosition = 0;
   private scrollThreshold = 50;
 
-  constructor(
-    private router: Router,
-    private movieService: MovieService,
-    private scrollService: ScrollService
-  ) {
+  private router = inject(Router);
+  private movieService = inject(MovieService);
+  private scrollService = inject(ScrollService);
+
+  constructor() {
     const currentUrl = this.router.url.split('/')[1];
     if (currentUrl === 'favorites') {
       this.currentSegment = 'favorites';
@@ -42,12 +42,12 @@ export class MovieFooterComponent {
       const allMovies = this.movieService.getMovies();
       const saved = this.movieService.getSavedMovies(allMovies);
       const newCount = saved.length;
-      
+
       // Trigger bounce animation if count changed
       if (newCount !== this.favoritesCount()) {
         this.isBouncing.set(true);
         this.favoritesCount.set(newCount);
-        
+
         // Reset animation after it completes (800ms for 2 bounces)
         setTimeout(() => {
           this.isBouncing.set(false);
@@ -65,7 +65,7 @@ export class MovieFooterComponent {
         // Scrolling up
         this.isHidden.set(false);
       }
-      
+
       this.lastScrollPosition = currentScrollPosition;
     });
   }

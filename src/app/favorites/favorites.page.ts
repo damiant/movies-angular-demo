@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, signal, effect } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal, effect, inject } from '@angular/core';
 
 import { Router } from '@angular/router';
 import {
@@ -48,7 +48,11 @@ export class FavoritesPage {
   star = star;
   selectedMovieId = signal<number | null>(null);
 
-  constructor(private movieService: MovieService, private router: Router, private scrollService: ScrollService) {
+  private movieService = inject(MovieService);
+  private router = inject(Router);
+  private scrollService = inject(ScrollService);
+
+  constructor() {
     addIcons({ star });
     this.loadSavedMovies();
 
