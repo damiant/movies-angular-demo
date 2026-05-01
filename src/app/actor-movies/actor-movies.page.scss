@@ -33,7 +33,7 @@
   }
 
   ion-card-header {
-    padding: 0 10px;
+    padding: var(--spacing-sm) 10px 0;
     flex-shrink: 0;
   }
 
@@ -119,7 +119,7 @@
 
   .movie-card {
     ion-card-header {
-      padding: 0 20px;
+      padding: var(--spacing-sm) 20px 0;
     }
 
     ion-card-content {

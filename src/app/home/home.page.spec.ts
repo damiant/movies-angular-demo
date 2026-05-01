@@ -9,8 +9,12 @@ describe('HomePage', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HomePage]
-    }).compileComponents();
+      imports: [HomePage],
+    })
+      .overrideComponent(HomePage, {
+        set: { template: '' },
+      })
+      .compileComponents();
 
     fixture = TestBed.createComponent(HomePage);
     component = fixture.componentInstance;
