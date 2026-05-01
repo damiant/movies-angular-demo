@@ -65,9 +65,14 @@
 
 .card-subtitle {
   display: flex;
-  gap: var(--spacing-xs);
   margin-top: 4px;
   flex-wrap: wrap;
+}
+
+.spacer {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: center;
 }
 
 .card-subtitle ion-badge {
