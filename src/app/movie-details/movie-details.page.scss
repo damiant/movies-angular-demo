@@ -206,6 +206,11 @@
 }
 
 @media (min-width: 801px) {
+  .poster-modal {
+    --width: 95vw;
+    --height: 95vh;
+  }
+
   .movie-poster {
     max-height: 50vh;
     object-fit: cover;

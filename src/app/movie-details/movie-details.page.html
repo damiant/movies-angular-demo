@@ -77,7 +77,7 @@
   }
 </ion-content>
 
-<ion-modal [isOpen]="showPosterModal()" (ionModalDidDismiss)="closePosterModal()">
+<ion-modal class="poster-modal" [isOpen]="showPosterModal()" (ionModalDidDismiss)="closePosterModal()">
   <ng-template>
     <ion-content [fullscreen]="true" class="poster-modal-content">
       <ion-fab slot="fixed" vertical="top" horizontal="end">
