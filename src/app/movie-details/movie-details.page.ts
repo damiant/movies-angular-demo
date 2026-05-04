@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, signal, effect } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal, effect, inject } from '@angular/core';
 
 import { Router } from '@angular/router';
 import {
@@ -45,6 +45,11 @@ import { PageSpacingComponent } from '../components/page-spacing/page-spacing.co
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MovieDetailsPage {
+  private movieService = inject(MovieService);
+  private router = inject(Router);
+  private celebrationService = inject(CelebrationService);
+  private scrollService = inject(ScrollService);
+
   movie = this.movieService.getSelectedMovie();
   showTrailerModal = signal(false);
   isSavedForLater = signal(false);
@@ -55,12 +60,7 @@ export class MovieDetailsPage {
   star = star;
   starOutline = starOutline;
 
-  constructor(
-    private movieService: MovieService,
-    private router: Router,
-    private celebrationService: CelebrationService,
-    private scrollService: ScrollService
-  ) {
+  constructor() {
     addIcons({ openOutline, playCircle, closeOutline, star, starOutline });
     // Check if navigating from favorites page
     const navigation = this.router.getCurrentNavigation();
@@ -114,5 +114,3 @@ export class MovieDetailsPage {
     }
   }
 }
-
-

@@ -33,7 +33,7 @@
   }
 
   ion-card-header {
-    padding: 0 10px;
+    padding: var(--spacing-sm) 10px 0;
     flex-shrink: 0;
   }
 
@@ -65,9 +65,14 @@
 
 .card-subtitle {
   display: flex;
-  gap: var(--spacing-xs);
-  margin-top: 4px;
+  margin-top: var(--spacing-sm);
   flex-wrap: wrap;
+}
+
+.spacer {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: center;
 }
 
 .card-subtitle ion-badge {
@@ -114,7 +119,7 @@
 
   .movie-card {
     ion-card-header {
-      padding: 0 20px;
+      padding: var(--spacing-sm) 20px 0;
     }
 
     ion-card-content {

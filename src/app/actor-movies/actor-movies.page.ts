@@ -1,4 +1,4 @@
-import { Component, signal, ChangeDetectionStrategy, effect } from '@angular/core';
+import { Component, signal, ChangeDetectionStrategy, effect, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import {
@@ -56,11 +56,11 @@ export class ActorMoviesPage {
   starOutline = starOutline;
   selectedMovieId = signal<number | null>(null);
 
-  constructor(
-    private movieService: MovieService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  private movieService = inject(MovieService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
+  constructor() {
     addIcons({ starOutline });
     this.initializeActorData();
   }

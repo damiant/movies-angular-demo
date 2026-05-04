@@ -1,4 +1,4 @@
-import { Component, input, output, ChangeDetectionStrategy, signal, effect } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy, signal, effect, inject } from '@angular/core';
 
 import {
   IonIcon,
@@ -48,7 +48,9 @@ export class MovieCardLargeComponent {
   playCircle = playCircle;
   openOutline = openOutline;
 
-  constructor(private celebrationService: CelebrationService) {
+  private celebrationService = inject(CelebrationService);
+
+  constructor() {
     addIcons({ star, starOutline, playCircle, openOutline });
     effect(() => {
       this.isFavoritedLocal.set(this.isFavorited());

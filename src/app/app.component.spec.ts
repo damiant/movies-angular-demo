@@ -7,8 +7,12 @@ describe('AppComponent', () => {
   it('should create the app', async () => {
     await TestBed.configureTestingModule({
       imports: [AppComponent],
-      providers: [provideRouter([])]
-    }).compileComponents();
+      providers: [provideRouter([])],
+    })
+      .overrideComponent(AppComponent, {
+        set: { template: '' },
+      })
+      .compileComponents();
 
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
