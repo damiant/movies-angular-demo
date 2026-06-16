@@ -6,7 +6,17 @@
   margin: 0 auto;
 }
 
+.poster-button {
+  display: block;
+  width: 100%;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
 .movie-poster {
+  display: block;
   width: 100%;
   height: auto;
   border-radius: var(--border-radius-sm);
@@ -47,8 +57,6 @@
 
 .description-section {
   padding: var(--spacing-lg) 0;
-  border-top: 1px solid var(--color-gray-lighter);
-  border-bottom: 1px solid var(--color-gray-lighter);
 }
 
 .movie-description {
@@ -144,6 +152,27 @@
   --border-radius: 50px;
 }
 
+.poster-modal-content {
+  --background: rgba(0, 0, 0, 0.92);
+}
+
+.poster-modal-image-shell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  padding: calc(var(--spacing-xl) * 2) var(--spacing-lg) var(--spacing-lg);
+}
+
+.poster-modal-image {
+  width: 100%;
+  max-width: 900px;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: var(--border-radius-sm);
+  box-shadow: var(--shadow-lg);
+}
+
 .trailer-container {
   width: 100%;
   padding: var(--spacing-lg);
@@ -175,6 +204,11 @@
 }
 
 @media (min-width: 801px) {
+  .poster-modal {
+    --width: 95vw;
+    --height: 95vh;
+  }
+
   .movie-poster {
     max-height: 50vh;
     object-fit: cover;
@@ -184,6 +218,10 @@
 @media (max-width: 576px) {
   .movie-details-container {
     padding: var(--spacing-md);
+  }
+
+  .poster-modal-image-shell {
+    padding: calc(var(--spacing-xl) * 2) var(--spacing-md) var(--spacing-md);
   }
 
   .movie-title {

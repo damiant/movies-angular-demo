@@ -10,6 +10,8 @@ import {
   IonBadge,
   IonBackButton,
   IonButtons,
+  IonFab,
+  IonFabButton,
   IonIcon,
   IonModal,
 } from '@ionic/angular/standalone';
@@ -36,6 +38,8 @@ import { PageSpacingComponent } from '../components/page-spacing/page-spacing.co
     IonBadge,
     IonBackButton,
     IonButtons,
+    IonFab,
+    IonFabButton,
     IonIcon,
     IonModal,
     SafePipe,
@@ -51,6 +55,7 @@ export class MovieDetailsPage {
   private scrollService = inject(ScrollService);
 
   movie = this.movieService.getSelectedMovie();
+  showPosterModal = signal(false);
   showTrailerModal = signal(false);
   isSavedForLater = signal(false);
   isFromFavorites = signal(false);
@@ -84,6 +89,14 @@ export class MovieDetailsPage {
     if (selectedMovie?.link) {
       window.open(selectedMovie.link, '_blank');
     }
+  }
+
+  openPosterModal(): void {
+    this.showPosterModal.set(true);
+  }
+
+  closePosterModal(): void {
+    this.showPosterModal.set(false);
   }
 
   openTrailerModal(): void {
