@@ -1,6 +1,6 @@
 # Movie Rater App
 
-Movie Rater is a modern, mobile-first Ionic + Angular application for browsing, rating, and favoriting movies. It features a beautiful, responsive UI with animated navigation, persistent footer, and smooth transitions. The app demonstrates advanced Angular 17+ features including Signals, Effects, and standalone components, and leverages Ionic 7+ for a native-like mobile experience.
+Movie Rater is a modern, mobile-first Ionic + Angular application for browsing, rating, and favoriting movies. It features a beautiful, responsive UI with animated navigation, persistent footer, and smooth transitions. The app demonstrates advanced Angular 22+ features including Signals, Effects, and standalone components, and leverages Ionic 8+ for a native-like mobile experience.
 
 ## Features
 
@@ -13,10 +13,12 @@ Movie Rater is a modern, mobile-first Ionic + Angular application for browsing, 
 - **Performance:** Uses Angular Signals and Effects for highly reactive, efficient UI updates. Scroll events are throttled for smooth performance.
 
 ## Tech Stack
-- **Angular 17+** (standalone components, Signals API)
-- **Ionic 7+** (ion-content, ion-segment, etc.)
-- **TypeScript (strict mode)**
+- **Angular 22+** (standalone components, Signals API)
+- **Ionic 8+** (ion-content, ion-segment, etc.)
+- **TypeScript 6+ (strict mode)**
+- **Capacitor 8** for native platform integration
 - **SCSS/CSS Variables**
+- **Bun** for dependency management and scripts
 
 ## Getting Started
 1. Install dependencies:
