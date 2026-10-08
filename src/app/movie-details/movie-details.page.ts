@@ -16,7 +16,7 @@ import {
 import { MovieService } from '../services/movie.service';
 import { ScrollService } from '../services/scroll.service';
 import { CelebrationService } from '../services/celebration.service';
-import { openOutline, playCircle, closeOutline, star, starOutline } from 'ionicons/icons';
+import { openOutline, playCircle, closeOutline, thumbsUp, thumbsUpOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { SafePipe } from '../pipes/safe.pipe';
 import { ActorCardComponent } from '../components/actor-card/actor-card.component';
@@ -57,11 +57,11 @@ export class MovieDetailsPage {
   openOutline = openOutline;
   playCircle = playCircle;
   closeOutline = closeOutline;
-  star = star;
-  starOutline = starOutline;
+  thumbsUp = thumbsUp;
+  thumbsUpOutline = thumbsUpOutline;
 
   constructor() {
-    addIcons({ openOutline, playCircle, closeOutline, star, starOutline });
+    addIcons({ openOutline, playCircle, closeOutline, thumbsUp, thumbsUpOutline });
     // Check if navigating from favorites page
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras?.state?.['fromFavorites']) {

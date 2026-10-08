@@ -8,7 +8,7 @@ import {
 } from '@ionic/angular/standalone';
 import { Movie } from '../../services/movie.service';
 import { CelebrationService } from '../../services/celebration.service';
-import { star, playCircle, openOutline, starOutline } from 'ionicons/icons';
+import { star, playCircle, openOutline, thumbsUp, thumbsUpOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { ActorCardComponent } from '../actor-card/actor-card.component';
 
@@ -44,14 +44,15 @@ export class MovieCardLargeComponent {
   favoriteClick = output<void>();
 
   star = star;
-  starOutline = starOutline;
+  thumbsUp = thumbsUp;
+  thumbsUpOutline = thumbsUpOutline;
   playCircle = playCircle;
   openOutline = openOutline;
 
   private celebrationService = inject(CelebrationService);
 
   constructor() {
-    addIcons({ star, starOutline, playCircle, openOutline });
+    addIcons({ star, thumbsUp, thumbsUpOutline, playCircle, openOutline });
     effect(() => {
       this.isFavoritedLocal.set(this.isFavorited());
     });

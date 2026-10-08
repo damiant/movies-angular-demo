@@ -89,7 +89,7 @@
           <div class="card-image error-placeholder"></div>
         }
         <button class="favorite-btn" (click)="onFavoriteClick(); $event.stopPropagation()" [class.favorited]="isFavoritedLocal()">
-          <ion-icon [icon]="isFavoritedLocal() ? star : starOutline"></ion-icon>
+          <ion-icon [icon]="isFavoritedLocal() ? thumbsUp : thumbsUpOutline"></ion-icon>
         </button>
 
         <div class="card-header">
