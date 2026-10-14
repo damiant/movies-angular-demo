@@ -40,7 +40,7 @@
             IMDB
           </ion-button>
           <ion-button expand="full" fill="solid" color="primary" shape="round" (click)="toggleFavorite()" class="rounded-button">
-            <ion-icon slot="start" [icon]="isSavedForLater() ? star : starOutline"></ion-icon>
+            <ion-icon slot="start" [icon]="isSavedForLater() ? thumbsUp : thumbsUpOutline"></ion-icon>
             {{ isSavedForLater() ? 'Favorited' : 'Favorite' }}
           </ion-button>
         </div>
