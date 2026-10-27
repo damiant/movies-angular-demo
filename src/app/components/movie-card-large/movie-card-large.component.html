@@ -33,22 +33,22 @@
             <div class="cast-list">
               @for (actor of movie()!.actors; let i = $index; track i) {
                 @if (movie()!.actorIds && movie()!.actorIds[i]) {
-                  <div class="cast-item clickable" (click)="actorClick.emit(movie()!.actorIds[i])">
+                  <button type="button" class="cast-item clickable" [attr.aria-label]="'View movies with ' + actor" (click)="actorClick.emit(movie()!.actorIds[i])">
                     @if (movie()!.actorImages[i]) {
-                      <img [src]="movie()!.actorImages[i]" [alt]="actor" class="actor-avatar" />
+                      <img [src]="movie()!.actorImages[i]" alt="" class="actor-avatar" />
                     } @else {
-                      <div class="actor-avatar placeholder">
+                      <div class="actor-avatar placeholder" aria-hidden="true">
                         {{ actor.charAt(0) }}
                       </div>
                     }
                     <span class="actor-name">{{ actor }}</span>
-                  </div>
+                  </button>
                 } @else {
                   <div class="cast-item">
                     @if (movie()!.actorImages[i]) {
-                      <img [src]="movie()!.actorImages[i]" [alt]="actor" class="actor-avatar" />
+                      <img [src]="movie()!.actorImages[i]" alt="" class="actor-avatar" />
                     } @else {
-                      <div class="actor-avatar placeholder">
+                      <div class="actor-avatar placeholder" aria-hidden="true">
                         {{ actor.charAt(0) }}
                       </div>
                     }
@@ -88,16 +88,17 @@
         } @else {
           <div class="card-image error-placeholder"></div>
         }
-        <button class="favorite-btn" (click)="onFavoriteClick(); $event.stopPropagation()" [class.favorited]="isFavoritedLocal()">
-          <ion-icon [icon]="isFavoritedLocal() ? star : starOutline"></ion-icon>
+        <button type="button" class="favorite-btn" [attr.aria-label]="isFavoritedLocal() ? 'Remove ' + movie()!.title + ' from favorites' : 'Add ' + movie()!.title + ' to favorites'" [attr.aria-pressed]="isFavoritedLocal()" (click)="onFavoriteClick(); $event.stopPropagation()" [class.favorited]="isFavoritedLocal()">
+          <ion-icon [icon]="isFavoritedLocal() ? star : starOutline" aria-hidden="true"></ion-icon>
         </button>
 
         <div class="card-header">
-          <h2 class="card-title">{{ movie()!.title }}</h2>
+          <h2 class="card-title"><button type="button" class="card-title-btn">{{ movie()!.title }}</button></h2>
           <div class="card-subtitle">
             <span class="year-badge">{{ movie()!.year }}</span>
             <span class="rating-badge">
-              <ion-icon [icon]="star" class="rating-icon"></ion-icon>
+              <ion-icon [icon]="star" class="rating-icon" aria-hidden="true"></ion-icon>
+              <span class="visually-hidden">Rating:</span>
               {{ movie()!.rating.toFixed(1) }}
             </span>
           </div>

@@ -5,12 +5,13 @@
 </ion-header>
 
 <ion-content (ionScroll)="onScroll($event)">
+  <h1 class="visually-hidden">Favorites</h1>
   @if (savedMovies().length > 0) {
     <div class="favorites-container">
       <div class="movies-grid">
         @for (movie of savedMovies(); track movie.id) {
-          <ion-card class="movie-card clickable" (click)="goToMovieDetails(movie)">
-            <ion-img [src]="movie.image" [alt]="movie.title" class="movie-poster"></ion-img>
+          <ion-card button="true" class="movie-card clickable" (click)="goToMovieDetails(movie)">
+            <ion-img [src]="movie.image" alt="" class="movie-poster"></ion-img>
 
             <ion-card-header>
               <ion-card-title class="card-title">{{ movie.title }}</ion-card-title>
@@ -18,7 +19,7 @@
                 <ion-badge color="primary">{{ movie.year }}</ion-badge>
                 @if (movie.rating) {
                   <ion-badge color="warning">
-                    <ion-icon [icon]="star" class="rating-icon"></ion-icon>
+                    <ion-icon [icon]="star" class="rating-icon" aria-hidden="true"></ion-icon>
                     {{ (movie.rating / 2).toFixed(1) }}
                   </ion-badge>
                 }

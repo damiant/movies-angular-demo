@@ -1,8 +1,16 @@
-@if (image() && !imageLoadFailed()) {
-  <img [src]="image()" [alt]="name()" class="actor-avatar" (click)="actorClick.emit()" (error)="onImageError()" />
+@if (interactive()) {
+  <button type="button" class="actor-btn" [attr.aria-label]="'View movies with ' + name()" (click)="onClick($event)">
+    @if (image() && !imageLoadFailed()) {
+      <img [src]="image()" alt="" class="actor-avatar" (error)="onImageError()" />
+    } @else {
+      <div class="actor-avatar placeholder" aria-hidden="true">{{ getInitials() }}</div>
+    }
+  </button>
 } @else {
-  <div class="actor-avatar placeholder" (click)="actorClick.emit()">
-    {{ getInitials() }}
-  </div>
+  @if (image() && !imageLoadFailed()) {
+    <img [src]="image()" alt="" class="actor-avatar" (error)="onImageError()" />
+  } @else {
+    <div class="actor-avatar placeholder" aria-hidden="true">{{ getInitials() }}</div>
+  }
 }
 <span class="actor-name" [class.white-text]="whiteText()">{{ name() }}</span>

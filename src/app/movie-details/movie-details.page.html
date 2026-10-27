@@ -54,6 +54,7 @@
                   [name]="actor"
                   [image]="movie()!.actorImages[i]"
                   [whiteText]="true"
+                  [interactive]="!isFromFavorites()"
                   (actorClick)="!isFromFavorites() && goToActorMovies(movie()!.actorIds[i])"
                 ></app-actor-card>
               }
@@ -76,8 +77,8 @@
       <ion-toolbar>
         <ion-title>{{ movie()?.title }} - Trailer</ion-title>
         <ion-buttons slot="end">
-          <ion-button (click)="closeTrailerModal()">
-            <ion-icon slot="icon-only" [icon]="closeOutline"></ion-icon>
+          <ion-button aria-label="Close trailer" (click)="closeTrailerModal()">
+            <ion-icon slot="icon-only" [icon]="closeOutline" aria-hidden="true"></ion-icon>
           </ion-button>
         </ion-buttons>
       </ion-toolbar>
