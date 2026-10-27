@@ -50,7 +50,10 @@
   --color-black: #000;
   
   // Primary Brand Colors
-  --color-dark-green: #1a4d2e;
+  --color-brand: #a7c7e7;
+  --color-brand-light: #d3e3f4;
+  --color-brand-dark: #1f4e79;
+  --color-on-brand: #12263f;
   --color-sage-green: #7a9b7f;
   --color-beige: #e8d4c0;
   --color-magenta: #c41e5a;
@@ -69,9 +72,9 @@
   --color-shadow-medium: rgba(0, 0, 0, 0.2);
   --color-shadow-dark: rgba(0, 0, 0, 0.3);
 
-  --gradient-primary: linear-gradient(135deg, var(--color-dark-green) 0%, var(--color-sage-green) 100%);
+  --gradient-primary: linear-gradient(135deg, var(--color-brand) 0%, var(--color-brand-light) 100%);
   --gradient-accent: linear-gradient(135deg, var(--color-magenta) 0%, var(--color-burgundy) 100%);
-  --gradient-dark: linear-gradient(135deg, #0d2d1a 0%, #5a7b5f 100%);
+  --gradient-dark: linear-gradient(135deg, #12263f 0%, #4a6f99 100%);
 
   // ========================================
   // SHADOWS
