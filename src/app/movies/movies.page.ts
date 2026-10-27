@@ -78,8 +78,6 @@ export class MoviesPage {
     const allMovies = this.movieService.getMovies();
     const shuffled = [...allMovies].sort(() => Math.random() - 0.5);
     this.randomMovies.set(shuffled.slice(0, 5));
-    this.isLoading.set(false);
-
   }
 
   openMovieLink(): void {
