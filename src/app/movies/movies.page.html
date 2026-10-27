@@ -5,6 +5,7 @@
   <ion-toolbar>
     <ion-searchbar
       placeholder="Search for movies..."
+      aria-label="Search for movies"
       [value]="searchQuery()"
       [debounce]="1000"
       (ionInput)="onSearchInput($event)"
@@ -15,8 +16,9 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding" [scrollEvents]="true" (ionScroll)="onScroll($event)">
+  <h1 class="visually-hidden">Movie Rater</h1>
   @if (searching()) {
-    <div class="loading-container">
+    <div class="loading-container" role="status" aria-label="Loading">
       <ion-spinner></ion-spinner>
     </div>
   } @else if (searchResults() !== null) {
@@ -45,7 +47,7 @@
     }
   } @else {
     @if (isLoading()) {
-      <div class="loading-container">
+      <div class="loading-container" role="status" aria-label="Loading">
         <ion-spinner></ion-spinner>
       </div>
     }

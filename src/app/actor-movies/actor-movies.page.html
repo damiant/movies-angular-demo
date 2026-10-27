@@ -9,7 +9,7 @@
 
 <ion-content [fullscreen]="true">
   @if (isLoading()) {
-    <div class="loading-container">
+    <div class="loading-container" role="status" aria-label="Loading">
       <ion-spinner></ion-spinner>
     </div>
   }
@@ -20,8 +20,8 @@
 
       <div class="movies-grid">
         @for (movie of movies(); track movie.id) {
-          <ion-card class="movie-card clickable" (click)="goToMovieDetails(movie)">
-            <ion-img [src]="movie.image" [alt]="movie.title" class="movie-poster"></ion-img>
+          <ion-card button="true" class="movie-card clickable" (click)="goToMovieDetails(movie)">
+            <ion-img [src]="movie.image" alt="" class="movie-poster"></ion-img>
 
             <ion-card-header>
               <ion-card-title class="card-title">{{ movie.title }}</ion-card-title>

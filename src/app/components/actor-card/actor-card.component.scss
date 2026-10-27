@@ -3,7 +3,6 @@
   height: var(--actor-avatar-size);
   border-radius: var(--border-radius-lg);
   object-fit: cover;
-  cursor: pointer;
 
   &.placeholder {
     display: flex;
@@ -33,4 +32,12 @@
   &.white-text {
     color: var(--color-white);
   }
+}
+
+.actor-btn {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  border-radius: var(--border-radius-lg);
 }

@@ -13,10 +13,16 @@ export class ActorCardComponent {
   name = input<string>('');
   image = input<string | null>(null);
   whiteText = input(false);
+  interactive = input(true);
   
   imageLoadFailed = signal(false);
   
   actorClick = output<void>();
+
+  onClick(event: Event): void {
+    event.stopPropagation();
+    this.actorClick.emit();
+  }
 
   onImageError(): void {
     this.imageLoadFailed.set(true);
